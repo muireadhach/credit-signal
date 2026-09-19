@@ -1,30 +1,30 @@
 {
- "n": 1425,
- "n_shop": 988,
+ "n": 711,
+ "n_shop": 498,
  "modes": [
   {
    "mode": "thread_damage",
    "name": "Thread damage",
    "category": "Manufacturing & dimensional",
-   "n": 31,
-   "share": 0.0218,
-   "avg_conf": 0.777,
-   "shop_n": 26,
+   "n": 10,
+   "share": 0.0141,
+   "avg_conf": 0.69,
+   "shop_n": 9,
    "examples": [
     {
-     "quote": "Striped threads on the first ball joint.. Ya get what ya pay for!. I don't like that I have to either use a helicoil or use epoxy to fix stripped threads",
-     "text": "Striped threads on the first ball joint.. Ya get what ya pay for!. I don't like that I have to either use a helicoil or use epoxy to fix stripped threads on the first knuckle or ball joint, regardless what price is paid, a product shouldn't be failed before even using it! However, I gave two stars because the dial indicator is a higher quality and as should be very sensitive!<br /><br />As for the",
-     "conf": 0.92
-    },
-    {
-     "quote": "Poorly cut threads - leaks.. Female threads not cut properly.",
-     "text": "Poorly cut threads - leaks.. Female threads not cut properly. Leaks, even with plumbers tape. Difficult to tighten down enough to stop leak, given the poorly cut threads.",
-     "conf": 0.92
-    },
-    {
-     "quote": "wouldn't tighten all the way down onto the bucket and wanted to cross thread every time",
-     "text": "Garbage. The pump itself is okay to use but the \u201clid\u201d piece that screws it onto the bucket is junk. It wouldn\u2019t tighten all the way down onto the bucket and wanted to cross thread every time.<br /><br />I gave up after five minutes of constant trying and used the lid/top that came off the bucket of detergent I just opened. I cut a hole in the original bucket lid that fit the pump exactly like the ",
+     "quote": "Poor quality threads... nuts froze on the screws about half way to tightening them down",
+     "text": "Check the threads.... Poor quality threads. I didn't realize the threads were messed up on about 25% of them until I used nylon lock nuts and the nuts froze on the screws about half way to tightening them down. Had to cut them off using a rotary tool. Not happy.",
      "conf": 0.85
+    },
+    {
+     "quote": "Striped threads on the first ball joint",
+     "text": "Striped threads on the first ball joint.. Ya get what ya pay for!. I don't like that I have to either use a helicoil or use epoxy to fix stripped threads on the first knuckle or ball joint, regardless what price is paid, a product shouldn't be failed before even using it! However, I gave two stars because the dial indicator is a higher quality and as should be very sensitive!<br /><br />As for the",
+     "conf": 0.85
+    },
+    {
+     "quote": "wanted to cross thread every time",
+     "text": "Garbage. The pump itself is okay to use but the \u201clid\u201d piece that screws it onto the bucket is junk. It wouldn\u2019t tighten all the way down onto the bucket and wanted to cross thread every time.<br /><br />I gave up after five minutes of constant trying and used the lid/top that came off the bucket of detergent I just opened. I cut a hole in the original bucket lid that fit the pump exactly like the ",
+     "conf": 0.75
     }
    ]
   },
@@ -32,25 +32,25 @@
    "mode": "out_of_tolerance",
    "name": "Out-of-tolerance dimensions",
    "category": "Manufacturing & dimensional",
-   "n": 90,
-   "share": 0.0632,
-   "avg_conf": 0.805,
-   "shop_n": 69,
+   "n": 51,
+   "share": 0.0717,
+   "avg_conf": 0.649,
+   "shop_n": 40,
    "examples": [
     {
-     "quote": "The standoff portion is 5mm, not 8mm. THE ENTIRE piece of brass from tip of last thread to the top of the largest portion is 8mm",
-     "text": "ULTRA TINY STANDOFFS, SMALLER THAN ADVERTISED, NOT FOR COMPUTER MOTHERBOARDS..... NOT MOTHERBOARD BRASS STANDOFFS. I don't know what the world a &#34;brass standoff&#34; would otherwise be used for than a Computer Motherboard, but these are not it. Additionally, the measurements are NOT accurate. The standoff portion is 5mm, not 8mm. THE ENTIRE piece of brass from tip of last thread to the top of ",
-     "conf": 0.95
+     "quote": "the feelers in this gauge set were all found to be too thick",
+     "text": "Inaccurate measurements. Compared to two known good gauges from Snap On and MAC Tools, the feelers in this gauge set were all found to be too thick. The gauging is inaccurate. Would not trust it to do valve adjustments",
+     "conf": 0.85
     },
     {
-     "quote": "The staples were too wide for my staple gun and could not feed, making them useless. They measure 26.3 mm wide. Senco spec says they are suppose to be 25.4 mm.",
-     "text": "Bad Staples. The staples were too wide for my staple gun and could not feed, making them useless.<br />They measure 26.3 mm wide. Senco spec says they are suppose to be 25.4 mm. I contacted SENCO for a remedy, they offered nothing. I could return them to Amazon except some were damaged in shipment to me and they are heavy and would be expensive to ship.",
-     "conf": 0.95
+     "quote": "Diameter is all over the board, from 1.58mm to 1.91mm",
+     "text": "Pretty! ... big mess.. Diameter is all over the board, from 1.58mm to 1.91mm just in the first few meters! Jammed, snapped off inside the bowden tube - spent two hours clearing it. Looks promising - but isn't.<br /><br />After clearing, cleaning, releveling, ... back printing Hatchbox again for the last twelve hours with nary a hiccup.<br /><br />I wanted to like it, it'd be perfect for things lik",
+     "conf": 0.85
     },
     {
-     "quote": "these are stupid short: 2-3 millimeters shorter than necessary",
-     "text": "Way too short = can't get nozzle anywhere near buildplate. Writing before filing for return so i can go try similar product from these guys' competition.<br />As the title says, these are stupid short: 2-3 millimeters shorter than necessary. Moved limit switch til it was barely attached & still can't get nozzle anywhere close to the bed. Description mentions downloading some thingiverse files, but",
-     "conf": 0.92
+     "quote": "Received: 1 @ 2.85 x 16.15 x ~200 - 1 @ 3 x 15.9 x ~200",
+     "text": "Why can't they at least be the same thickness!. Ordered: 2 @ 3 x 16 x 200 mm. Received: 1 @ 2.85 x 16.15 x ~200 - 1 @ 3 x 15.9 x ~200. The length (200 mm) was \"cut\" (some ends look broken but I believe they were cut.) at an angle as /===/ and measured from point to point. If you trim them square you will loose roughly 8 mm leaving you 192 mm at best! As for the 3 mm thickness... why can't they at ",
+     "conf": 0.85
     }
    ]
   },
@@ -58,25 +58,25 @@
    "mode": "thread_mismatch",
    "name": "Thread mismatch / wrong pitch or class",
    "category": "Manufacturing & dimensional",
-   "n": 53,
-   "share": 0.0372,
-   "avg_conf": 0.82,
-   "shop_n": 49,
+   "n": 22,
+   "share": 0.0309,
+   "avg_conf": 0.723,
+   "shop_n": 20,
    "examples": [
     {
      "quote": "the thread is not US NPT but British BPST 1/8",
      "text": "the thread is not US NPT but British BPST 1/8 BEWARE. the thread is not US NPT but British BPST 1/8 BEWARE NOT USA STANDARD",
-     "conf": 0.95
+     "conf": 0.9
     },
     {
-     "quote": "the screw drive is reverse threaded! WHY?? I have NEVER had a reverse thread clamp before!",
-     "text": "Reverse thread! WHY??. I could not figure out why the banding would not start on to the clamp. No matter how hard I tried, it just wouldn't start. But I noticed it started when I accidently turned the screw backwards just a little. That's when I discovered that the screw drive is reverse threaded! WHY?? I have NEVER had a reverse thread clamp before! Just dumb! And they are VERY hard to get starte",
-     "conf": 0.95
+     "quote": "these turned 2-3 threads before they turned no further",
+     "text": "Meh.... These worked for my purpose, but the 8-32 thread is not accurate. The 8-32 bolts that come with my cabinet knobs threaded freely for the entire length of the bolt; however, these turned 2-3 threads before they turned no further. I thought that my cabinet knobs may have come with a different thread, but tested them with a big box store sizing block and they worked perfectly.",
+     "conf": 0.85
     },
     {
-     "quote": "The description states that the fitting is Garden Hose Thread. It is not. The outside threads are NPT.",
-     "text": "NOT garden hose thread!!!. The description states that the fitting is Garden Hose Thread. It is not. The outside threads are NPT. If you try to attach a garden hose, the threads are the wrong side and you will only get one or two turns. Then the hose will flip around and leak.",
-     "conf": 0.95
+     "quote": "will not thread onto ANY showerhead fitting I attempt",
+     "text": "Not as described.. This says it is 1/2 NPT, but will not thread onto ANY showerhead fitting I attempt. Not a faucet diverter adapter, not an actual showerhead pipe, not a shower wand. I have other 1/2 NPT adapters that all work, and were listed the same. But this one does NOT.",
+     "conf": 0.85
     }
    ]
   },
@@ -84,25 +84,25 @@
    "mode": "burrs_finish",
    "name": "Burrs & poor finishing",
    "category": "Manufacturing & dimensional",
-   "n": 20,
-   "share": 0.014,
-   "avg_conf": 0.692,
-   "shop_n": 15,
+   "n": 5,
+   "share": 0.007,
+   "avg_conf": 0.634,
+   "shop_n": 3,
    "examples": [
     {
-     "quote": "blade is totally rough on the cutting edge, making it difficult to operate",
+     "quote": "totally rough on the cutting edge, making it difficult to operate the scissors",
      "text": "\"Please note these are economy grade they are disposable and meant to be thrown away\". Was very disappointed in quality. The one blade is totally rough on the cutting edge, making it difficult to operate the scissors. It sticks on the rough edge. Looking at other reviews (positive and negative) I guess that it might have been the luck of the draw and I just received a &#34;bad&#34;/not up to stand",
-     "conf": 0.85
+     "conf": 0.82
     },
     {
-     "quote": "All the parts are super sharp, and when you open it to measure, the long thin part stretches out at the bottom, and is also super sharp",
-     "text": "SUPER SHARP AND HORRIBLE PRODUCT!. Worse product to use! All the parts are super sharp, and when you open it to measure, the long thin part stretches out at the bottom, and is also super sharp! I also bought a nice Digital camera, and had these pieces in a container with some other stuff not realizing how sharp this item was, and it scratched the whole display lens! So it also damaged my new camer",
-     "conf": 0.85
+     "quote": "Sharp jagged edges to catch and scratch your hands",
+     "text": "Major decline in quality, poor welding. I owned the R10 for years and it was a quality cart. So it is disappointing to see the decline in quality after receiving this R6 model. The welding is atrocious. Sharp jagged edges to catch and scratch your hands and cargo during transport. The rear tires are all plastic and the wheel bearings and plastic washers were already popping out of shape during ass",
+     "conf": 0.65
     },
     {
-     "quote": "Blades were uneven and cutting area were full of burrs",
-     "text": "Very poor quality product if bought from PreciseCanada. If you buy these from PreciseCanada be prepared to receive a poor quality product. Blades were uneven and cutting area were full of burrs. I bought two pairs and both were of poor quality. I couldn't even cut a piece of sewing thread with them.",
-     "conf": 0.85
+     "quote": "several have gouges and nicks and slices",
+     "text": "Not fantastic but could be worse.. I should have taken another picture with inches showing but I use metric most of the time so I didn\u2019t think, my apologies. I struggled since as of now, there are no listed measurements that I could find, on the ad or the manufacturer\u2019s website. Dimensions of the box, yes and 6L, that\u2019s not a worldwide standard size so 6L actually can be found with multiple dimens",
+     "conf": 0.6
     }
    ]
   },
@@ -110,25 +110,25 @@
    "mode": "out_of_true",
    "name": "Out of straight, flat, or round",
    "category": "Manufacturing & dimensional",
-   "n": 17,
-   "share": 0.0119,
-   "avg_conf": 0.773,
-   "shop_n": 13,
+   "n": 7,
+   "share": 0.0098,
+   "avg_conf": 0.697,
+   "shop_n": 4,
    "examples": [
     {
-     "quote": "Most of the shafts are bent. Brand new out of the package and they wobble when spinning at any speed.",
+     "quote": "Most of the shafts are bent... they wobble when spinning at any speed",
      "text": "Wobbly shafts.. Good: Packaged nicely and neatly.<br />Bad: Not very useable. Most of the shafts are bent. Brand new out of the package and they wobble when spinning at any speed. Roll them on a flat surface and watch the shaft wobble about 3/16\u201d from the base of the cutting head.",
-     "conf": 0.95
+     "conf": 0.88
     },
     {
-     "quote": "the wheel went from 60thsd-30thsd from one side to the other... they're shaped like an Egg",
-     "text": "Grinding egg. I should have listened to the other reviews on these grinding wheels, the plastic bushings the send are a JOKE. I purchased some nylon 1&#34;x1/2&#34; bushings then spent almost an hour trying to get this wheel to spin true,after looking at it i noticed the paper sticker on both sides of the wheel went from 60thsd-30thsd from one side to the other, after wetting the stickers down the",
-     "conf": 0.92
-    },
-    {
-     "quote": "thread axis is not parallel to nut axis. There's a very noticeable 1-3\u00ba pitch between the external shape and the threaded internal",
+     "quote": "thread axis is not parallel to nut axis",
      "text": "thread axis is not parallel to nut axis. Terrible machine work, but it won't ruin my project. I already intended to turn off the hex shape on the lathe, and while I'm at it, I can correct the skewed thread-to-external axis.<br /><br />There's a very noticeable 1-3\u00ba pitch between the external shape and the threaded internal on every one of these. The thread does a decent job of coupling with M6 scr",
      "conf": 0.85
+    },
+    {
+     "quote": "Every single glass pipette piece is crooked inside the bottle to where it bangs the side of the bottle",
+     "text": "Crooked pipettes that bang the bottle. Hate!. This are super crappy. Every single glass pipette piece is crooked inside the bottle to where it bangs the side of the bottle when you lift it out. I can\u2019t straighten any of them either. It looks super low quality and I\u2019m almost embarassed to sell my products in these. I am also assuming they might leak because the bulb and the screw on top are separat",
+     "conf": 0.75
     }
    ]
   },
@@ -136,24 +136,24 @@
    "mode": "material_nonconformance",
    "name": "Material or hardness nonconformance",
    "category": "Manufacturing & dimensional",
-   "n": 98,
-   "share": 0.0688,
-   "avg_conf": 0.752,
-   "shop_n": 84,
+   "n": 89,
+   "share": 0.1252,
+   "avg_conf": 0.597,
+   "shop_n": 67,
    "examples": [
     {
-     "quote": "These blades are NOT tempered, NOT hardened - NOT spring steel like a real feeler gauge. Instead these are plain annealed",
-     "text": "NOT tempered, NOT hardened - more bendy like a piece of cardboard !. I thought I had seen all the crap from China there was to see --- until I received these !<br />These blades are NOT tempered, NOT hardened - NOT spring steel like<br />a real feeler gauge. Instead these are plain annealed, and more bendy like a piece of plastic or cardboard.<br />If you try to shove this into a tight gap the gau",
-     "conf": 0.95
+     "quote": "the steel SHOULD NEVER allow this... your heat treating is less than effective",
+     "text": "A bad experience. Bought this package of rotary burrs to go with a very powerful makita high speed die grinder. Since I was not familiar with the grinder I started out at the lowest of speed. At the first contact with the work surface, a mild steel plate, the burr bit, jumped and bent to a 30 degree angle. I was able to more or less straighten this bit with a bench vise, the steel SHOULD NEVER all",
+     "conf": 0.85
     },
     {
-     "quote": "NOT Brass, but cheap steel. Brass plated. A magnet sticks to them. They are STEEL.",
-     "text": "NOT Brass, but cheap steel. Brass plated. I bought these specifically because they said they were BRASS. Well they are tough steel, and scratched the heck out of the metal I first tried them on. A magnet sticks to them. They are STEEL. Cheaply made too.",
-     "conf": 0.95
+     "quote": "DEFINITELY NOT stainless Steel, but a blend of steel and other alloy",
+     "text": "I am not the only person making a bad review, and it is because the product is .... I am not the only person making a bad review, and it is because the product is DEFINITELY NOT stainless Steel, but a blend of steel and other alloy.<br />First, Stainless steel does not rust, not does it looks like &#34;GRAY&#34; Steel.<br />I would avoid this product at ALL cost, and go to home depot and buy the 1",
+     "conf": 0.85
     },
     {
-     "quote": "quite soft and very easy to strip out the threads",
-     "text": "Soft metal, strip out easily. I purchased these t-nuts for mounting subwoofer speakers into a speaker box baffle. Unfortunately I found these to be quite soft and very easy to strip out the threads. I did have success when using a c-clamp and then being careful when hand tightening but every time I used a power drill or impact, I stripped the t-nut and had to replace.",
+     "quote": "black spot in the center of the bit. These were made from defective/cheap metals",
+     "text": "Do Not Buy. I bought these to mill out a piece of polymer. At a depth of 5/8\" the 3/8\" end mill snapped in half. When I looked into the snapped halves there was a black spot in the center of the bit. These were made from defective/cheap metals... as the surrounding looked to be some sort of plastic not sure what these are made out of but they break in plastic.",
      "conf": 0.85
     }
    ]
@@ -162,25 +162,20 @@
    "mode": "plating_coating",
    "name": "Plating or coating defects",
    "category": "Manufacturing & dimensional",
-   "n": 12,
-   "share": 0.0084,
-   "avg_conf": 0.739,
-   "shop_n": 11,
+   "n": 2,
+   "share": 0.0028,
+   "avg_conf": 0.835,
+   "shop_n": 1,
    "examples": [
     {
-     "quote": "It is plated and the plating wears off exposing the steel. It also has developed many rust spots.",
+     "quote": "the plating wears off exposing the steel",
      "text": "Not safe!. I do not recommend this product. It is plated and the plating wears off exposing the steel. It also has developed many rust spots. Poorly made.",
-     "conf": 0.85
-    },
-    {
-     "quote": "The \"titanium\" coating wore out right away",
-     "text": "Garbage. This drill bit is one of the worst if not the worst I ever used. Right from the package it struggled to make a hole on an electrical box that was already started with a pilot drill bit. The \"titanium\" coating wore out right away. Save your money an buy a brand name one.",
      "conf": 0.85
     },
     {
      "quote": "Zinc flaking off inside the tank",
      "text": "This product may cause damage to your diesel motor from Zinc flaking off inside the tank. We emailed Justrite and they never responded!!!!!! We learned from the internet the Justrite Yellow-Diesel fuel can may allow Zinc to flake off into the diesel fuel. This may cause severe damage to a diesel motor. Justrite chose to ignore our question and serious concern. Do your internet searches to this reg",
-     "conf": 0.85
+     "conf": 0.82
     }
    ]
   },
@@ -188,25 +183,25 @@
    "mode": "corrosion_on_arrival",
    "name": "Corrosion on arrival",
    "category": "Storage & handling",
-   "n": 19,
-   "share": 0.0133,
-   "avg_conf": 0.688,
-   "shop_n": 10,
+   "n": 5,
+   "share": 0.007,
+   "avg_conf": 0.57,
+   "shop_n": 4,
    "examples": [
     {
-     "quote": "Arrived rusted and pitted.. Arrived already heavily rusted and pitted affecting its utility",
-     "text": "Arrived rusted and pitted.. Arrived already heavily rusted and pitted affecting its utility as a smooth and consistent ball bearing.<br /><br />I purchased several other bearings from BC Precision at the same time all with the same issue of not living up the advertised material or product image. The price is low but I will not buy from them again unless I don't care about product accuracy.",
-     "conf": 0.95
-    },
-    {
-     "quote": "Already rusted just 2 days after installing them",
-     "text": "Not stainless. Not stainless. Already rusted just 2 days after installing them. Half was bent in the small flat cardboard box they come in",
-     "conf": 0.85
-    },
-    {
-     "quote": "Rusted. Rusted and left rust stains on the boat.",
+     "quote": "Rusted. Grommets were slightly smaller than I have used.",
      "text": "Rusted. Grommets were slightly smaller than I have used. Used for a cover for a boat. Rusted and left rust stains on the boat. Brass?",
-     "conf": 0.85
+     "conf": 0.65
+    },
+    {
+     "quote": "The inside of the legs were rusted.",
+     "text": "What has four legs but can't stand still?. THIS SINK!<br /><br />This sink is completely unbalanced and tips over just by looking at it.<br /><br />The nut that screws the drain tailpiece to the drain basket would not go on tight enough to create a seal. It does not have enough teeth to screw on for a seal. I tried with and without the washer. Will need a new basket strainer.<br /><br />The inside",
+     "conf": 0.6
+    },
+    {
+     "quote": "came like rusted or with a kind of glue in the knob and its stuck",
+     "text": "Don't waste your money on this, they may send you an used product. Bought another needle valve since the one I bought some months ago was perfect, however this one came like rusted or with a kind of glue in the knob and its stuck, as if it was used or something, completely useless. Also it was completely different than the one pictured. Really disappointed, will return and ask for full refund.",
+     "conf": 0.6
     }
    ]
   },
@@ -214,25 +209,25 @@
    "mode": "transit_surface_damage",
    "name": "Surface damage from transit",
    "category": "Storage & handling",
-   "n": 54,
-   "share": 0.0379,
-   "avg_conf": 0.737,
-   "shop_n": 26,
+   "n": 44,
+   "share": 0.0619,
+   "avg_conf": 0.58,
+   "shop_n": 18,
    "examples": [
     {
-     "quote": "it had 3 deep dents in it! Right on the top of the stainless steel top!",
-     "text": "Dented top upon arrival!. Just what I wanted. I needed an island for more surface space in my kitchen, but when this came, perfect size as it was, it had 3 deep dents in it! Right on the top of the stainless steel top! So disappointing. When I contacted the company, they told me to try and use a block of wood, and beat it out with a hammer! What?? Oh, and I would be charged to return it.",
-     "conf": 0.95
-    },
-    {
-     "quote": "half of these slides were shattered",
-     "text": "Shattered upon arrival!. I purchased this for my son for his birthday. I had it wrapped and didn't check the quality. When my son opened his gifts (which was a microscope set), half of these slides were shattered. We had tiny broken glass everywhere! Very unhappy with this purchase. Would have returned it, had I known its poor quality.",
+     "quote": "both ends were caved in and beat up",
+     "text": "Huge disappointment. I\u2019ve never had to write a horrible review before, but this is definitely the one. This had to have been dropped from a very high place onto its edges a couple of times because both ends were caved in and beat up and we\u2019re talking heavy gauge stainless steel here. The irony is that the second shelf, which is tacky aluminum, (thanks for that surprise) is tweaked and crooked but ",
      "conf": 0.85
     },
     {
-     "quote": "wheels and nuts were loose in a plastic bag. When they arrived, some of the black paint was scratched and chipped",
-     "text": "Great wheels, poor packaging.. Packaging was non-existent. The wheels and nuts were loose in a plastic bag. When they arrived, some of the black paint was scratched and chipped. Otherwise, the wheels seem well made and are sturdy. I installed them on my up-down desk and, for the most part, they do the job well. On occasion, the locking lever gets stuck under the foot of the table. The price makes ",
-     "conf": 0.85
+     "quote": "Came delivered w dents & chipped paint on bottom opposite sides",
+     "text": "Lightweight construction.. Came delivered w dents & chipped paint on bottom opposite sides. Bubble wrapped, probably should have been in a box. Product is nowhere near what I used when I was growing up.",
+     "conf": 0.75
+    },
+    {
+     "quote": "The mirror arrived shattered",
+     "text": "Arrived broken.. I was really looking forward to this. The mirror arrived shattered. Wrapped in the bubble wrap.",
+     "conf": 0.75
     }
    ]
   },
@@ -240,25 +235,25 @@
    "mode": "aged_consumables",
    "name": "Aged or degraded elastomers & consumables",
    "category": "Storage & handling",
-   "n": 84,
-   "share": 0.0589,
-   "avg_conf": 0.789,
-   "shop_n": 60,
+   "n": 43,
+   "share": 0.0605,
+   "avg_conf": 0.735,
+   "shop_n": 33,
    "examples": [
     {
-     "quote": "rubber band provided was dry-rotted and broke before it was ever large enough",
-     "text": "One size fits all.....but..... I guess this was designed for any size shop-vac. I have a 12 gallon vac. The paper filter is at least three inches too tall. I assume that won\u2019t matter. Unfortunately, the rubber band provided was dry-rotted and broke before it was ever large enough to go around the filter. Now I have to go find large rubber bands before I can use my shop-vac. Must have been sitting ",
-     "conf": 0.95
-    },
-    {
-     "quote": "Tube was expired in 2020. Dissapointing that the tube I was sent expired in 2020!",
+     "quote": "Tube was expired in 2020",
      "text": "Tube was expired in 2020. Dissapointing that the tube I was sent expired in 2020! Nearly 2 years ago so you can imagine how old that tube must be.",
-     "conf": 0.95
+     "conf": 0.92
     },
     {
-     "quote": "Item is expired. Use-by date is Jan 14, 2018. Item arrived Jan 30, 2018.",
-     "text": "Item is expired. Use-by date is Jan 14, .... Item is expired. Use-by date is Jan 14, 2018. Item arrived Jan 30, 2018. The last thing I'd want to do is use expired caulk because it doesn't always properly cure. The purpose of caulking with this very expensive caulk ($18.50/tube--quite high for caulk) is to do a job that will last for years. It is a lot of work to do this job. I will not use this pr",
-     "conf": 0.95
+     "quote": "it was hard as a rock and unusable",
+     "text": "Old Stale Vendor Inventory !. A month after I received this product I went to use it after being stored in my heated garage and it was hard as a rock and unusable. It was likely shipped to me in this condition because it was only then that I checked the code date of Sept 24, 2022 on the tube inset ....I had barely 6 weeks to use it. Not only did I miss my 30 day window to return but I also wasted ",
+     "conf": 0.92
+    },
+    {
+     "quote": "rubber band provided was dry-rotted and broke",
+     "text": "One size fits all.....but..... I guess this was designed for any size shop-vac. I have a 12 gallon vac. The paper filter is at least three inches too tall. I assume that won\u2019t matter. Unfortunately, the rubber band provided was dry-rotted and broke before it was ever large enough to go around the filter. Now I have to go find large rubber bands before I can use my shop-vac. Must have been sitting ",
+     "conf": 0.9
     }
    ]
   },
@@ -266,25 +261,25 @@
    "mode": "wrong_part",
    "name": "Wrong part in the right bag",
    "category": "Fulfillment",
-   "n": 85,
-   "share": 0.0596,
-   "avg_conf": 0.818,
-   "shop_n": 71,
+   "n": 41,
+   "share": 0.0577,
+   "avg_conf": 0.72,
+   "shop_n": 32,
    "examples": [
     {
-     "quote": "bag was labeled as a M12 x 1.5 tap so I proceeded to re-tap... was sent a M12 x 1.75",
+     "quote": "The bag was labeled as a M12 x 1.5 tap so I proceeded to re-tap",
      "text": "Ordered this and was sent M12 x 1.75!. This tap worked very well at cutting new threads in my BMW's wheel hub. Unfortunately I was sent a M12 x 1.75 size tap! The bag was labeled as a M12 x 1.5 tap so I proceeded to re-tap the lug bolt hole on my wheel hub. Obviously the lug bolt does not want to go into this new hole. Awesome.<br /><br />Most taps I have are labeled with the size AND the thread p",
-     "conf": 0.95
+     "conf": 0.93
     },
     {
-     "quote": "Incorrect description - these are TINY !!! NOT #12! These are #2",
-     "text": "Incorrect description - these are TINY !!! NOT #12! These are #2.. The UTS (Unified Thread Standard) says that #12 threads are 0.2160 inches in diameter.<br />My caliper says these are less than 0.09 in diameter.<br />I think these are #2 hooks. UTS #2 is 0.0860 in diameter.<br />Common sizes of screws are #6, #8, and #10, with #12 being very heavy duty.<br />So although there's nothing wrong with",
-     "conf": 0.95
+     "quote": "I ordered 1/2 npt x 3/4 jic and I received 3/4 npt x 3/4 jic",
+     "text": "Quality of product is good but wrong item was received. Disclaimer: The reason this product gets 1 star is because I ordered 1/2 npt x 3/4 jic and I received 3/4 npt x 3/4 jic. I am going to order again, and if I receive the proper item this time, I will amend my review. I have been happy overall with Eaton Weatherhead products. I have had to travel quite a distance to get hydraulic hoses made up ",
+     "conf": 0.92
     },
     {
-     "quote": "Not a set! not reduced shank! Two taper taps and plug tap. No bottoming tap.",
-     "text": "NOT AS DESCRIBED. Not a set! not reduced shank! Two taper taps and plug tap. No bottoming tap. Set is useless as is. You have to grind down a tap making it short and useless as a full depth bottoming tap",
-     "conf": 0.95
+     "quote": "what they package said and what was actually in the box was different",
+     "text": "Great screws, but they packaged the wrong sizes.. I have a Kreg screw kit and love it. These screws work fine, however BE CAREFUL, what they package said and what was actually in the box was different. I was supposed to get 1.25&#34; and I realized as I had some from a different box in my hand that these were 1.5&#34; doesn't sound like much but if you are building furniture and that extra .25&#34",
+     "conf": 0.92
     }
    ]
   },
@@ -292,25 +287,25 @@
    "mode": "short_count",
    "name": "Short count or missing components",
    "category": "Fulfillment",
-   "n": 71,
-   "share": 0.0498,
-   "avg_conf": 0.865,
-   "shop_n": 41,
+   "n": 38,
+   "share": 0.0534,
+   "avg_conf": 0.773,
+   "shop_n": 22,
    "examples": [
     {
-     "quote": "Both were missing pieces",
-     "text": "Missing pieces... But still an awesome tool!. I purchased 2 sets of these rods. Both were missing pieces. Disappointing. For this reason 2 stars.<br />Otherwise a nice product. Each rod appears to be accurate in size and shape.<br />Still a great tool for teaching math concepts. I learned with them 50 years ago. I'm excited using this tool to teach my 5 year old granddaughter who is now learning m",
+     "quote": "Description clearly says that this is a package of 50. There was 1 belt in the package.",
+     "text": "Quantity listed is Wrong!. Description clearly says that this is a package of 50. There was 1 belt in the package.",
+     "conf": 0.96
+    },
+    {
+     "quote": "Package only contained 200 screws not 250 as advertised",
+     "text": "Package short 50 screws.. Package only contained 200 screws not 250 as advertised.",
      "conf": 0.95
     },
     {
-     "quote": "1 bolt and washer missing",
-     "text": "There's a SCREW MISSING!. The box was smashed and torn, particularly at the corners. The cart was only slightly scratched at the bottom of the handle near the elbow joint, better than you would expect after seeing the box. Disappointed when I discovered 1 bolt and washer missing. That means one caster will only have 3 bolts to hold it on rather than the 4 that it supposed to have. My husband and I",
-     "conf": 0.95
-    },
-    {
-     "quote": "Missing piece. Missing part.",
-     "text": "Missing piece. Missing part. Frustrating cause I really needed this for a special event.<br />I recommend going through someone else",
-     "conf": 0.95
+     "quote": "Package is supposed to have 40 pegs. I received 32",
+     "text": "Package is supposed to have 40 pegs. I received 32.. Did not come with the right amount of pegs. I did not realize until I was ready to install. I couldn\u2019t put them up until my mudroom was finished and it was too late to return.",
+     "conf": 0.93
     }
    ]
   },
@@ -318,25 +313,25 @@
    "mode": "bent_long_stock",
    "name": "Bent or crushed long stock",
    "category": "Fulfillment",
-   "n": 31,
-   "share": 0.0218,
-   "avg_conf": 0.802,
-   "shop_n": 18,
+   "n": 3,
+   "share": 0.0042,
+   "avg_conf": 0.667,
+   "shop_n": 3,
    "examples": [
     {
      "quote": "Hose came crimped in more then one place",
      "text": "Hose came crimped in more then one place. Had .... Hose came crimped in more then one place. Had to leave it out in the HOTAZ. sun for a few days to get it to straighten out. Once it somewhat straightened out, I needed to place a towel around the tubing & unkink it w/a heavy set of pliers. Towel was used as not to damage the hose. It didn't!",
-     "conf": 0.95
+     "conf": 0.75
     },
     {
-     "quote": "both ends were caved in and beat up",
-     "text": "Huge disappointment. I\u2019ve never had to write a horrible review before, but this is definitely the one. This had to have been dropped from a very high place onto its edges a couple of times because both ends were caved in and beat up and we\u2019re talking heavy gauge stainless steel here. The irony is that the second shelf, which is tacky aluminum, (thanks for that surprise) is tweaked and crooked but ",
-     "conf": 0.95
+     "quote": "Bent ends on it",
+     "text": "Missing most of the hardware. Bent ends on it .... Missing most of the hardware. Bent ends on it. Had to fab and weld it a lot to get it to work",
+     "conf": 0.7
     },
     {
-     "quote": "shields because they arrived kinked so we could not use them",
-     "text": "Not satisfied. We did not use the shields because they arrived kinked so we could not use them. We contacted the firm, but did not get any results when contacting the company. Amazon on the other hand was great how they handled the situation.",
-     "conf": 0.95
+     "quote": "One of the threaded bars also came bent.",
+     "text": "Multiple subpar parts. Never could get it working. Bad customer service.. The printer seems to have a good form factor, and while the materials are cheap, they look nice. The aluminum seems reasonable enough quality. However, the power supply came broken, and when I tried to ask them for a replacement, they stalled me and asked me to do tests and provide them with video evidence. Extremely poor cu",
+     "conf": 0.55
     }
    ]
   },
@@ -344,25 +339,25 @@
    "mode": "doa_mechanism",
    "name": "Assembly or mechanism failure on first use",
    "category": "Functional & in-service",
-   "n": 281,
-   "share": 0.1972,
-   "avg_conf": 0.779,
-   "shop_n": 200,
+   "n": 107,
+   "share": 0.1505,
+   "avg_conf": 0.678,
+   "shop_n": 75,
    "examples": [
     {
-     "quote": "when I energized it, it clicked but did not change the gas flow. Piston was jammed. Never operated at all.",
-     "text": "DOES NOT WORK. Don't buy this if you need to get your project done.<br /><br />It arrived. when I energized it, it clicked but did not change the gas flow. Piston was jammed. After working on it for an hour, I could not free it. Never operated at all. Total waste of time!!!!",
-     "conf": 0.95
+     "quote": "leaked from the base upon installation with 60psi of pressure",
+     "text": "leaked right upon installation. the gauge leaked from the base upon installation with 60psi of pressure. Ended up in the trash!",
+     "conf": 0.88
     },
     {
-     "quote": "one of three transducers left no holes, and both of the others were little to no holes",
-     "text": "Didnt work right out of the box - 1 transducer bad. I had high hopes for this machine, but was disappointed. It include a drain hose to thread into the drain fitting, but it doesnt fit, the plastic is too small for the brass cutoff threads. Likely 20 or so wraps of teflon tape make help, but that would be useless. After opening. filled with distilled water, let it run for a 10 or so minutes with o",
-     "conf": 0.95
+     "quote": "Valve was frozen. Plastic handle broke on first turn.",
+     "text": "Defective. Valve was frozen. Plastic handle broke on first turn. Completely defective.",
+     "conf": 0.85
     },
     {
-     "quote": "Broke on first use. Seemed to start out OK but when drawing the hone backward the two \"arms\" holding the abrasive material broke away from the main shaft.",
-     "text": "Piece of Junk - waste of money. Broke on first use. Seemed to start out OK but when drawing the hone backward the two &#34;arms&#34; holding the abrasive material broke away from the main shaft. It seems they are held on by a thin piece of plastic just a bit more rugged than a drinking straw.<br /><br />Actually its construction makes no sense - the shaft end that fits into the drill is very heavy",
-     "conf": 0.92
+     "quote": "the gauge doesn't even move or react to the pressure change",
+     "text": "Doesn't work, item defective. After I attached the gauge and the pump, the gauge doesn't even move or react to the pressure change. Item is unreliable and and was a waste of time to purchase. Returned right away. (Review by a medical student).",
+     "conf": 0.85
     }
    ]
   },
@@ -370,24 +365,24 @@
    "mode": "premature_failure",
    "name": "Premature failure in service",
    "category": "Functional & in-service",
-   "n": 179,
-   "share": 0.1256,
-   "avg_conf": 0.758,
-   "shop_n": 126,
+   "n": 122,
+   "share": 0.1716,
+   "avg_conf": 0.681,
+   "shop_n": 89,
    "examples": [
     {
-     "quote": "the spring that holds and releases one of the wheels broke this morning when I tried to move",
-     "text": "Broke After Only A Few Times. Used only a few times for a move last month but the spring that holds and releases one of the wheels broke this morning when I tried to move a couple of things on my patio. This broken wheel makes the cart totally useless. I am very disappointed because I read the reviews carefully and chose the model with the fewest negative reviews.",
+     "quote": "the relay would stay energized",
+     "text": "the relay is the weak point. I used this for a short period of time before the relay would stay energized. It was used for a powder coating oven so overbaking a part means I have to start all over...stripping, blasting, coating, baking...plus the time to replace the relay. The instructions are \"lacking\". The only thing I'm still using is the controller, everything else has needed to be replaced. I",
      "conf": 0.85
     },
     {
-     "quote": "Heads strip out almost immediately after cutter engages. Majority of them strip out halfway into material",
-     "text": "SNAP CRACKLE POP!. These are junk. These are good at only 2 things pissing you off and taking your money.<br />Heads strip out almost immediately after cutter engages.<br />Majority of them strip out halfway into material and stay there!? Only way to fix is pry bar the damned thing out. Because it won\u2019t go any further and won\u2019t back out due to striped threads in the middle.<br />Also had a ton sna",
+     "quote": "good for two weeks and then stopped working completely",
+     "text": "I was good for two weeks and then stopped working completely. I wish my printer worked as well as others. I was good for two weeks and then stopped working completely. I sent it back to be fixed, only to have it break again another few weeks later. Piece of crap in my experience. Also shipping it back and forth to be fixed was a pain.<br /><br />Updated to include the fact the M3d WILL NOT let me ",
      "conf": 0.85
     },
     {
-     "quote": "Screw heads broke off trying to anchor into wall",
-     "text": "Breaks Too Easy. Screw heads broke off trying to anchor into wall. Incredibly cheap, product now I need to dig one out of my wall.<br /><br />Spend a few more dollars and get something higher quality and save yourself potential time in the future repairing what this product will mess up.<br /><br />Extremely dissatisfied",
+     "quote": "two weeks after receiving it & only using it once, the pump was broken",
+     "text": "The machine worked great the first time. The machine worked great the first time, two weeks after receiving it & only using it once, the pump was broken. I was very upset that I had to further inconvenience myself and bring it to a repair center (none which were very local) after only one use!!",
      "conf": 0.85
     }
    ]
@@ -396,25 +391,25 @@
    "mode": "other_unclear",
    "name": "Other / unclear",
    "category": "Unclear",
-   "n": 300,
-   "share": 0.2105,
-   "avg_conf": 0.781,
-   "shop_n": 169,
+   "n": 122,
+   "share": 0.1716,
+   "avg_conf": 0.631,
+   "shop_n": 78,
    "examples": [
+    {
+     "quote": "I made an error and ordere Justrite 11078 hose which I alreaddy possessed",
+     "text": "greg@Bartlett, Tn. This item was ordered to replace an existing flex hose on a justrite gas can. I made an error and ordere Justrite 11078 hose which I alreaddy possessed. I really wanted a 3/4 inch justrite flex hose, because the justrite 11078 flex hose is 2 small and does not flow fsst enough fr the 5 gallon justrite metal gas can. The justrite 11078 flex hose is a quality hose, but it is 2 sma",
+     "conf": 0.9
+    },
+    {
+     "quote": "the homebrew shop is a ripoff",
+     "text": "the homebrew shop is a ripoff and youre paying more in shipping than thisitem should cost.. dont pay more than $3 for this, this is a total ripoff",
+     "conf": 0.9
+    },
     {
      "quote": "stirrers are small and flimsy and are barely 6 inches long",
      "text": "VERY SHORT. I bought these to mix 1-3 quarts of epoxy resin without wearing out my arm from stirring. I expected them to be large enough to stir more than an 8oz cup, but alas, these stirrers are small and flimsy and are barely 6 inches long. I will be looking for something better. Save your money on these unless you only want to mix a tiny amount of resin in a very small cup.",
-     "conf": 0.95
-    },
-    {
-     "quote": "it's too thick that it warps the bed in the center",
-     "text": "Yeah I guess it works, but that's it... (not a good thing). Pros:<br />- Your bed heats up a little quicker<br />- You are less likely to burn yourself since the bottom is covered<br />- Less energy required to stay hot<br /><br />Cons:<br />- On the Ender 3 Pro, it's too thick that it warps the bed in the center<br />- You try to compress it by lowering the bed and now every corner is unleveled<b",
-     "conf": 0.95
-    },
-    {
-     "quote": "Does nothing. I purchased this because it says it get rid of grease and oil... It removed nothing.",
-     "text": "Does nothing. I purchased this because it says it get rid of grease and oil. I put it to the test. My power chair broke a seal on the gear box and leaked 90 weight gear oil all over the carpet before i realized it. I followed the instructions to the letter. I let it set 30 seconds and then blotted it with a white towel. It removed nothing. I tried it several times and it didn't even faze the greas",
-     "conf": 0.95
+     "conf": 0.85
     }
    ]
   }

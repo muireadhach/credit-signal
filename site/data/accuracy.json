@@ -1,5 +1,7 @@
 {
  "bulk": null,
  "reference": null,
+ "bulk_on_reference_subset": null,
+ "agreement": null,
  "error_examples": []
 }

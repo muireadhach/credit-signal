@@ -16,14 +16,16 @@
   const svgEl = (w, h) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", `0 0 ${w} ${h}`); s.setAttribute("class", "chart"); s.setAttribute("role", "img"); return s; };
 
   /* Horizontal bars. rows: [{label, segs:[{v, cls, tip}], chips, note}] */
-  function hbars(el, rows, { max, labelW = 190, rowH = 26, valueFmt = fmt.usd } = {}) {
-    const W = 560, pad = 8, plotW = W - labelW - 70;
+  const clip = (t, n = 30) => t.length > n ? t.slice(0, n - 1) + "…" : t;
+  function hbars(el, rows, { max, labelW = 220, rowH = 26, valueFmt = fmt.usd } = {}) {
+    if (!rows.length) { el.replaceChildren(); return; }
+    const W = 580, pad = 8, plotW = W - labelW - 70;
     const H = rows.length * rowH + pad * 2;
     const s = svgEl(W, H); let y = pad;
-    max = max || Math.max(...rows.map(r => r.segs.reduce((a, b) => a + b.v, 0)));
+    max = (max && isFinite(max) && max > 0) ? max : (Math.max(0, ...rows.map(r => r.segs.reduce((a, b) => a + b.v, 0))) || 1);
     for (const r of rows) {
       let x = labelW; const total = r.segs.reduce((a, b) => a + b.v, 0);
-      s.innerHTML += `<text class="lbl" x="${labelW - 10}" y="${y + rowH / 2 + 4}" text-anchor="end">${esc(r.label)}</text>`;
+      s.innerHTML += `<text class="lbl" x="${labelW - 10}" y="${y + rowH / 2 + 4}" text-anchor="end"><title>${esc(r.label)}</title>${esc(clip(r.label))}</text>`;
       for (const g of r.segs) {
         const w = Math.max(0, g.v / max * plotW);
         s.innerHTML += `<rect class="bar ${g.cls || ""}" x="${x}" y="${y + 5}" width="${w}" height="${rowH - 10}" rx="2" data-tip="${esc(g.tip || "")}"></rect>`;
@@ -40,6 +42,7 @@
     const W = 560, H = 230, L = 46, R = 14, T = 14, B = 34, pw = W - L - R, ph = H - T - B;
     const s = svgEl(W, H);
     const ys = series.flatMap(q => q.pts.map(p => p.y)).filter(v => v != null);
+    if (!ys.length) { el.replaceChildren(); return; }
     ymax = ymax || Math.max(...ys) * 1.15 || 1;
     const X = i => L + (xs.length > 1 ? i / (xs.length - 1) * pw : pw / 2), Y = v => T + ph - v / ymax * ph;
     for (let i = 0; i <= 4; i++) { const v = ymax * i / 4, yy = Y(v); s.innerHTML += `<line class="grid" x1="${L}" y1="${yy}" x2="${W - R}" y2="${yy}"/><text x="${L - 6}" y="${yy + 4}" text-anchor="end">${esc(yFmt(v))}</text>`; }
@@ -95,7 +98,7 @@
         { label: "LLM extraction", segs: [{ v: seedA.llm.lift || 0, tip: `${fmt.pct(seedA.llm.rate_in)} in group vs ${fmt.pct(seedA.llm.rate_out)} outside · p=${seedA.llm.p}` }] },
         { label: "Keyword “damaged…”", segs: [{ v: seedA.keyword.lift || 0, cls: "kw", tip: `${fmt.pct(seedA.keyword.rate_in)} vs ${fmt.pct(seedA.keyword.rate_out)} · p=${seedA.keyword.p}` }] },
         { label: "Ground truth (hidden)", segs: [{ v: seedA.ground_truth_lift || 0, cls: "dim", tip: "the lift that was actually seeded" }] },
-      ], { valueFmt: fmt.x, labelW: 170, rowH: 34 });
+      ], { valueFmt: fmt.x, labelW: 200, rowH: 34 });
       $("#lift-note").textContent = `Thread damage in ${seedA.n_in} bulk-bagged fastener credits after the spec change vs ${seedA.n_out} other fastener credits. The keyword baseline matches "damaged", "broke", "bent", "stripped", "cross-thread" and similar — it catches too much to see the specific problem.`;
     }
     $("#seed-table").innerHTML = `<thead><tr><th>Check</th><th>Target</th><th class="n">n in / out</th><th class="n">LLM lift</th><th class="n">p</th><th class="n">Keyword lift</th><th>Verdict</th></tr></thead><tbody>` +

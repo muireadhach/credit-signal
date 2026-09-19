@@ -1,0 +1,4 @@
+model=claude-haiku-4-5 classifying 200 records (skipping 0 already done)
+  100/200  spend $10.88
+  200/200  spend $10.91
+done -> data/processed/classified_cheap.jsonl | errors in file: 107 | total spend $10.91

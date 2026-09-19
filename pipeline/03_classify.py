@@ -8,7 +8,7 @@ import argparse, json, sys
 from pathlib import Path
 from typing import Literal, Optional
 from pydantic import BaseModel, Field
-import yaml
+import yaml, anthropic
 sys.path.insert(0, "pipeline"); import llm
 
 TAX = yaml.safe_load(open("taxonomy/failure_modes.yaml"))
@@ -79,7 +79,7 @@ def main():
     a = ap.parse_args()
     model = {"bulk": llm.BULK, "reference": llm.REFERENCE, "cheap": llm.CHEAP}[a.model]
     out_path = Path(f"data/processed/classified_{a.model}.jsonl")
-    done = {json.loads(l)["id"] for l in open(out_path)} if out_path.exists() else set()
+    done = {r["id"] for r in map(json.loads, open(out_path)) if "error" not in r} if out_path.exists() else set()
 
     records = []
     if a.source in ("public", "both"):
@@ -99,6 +99,9 @@ def main():
             x = llm.call_json(model, system, f"Text:\n\"\"\"\n{r['text']}\n\"\"\"", Extraction, max_tokens=400,
                               purpose=f"classify_{a.model}", effort="low")
             return dict(id=r["id"], source=r["source"], model=model, **x.model_dump())
+        except anthropic.BadRequestError as e:
+            if "credit balance" in str(e): raise SystemExit(f"STOP: API credit balance exhausted ({r['id']})")
+            return dict(id=r["id"], source=r["source"], model=model, error=str(e)[:200])
         except Exception as e:
             return dict(id=r["id"], source=r["source"], model=model, error=str(e)[:200])
     with ThreadPoolExecutor(max_workers=6) as ex, open(out_path, "a") as f:

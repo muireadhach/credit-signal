@@ -1,8 +1,8 @@
 {
  "threshold": 0.6,
- "n_total": 1425,
- "n_queue": 23,
- "share": 0.016,
+ "n_total": 711,
+ "n_queue": 224,
+ "share": 0.315,
  "curve": [
   {
    "threshold": 0.5,
@@ -32,100 +32,100 @@
  ],
  "examples": [
   {
-   "id": "is_AHPGILIP_B00MGCRUI0_1615993189414",
+   "id": "is_AEN7UKKZ_B07S8QJYCZ_1601233593779",
    "source": "public_review",
-   "mode": "Other / unclear",
-   "conf": 0.3,
-   "secondary": null,
-   "text": "Doesn\u2019t do much but if 1stc means something to you then these are worth it.. I did a test of my own in a residential environment and saw almost no STC improvement."
-  },
-  {
-   "id": "is_AEVAWDBI_B073ZNYTRT_1609828008681",
-   "source": "public_review",
-   "mode": "Other / unclear",
-   "conf": 0.3,
-   "secondary": null,
-   "text": "They leak. I filled these bottles with jojoba infused oil and they leak, so I can't give these out as gifts."
-  },
-  {
-   "id": "is_AGCMOXDV_B07FSF4KRF_1552254148420",
-   "source": "public_review",
-   "mode": "Corrosion on arrival",
-   "conf": 0.3,
-   "secondary": null,
-   "text": "Not sure about quality but super silent. I gave it 2 stars because one was cracked on delivery however they are super silent and do push a fair amount of air its the quality thats the downfall. I did have to give them another try because their so silent and ordered another pair so I'll update if I have a better experience with the next ones."
-  },
-  {
-   "id": "is_AGFBLMUO_B00144BANC_1591079392714",
-   "source": "public_review",
-   "mode": "Plating or coating defects",
-   "conf": 0.35,
-   "secondary": "Assembly or mechanism failure on first use",
-   "text": "Leaking hose. Received the item quickly. Was pretty easy to install. However, the spray hose had about 40 pin hole leaks in it right out of the box. Pure junk. Will not purchase again."
-  },
-  {
-   "id": "is_AEHIEMT7_B09TGPRM75_1663975559386",
-   "source": "public_review",
-   "mode": "Other / unclear",
-   "conf": 0.35,
-   "secondary": null,
-   "text": "Disappointed. For the money this was a giant pain to put together. I did not expect to have to put it together, it's not very sturdy, too short, and the part that fits over the door should be a bit longer to hold it on better. Very unimpressed with this, and I would send it back but, I need it at the moment."
-  },
-  {
-   "id": "is_AGQAJYIF_B09MDYF3KB_1664350985858",
-   "source": "public_review",
-   "mode": "Other / unclear",
+   "mode": "Material or hardness nonconformance",
    "conf": 0.4,
-   "secondary": null,
-   "text": "Arrived dirty. The package was opened and containers were dirty. I planned on using these for food but now they are useless!"
+   "secondary": "Other / unclear",
+   "text": "Easy to bend maybe good for dentist nothing else.. Easily bends but very sharp and pointy this would 9nly be useful for delicate things anything else will cause it to bend."
+  },
+  {
+   "id": "is_AEAQZ5JY_B0056LUPJY_1588875547100",
+   "source": "public_review",
+   "mode": "Surface damage from transit",
+   "conf": 0.4,
+   "secondary": "Other / unclear",
+   "text": "Not worth price. Ordered and it's just like any bleach solution nothing special was half leaked out returned just buy bleach"
+  },
+  {
+   "id": "is_AFA6U6GO_B08G1833GN_1646709863521",
+   "source": "public_review",
+   "mode": "Premature failure in service",
+   "conf": 0.4,
+   "secondary": "Other / unclear",
+   "text": "Not a good review. I broke one while l was putting the hose on. I may have broken a second. I do not remember for sure. I do remember I went to Ace Hardware and built a completely different approach to solve what this should have."
+  },
+  {
+   "id": "is_AG7XDHYC_B07BSCXQJD_1542065592891",
+   "source": "public_review",
+   "mode": "Material or hardness nonconformance",
+   "conf": 0.4,
+   "secondary": "Assembly or mechanism failure on first use",
+   "text": "Worst skull ever!. This fox skull was very poor quality. Some of the bones are broken & it wasn't properly cleaned, as there are bits of flesh on it, & the bone is still greasy, & is also a dark yellow-brown color, as opposed to creamy white. It's also missing some teeth. I also don't like that the bottum jaw was glued to the top jaw very poorly. It fell apart on its own. The k-9 teeth weren't pro"
   },
   {
    "id": "is_AGQN6JEC_B072F645SJ_1635248190423",
    "source": "public_review",
-   "mode": "Corrosion on arrival",
+   "mode": "Surface damage from transit",
    "conf": 0.4,
-   "secondary": null,
+   "secondary": "Other / unclear",
    "text": "Dirty. I was afraid of putting into these bottles anything that will go into my eyes\u2026. They arrived in a dirty package. The bottles where not looking clean\u2026."
   },
   {
-   "id": "is_AHZH7YBF_B09MTZMRJR_1669424146860",
+   "id": "is_AGUIE6ZR_B003E48ESO_1592160051396",
+   "source": "public_review",
+   "mode": "Surface damage from transit",
+   "conf": 0.4,
+   "secondary": "Assembly or mechanism failure on first use",
+   "text": "Major letdown. Was pretty pumped to get these in, but opened the envelope to find they were broken. Going to return and buy a name brand not made in Pakistan"
+  },
+  {
+   "id": "is_AGIYXBA7_B073HFCB9S_1504531702509",
+   "source": "public_review",
+   "mode": "Other / unclear",
+   "conf": 0.4,
+   "secondary": "Material or hardness nonconformance",
+   "text": "They are pretty crappy. There is a space between the letters .... They are pretty crappy.There is a space between the letters R &V and it makes it look like a missing letter goes there. There is no way I could use these at a customers site. I guess they would be ok to use at home. The plastic is very thin."
+  },
+  {
+   "id": "is_AEEMDT6U_B0163FJOOI_1528234908685",
    "source": "public_review",
    "mode": "Other / unclear",
    "conf": 0.4,
    "secondary": null,
-   "text": "Not good stuff. First bottle had a broken seal and had leaked, the replacement bottle was sealed but this product is either gone bad or not what it claims to be."
+   "text": "Horribly disappointed. Returned immediately. Only one arrived in tact. Horribly disappointed. Returned immediately."
   },
   {
-   "id": "is_AF3LLMYD_B000LNX0X0_1570667932815",
+   "id": "is_AGNEZSR5_B01ENFON5A_1586195493648",
+   "source": "public_review",
+   "mode": "Other / unclear",
+   "conf": 0.4,
+   "secondary": "Aged or degraded elastomers & consumables",
+   "text": "Don\u2019t buy this. Total crap. The adhesive fell off, the plastic part kept coming off, it scratched the crap out of my neck."
+  },
+  {
+   "id": "is_AEQCVMT3_B01LXW28II_1650490614861",
+   "source": "public_review",
+   "mode": "Material or hardness nonconformance",
+   "conf": 0.4,
+   "secondary": "Other / unclear",
+   "text": "Uses. Lightweight but very flimsy. Horrible suction. Very very disappointing. Short vacuum tubing and not very well-made. All plastic is very weak."
+  },
+  {
+   "id": "is_AHL35FAU_B07KYWVCP6_1665616368010",
+   "source": "public_review",
+   "mode": "Material or hardness nonconformance",
+   "conf": 0.4,
+   "secondary": "Other / unclear",
+   "text": "From 5-stars to 1-star. I've gotten so I would rather not handle raw meat, so I use these nearly every day. The only thing I would mention for improvement is that sometimes when you pull them on, they rip. Then, you need to get another one. This happens when I am being fairly careful putting them on. Still, I would recommend them. The price is right.<br />--------------------------------------<br "
+  },
+  {
+   "id": "is_AGVLWC2Z_B08GS4CNWB_1641431307530",
    "source": "public_review",
    "mode": "Other / unclear",
    "conf": 0.4,
    "secondary": null,
-   "text": "Not dependable. This item did not withstand its reputation. My gutter still leaked"
-  },
-  {
-   "id": "is_AHT3IT7R_B07PYDNQXS_1577978280281",
-   "source": "public_review",
-   "mode": "Other / unclear",
-   "conf": 0.4,
-   "secondary": null,
-   "text": "warping. printed a bird house 2 corners warped added panters tape printed a box same thing warped"
-  },
-  {
-   "id": "is_AH7EWHEN_B0015T0LZO_1472184327000",
-   "source": "public_review",
-   "mode": "Corrosion on arrival",
-   "conf": 0.4,
-   "secondary": "Surface damage from transit",
-   "text": "Melted upon arrival. I went to use these today and realized that all but 4 of them were MELTED. The plastic is all warped and some of them are physically stuck together. Needless to say, they aren't useable. Wouldn't recommend ordering during an Arizona summer..."
-  },
-  {
-   "id": "is_AE7CQW6B_B009EOPTS6_1424213980000",
-   "source": "public_review",
-   "mode": "Other / unclear",
-   "conf": 0.4,
-   "secondary": null,
-   "text": "do not buy!. These are cheap, yes the price is low but they actually all arrived broken in one form or another- don't waste your time."
+   "text": "Breaking. This package I've gone thru quickly, that aren't that great. They fall apart easily."
   }
  ]
 }
