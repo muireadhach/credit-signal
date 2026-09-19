@@ -1,0 +1,28 @@
+# Estimated customer downtime per failure mode, in hours: (low, typical, high) for a
+# triangular distribution. These are an operator's estimates from running a service
+# bureau and production floor -- NOT measured data. A real deployment would replace them
+# with customer survey or telemetry. They are the lever that turns "credit dollars"
+# into "customer impact". Review and adjust freely.
+
+downtime_cost_per_hour_usd: 500   # small-shop line-down assumption; memo shows sensitivity at 250 / 500 / 1500
+
+downtime_hours:
+  thread_damage:            [0.5,  2,  6]
+  out_of_tolerance:         [1,    4, 16]
+  thread_mismatch:          [0.5,  2,  8]
+  burrs_finish:             [0.25, 1,  4]
+  out_of_true:              [2,    8, 24]
+  material_nonconformance:  [4,   16, 72]
+  plating_coating:          [0.25, 1,  4]
+  corrosion_on_arrival:     [0.5,  2,  8]
+  transit_surface_damage:   [1,    4, 16]
+  aged_consumables:         [1,    4, 24]
+  wrong_part:               [4,   12, 48]
+  short_count:              [2,    8, 24]
+  bent_long_stock:          [8,   24, 72]
+  doa_mechanism:            [2,    8, 24]
+  premature_failure:        [8,   24, 96]
+  other_unclear:            [0,    1,  4]
+
+# Modes that carry a safety dimension beyond downtime (flagged, not priced).
+safety_flag: [premature_failure, material_nonconformance, burrs_finish]
