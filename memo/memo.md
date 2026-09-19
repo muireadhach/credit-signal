@@ -1,7 +1,7 @@
 # Credit Signal — decision memo
 
 **Subject:** Finding the root causes behind customer credits with a language model, and what it would take to run it for real
-**Prepared by:** [Name] · September 2026
+**Prepared by:** Muireadhach Currie · September 2026
 **Status:** Portfolio prototype on public and disclosed synthetic data. Not McMaster-Carr data.
 
 ---

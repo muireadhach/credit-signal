@@ -185,12 +185,32 @@ errs = [c for c in syn_cls if c["failure_mode"] != frame[c["id"]]["true_mode"]]
 acc["error_examples"] = [dict(text=frame[c["id"]]["note"][:400], truth=NAME[frame[c["id"]]["true_mode"]], predicted=NAME[c["failure_mode"]], conf=c["confidence"], evidence=c["evidence"])
                          for c in sorted(errs, key=lambda c: -c["confidence"])[:10]]
 gold = load("data/gold/gold_labels.jsonl")
+cheap = {r["id"]: r for r in load("data/processed/classified_cheap.jsonl") if "error" not in r}
 if gold:
     g = {r["id"]: r["label"] for r in gold}
-    for tag, cm in (("bulk", bulk), ("reference", ref)):
-        pairs = [(g[i], cm[i]["failure_mode"]) for i in g if i in cm]
-        if pairs: acc[f"gold_{tag}"] = dict(n=len(pairs), accuracy=round(sum(t == p for t, p in pairs) / len(pairs), 3),
-                                            public_n=sum(i in public for i in g if i in cm))
+    gnote = {r["id"]: (r.get("note") or "") for r in gold}
+    import re as _re
+    hconf = {i: (_re.match(r"\[(high|medium|low)\]", n.strip()) or [None, None])[1] for i, n in gnote.items()}
+    acc["gold"] = dict(n=len(g), public_n=sum(i in public for i in g), synthetic_n=sum(i in frame for i in g))
+    # does the human agree with the synthetic ground truth? (checks the generator, not the model)
+    hs = [(g[i], frame[i]["true_mode"]) for i in g if i in frame]
+    acc["gold"]["human_vs_synthetic_truth"] = dict(n=len(hs), agree=sum(a == b for a, b in hs))
+    for tag, cm in (("bulk", bulk), ("reference", ref), ("cheap", cheap)):
+        ids = [i for i in g if i in cm]
+        if not ids: continue
+        def A(sub): return round(sum(g[i] == cm[i]["failure_mode"] for i in sub) / len(sub), 3) if sub else None
+        pub_ids = [i for i in ids if i in public]; syn_ids_g = [i for i in ids if i in frame]
+        r = dict(n=len(ids), accuracy=A(ids), public_n=len(pub_ids), public_accuracy=A(pub_ids), synthetic_n=len(syn_ids_g), synthetic_accuracy=A(syn_ids_g))
+        # precision-by-confidence on REAL reviews: does the threshold still work where the language is messy?
+        r["public_curve"] = []
+        for t in (0.5, 0.6, 0.7, 0.8, 0.9):
+            auto = [i for i in pub_ids if cm[i]["confidence"] >= t]
+            r["public_curve"].append(dict(threshold=t, coverage=round(len(auto) / len(pub_ids), 3), precision=A(auto)))
+        # agreement by how sure the human was
+        r["by_human_confidence"] = {h: dict(n=len(sub), accuracy=A(sub)) for h in ("high", "medium", "low") if (sub := [i for i in ids if hconf.get(i) == h])}
+        r["top_disagreements"] = [dict(human=NAME[a], model=NAME[b], n=n) for (a, b), n in Counter((g[i], cm[i]["failure_mode"]) for i in pub_ids if g[i] != cm[i]["failure_mode"]).most_common(6)]
+        r["examples"] = [dict(text=public[i]["text"][:300], human=NAME[g[i]], model=NAME[cm[i]["failure_mode"]], conf=cm[i]["confidence"], note=gnote[i][:160]) for i in pub_ids if g[i] != cm[i]["failure_mode"]][:6]
+        acc[f"gold_{tag}"] = r
 dump("accuracy", acc)
 
 # ---------- 6. unit economics ----------

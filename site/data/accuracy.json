@@ -1526,5 +1526,389 @@
    "conf": 0.75,
    "evidence": "the ends are burred and out of round badly enough that a nut won't start without chasing every one of them"
   }
- ]
+ ],
+ "gold": {
+  "n": 200,
+  "public_n": 150,
+  "synthetic_n": 50,
+  "human_vs_synthetic_truth": {
+   "n": 50,
+   "agree": 49
+  }
+ },
+ "gold_bulk": {
+  "n": 200,
+  "accuracy": 0.72,
+  "public_n": 150,
+  "public_accuracy": 0.64,
+  "synthetic_n": 50,
+  "synthetic_accuracy": 0.96,
+  "public_curve": [
+   {
+    "threshold": 0.5,
+    "coverage": 0.96,
+    "precision": 0.667
+   },
+   {
+    "threshold": 0.6,
+    "coverage": 0.58,
+    "precision": 0.747
+   },
+   {
+    "threshold": 0.7,
+    "coverage": 0.373,
+    "precision": 0.821
+   },
+   {
+    "threshold": 0.8,
+    "coverage": 0.1,
+    "precision": 1.0
+   },
+   {
+    "threshold": 0.9,
+    "coverage": 0.02,
+    "precision": 1.0
+   }
+  ],
+  "by_human_confidence": {
+   "high": {
+    "n": 92,
+    "accuracy": 0.967
+   },
+   "medium": {
+    "n": 77,
+    "accuracy": 0.545
+   },
+   "low": {
+    "n": 31,
+    "accuracy": 0.419
+   }
+  },
+  "top_disagreements": [
+   {
+    "human": "Other / unclear",
+    "model": "Material or hardness nonconformance",
+    "n": 9
+   },
+   {
+    "human": "Premature failure in service",
+    "model": "Material or hardness nonconformance",
+    "n": 8
+   },
+   {
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Material or hardness nonconformance",
+    "n": 6
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Assembly or mechanism failure on first use",
+    "n": 5
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Premature failure in service",
+    "n": 4
+   },
+   {
+    "human": "Out-of-tolerance dimensions",
+    "model": "Material or hardness nonconformance",
+    "n": 3
+   }
+  ],
+  "examples": [
+   {
+    "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.55,
+    "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
+   },
+   {
+    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake.<br /><br />I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time wh",
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Premature failure in service",
+    "conf": 0.6,
+    "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
+   },
+   {
+    "text": "Poor Quality. Horrible Packaging.. This is my second time purchasing these masks. The first time I purchased them, they arrived neatly packaged in a sealed box and I was impressed with the quality. Six months or so later, I did not hesitate ordering another box. What I received was NOTHING like my f",
+    "human": "Material or hardness nonconformance",
+    "model": "Surface damage from transit",
+    "conf": 0.45,
+    "note": "[low] Second order differs from first; 'no way these are 3 layers' is a claim the material does not meet spec. Crumpled packaging is secondary. Could equally be"
+   },
+   {
+    "text": "Flimsy. Most of them bent when installing and were not usable. Flimsy nail shaft so pressure bends them easily. Very disappointed I bought two boxes of these",
+    "human": "Premature failure in service",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.6,
+    "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
+   },
+   {
+    "text": "Total garbage-very thin. Total garbage.<br /><br />Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if ",
+    "human": "Other / unclear",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.55,
+    "note": "[medium] NOT LISTED: product grade too light (foil tape 'thin as foil') plus liner will not release. No stated spec violated so not out_of_tolerance/material; n"
+   },
+   {
+    "text": "Inconsistent Quality. Ordered two. One was perfect, finished well, accurate jaw alignment. The other was junk, clearly a different manufacturer, despite identical bagging. Poor finish, weak clamp, misaligned jaws. It's why I ordered two, I figured one would be good.",
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.55,
+    "note": "[low] Three defects listed equally (poor finish, weak clamp, misaligned jaws). Two of three are functional, so DOA assembly. Alt: burrs_finish or out_of_true. A"
+   }
+  ]
+ },
+ "gold_reference": {
+  "n": 200,
+  "accuracy": 0.79,
+  "public_n": 150,
+  "public_accuracy": 0.72,
+  "synthetic_n": 50,
+  "synthetic_accuracy": 1.0,
+  "public_curve": [
+   {
+    "threshold": 0.5,
+    "coverage": 0.94,
+    "precision": 0.745
+   },
+   {
+    "threshold": 0.6,
+    "coverage": 0.587,
+    "precision": 0.83
+   },
+   {
+    "threshold": 0.7,
+    "coverage": 0.393,
+    "precision": 0.898
+   },
+   {
+    "threshold": 0.8,
+    "coverage": 0.193,
+    "precision": 1.0
+   },
+   {
+    "threshold": 0.9,
+    "coverage": 0.027,
+    "precision": 1.0
+   }
+  ],
+  "by_human_confidence": {
+   "high": {
+    "n": 92,
+    "accuracy": 1.0
+   },
+   "medium": {
+    "n": 77,
+    "accuracy": 0.675
+   },
+   "low": {
+    "n": 31,
+    "accuracy": 0.452
+   }
+  },
+  "top_disagreements": [
+   {
+    "human": "Premature failure in service",
+    "model": "Other / unclear",
+    "n": 6
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Assembly or mechanism failure on first use",
+    "n": 6
+   },
+   {
+    "human": "Premature failure in service",
+    "model": "Material or hardness nonconformance",
+    "n": 5
+   },
+   {
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Other / unclear",
+    "n": 4
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Material or hardness nonconformance",
+    "n": 3
+   },
+   {
+    "human": "Out-of-tolerance dimensions",
+    "model": "Other / unclear",
+    "n": 3
+   }
+  ],
+  "examples": [
+   {
+    "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Premature failure in service",
+    "conf": 0.72,
+    "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
+   },
+   {
+    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake.<br /><br />I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time wh",
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Other / unclear",
+    "conf": 0.5,
+    "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
+   },
+   {
+    "text": "Poor Quality. Horrible Packaging.. This is my second time purchasing these masks. The first time I purchased them, they arrived neatly packaged in a sealed box and I was impressed with the quality. Six months or so later, I did not hesitate ordering another box. What I received was NOTHING like my f",
+    "human": "Material or hardness nonconformance",
+    "model": "Surface damage from transit",
+    "conf": 0.45,
+    "note": "[low] Second order differs from first; 'no way these are 3 layers' is a claim the material does not meet spec. Crumpled packaging is secondary. Could equally be"
+   },
+   {
+    "text": "Flimsy. Most of them bent when installing and were not usable. Flimsy nail shaft so pressure bends them easily. Very disappointed I bought two boxes of these",
+    "human": "Premature failure in service",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.62,
+    "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
+   },
+   {
+    "text": "Total garbage-very thin. Total garbage.<br /><br />Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if ",
+    "human": "Other / unclear",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.55,
+    "note": "[medium] NOT LISTED: product grade too light (foil tape 'thin as foil') plus liner will not release. No stated spec violated so not out_of_tolerance/material; n"
+   },
+   {
+    "text": "Inconsistent Quality. Ordered two. One was perfect, finished well, accurate jaw alignment. The other was junk, clearly a different manufacturer, despite identical bagging. Poor finish, weak clamp, misaligned jaws. It's why I ordered two, I figured one would be good.",
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Other / unclear",
+    "conf": 0.45,
+    "note": "[low] Three defects listed equally (poor finish, weak clamp, misaligned jaws). Two of three are functional, so DOA assembly. Alt: burrs_finish or out_of_true. A"
+   }
+  ]
+ },
+ "gold_cheap": {
+  "n": 200,
+  "accuracy": 0.675,
+  "public_n": 150,
+  "public_accuracy": 0.573,
+  "synthetic_n": 50,
+  "synthetic_accuracy": 0.98,
+  "public_curve": [
+   {
+    "threshold": 0.5,
+    "coverage": 0.893,
+    "precision": 0.604
+   },
+   {
+    "threshold": 0.6,
+    "coverage": 0.827,
+    "precision": 0.613
+   },
+   {
+    "threshold": 0.7,
+    "coverage": 0.707,
+    "precision": 0.66
+   },
+   {
+    "threshold": 0.8,
+    "coverage": 0.34,
+    "precision": 0.745
+   },
+   {
+    "threshold": 0.9,
+    "coverage": 0.04,
+    "precision": 1.0
+   }
+  ],
+  "by_human_confidence": {
+   "high": {
+    "n": 92,
+    "accuracy": 0.913
+   },
+   "medium": {
+    "n": 77,
+    "accuracy": 0.545
+   },
+   "low": {
+    "n": 31,
+    "accuracy": 0.29
+   }
+  },
+  "top_disagreements": [
+   {
+    "human": "Premature failure in service",
+    "model": "Other / unclear",
+    "n": 14
+   },
+   {
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Other / unclear",
+    "n": 9
+   },
+   {
+    "human": "Out-of-tolerance dimensions",
+    "model": "Other / unclear",
+    "n": 8
+   },
+   {
+    "human": "Premature failure in service",
+    "model": "Material or hardness nonconformance",
+    "n": 6
+   },
+   {
+    "human": "Aged or degraded elastomers & consumables",
+    "model": "Other / unclear",
+    "n": 5
+   },
+   {
+    "human": "Premature failure in service",
+    "model": "Assembly or mechanism failure on first use",
+    "n": 3
+   }
+  ],
+  "examples": [
+   {
+    "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Premature failure in service",
+    "conf": 0.72,
+    "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
+   },
+   {
+    "text": "Utter frustration.. The plastic hose is hard as a rock and twists where it pleases. The whole thing tips over unless you hold it. The dust bin doesnt collect much, it all ends up on the filter. Lucky if you can use for a few minutes before having to wash filter. The cord is way to short, no extender",
+    "human": "Other / unclear",
+    "model": "Aged or degraded elastomers & consumables",
+    "conf": 0.62,
+    "note": "[high] NOT LISTED: design/ergonomics dissatisfaction (stiff hose, tips over, short cord, filter clogs). Nothing is broken or nonconforming, so no defect mode ap"
+   },
+   {
+    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake.<br /><br />I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time wh",
+    "human": "Assembly or mechanism failure on first use",
+    "model": "Other / unclear",
+    "conf": 0.75,
+    "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
+   },
+   {
+    "text": "To hard to get out of tube. Almost broke my caulk gun trying to get it out of the tube. I gave up and threw it away.",
+    "human": "Aged or degraded elastomers & consumables",
+    "model": "Other / unclear",
+    "conf": 0.5,
+    "note": "[medium] Caulk too stiff to gun out is the classic partially-cured/old tube symptom, but customer gives no date evidence. Alt: high-viscosity formulation."
+   },
+   {
+    "text": "Not accurately depicted in photo. The 4 inch bolt is not full thread.. This is a 4 inch long stainless 1/4-20 socket cap bolt. It has one inch of thread, not full thread as depicted of the picture (which is clearly not of a 4 inch bolt). I returned this as I was looking for full thread.",
+    "human": "Other / unclear",
+    "model": "Out-of-tolerance dimensions",
+    "conf": 0.72,
+    "note": "[high] NOT LISTED: listing image error (photo shows full thread, 4in SKU is partial thread). Not wrong_part: he received the titled item, no mispick. Not out_of"
+   },
+   {
+    "text": "Not true gaffer's tape. Leaves moderate adhesive reside and won't tear cleanly.. This tape isn't true gaffers tape. It's a textured plastic sheet that won't tear cleanly and the adhesive leaves quite a bit of residue.<br /><br />It'll work for what I'm using it for, but if you need quality gaffer's ",
+    "human": "Material or hardness nonconformance",
+    "model": "Other / unclear",
+    "conf": 0.85,
+    "note": "[medium] 'Not true gaffer's tape... textured plastic sheet' = product is not the material it claims to be. Closest analogue to 'magnet sticks to my stainless'. "
+   }
+  ]
+ }
 }
