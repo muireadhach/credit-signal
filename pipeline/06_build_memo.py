@@ -18,7 +18,7 @@ html = f"""<!doctype html>
 .memo blockquote{{border-left:3px solid var(--rule-strong);margin:0;padding:4px 14px;color:var(--ink-2)}}
 .memo strong{{font-weight:600}}
 </style></head><body>
-<header class="top"><div class="wrap"><a class="brand" href="index.html">← Credit Signal</a><span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + disclosed synthetic credits.</span></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="./">← Credit Signal</a><span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + disclosed synthetic credits.</span></div></header>
 <main><div class="memo">{body}</div></main>
 </body></html>"""
 open("site/memo.html", "w").write(html); print("site/memo.html written")
