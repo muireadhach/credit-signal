@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Credit Signal — Decision memo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f4f6f3; --panel:#ffffff; --panel-2:#eef1ec; --rule:#d9ded6; --rule-strong:#b9c1b5;
+  --ink:#151815; --ink-2:#555b55; --ink-3:#7c837b;
+  --accent:#1c5cab; --accent-ink:#ffffff;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  --seq-2:#9ec5f4; --seq-5:#256abf;
+  --display:"IBM Plex Sans Condensed",system-ui,"Segoe UI",sans-serif; --body:"IBM Plex Sans",system-ui,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#171817; --panel:#202220; --panel-2:#2a2d2a; --rule:#353935; --rule-strong:#4b514b;
+  --ink:#f1f2ee; --ink-2:#c3c6bf; --ink-3:#8d928b; --accent:#6da7ec; --accent-ink:#0f1a2a;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+  --seq-2:#1c5cab; --seq-5:#6da7ec; }}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#171817; --panel:#202220; --panel-2:#2a2d2a; --rule:#353935; --rule-strong:#4b514b;
+  --ink:#f1f2ee; --ink-2:#c3c6bf; --ink-3:#8d928b; --accent:#6da7ec; --accent-ink:#0f1a2a;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+  --seq-2:#1c5cab; --seq-5:#6da7ec; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+header.top .wrap{display:flex;align-items:center;gap:18px;min-height:52px;flex-wrap:wrap;padding-block:6px}
+.brand{font:600 20px/1 var(--display);letter-spacing:.01em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:10px}
+.brand .mark{width:22px;height:22px;display:inline-block}
+nav.sections{display:flex;gap:2px 14px;flex-wrap:wrap;font-size:13px;margin-left:auto}
+nav.sections a{color:var(--ink-2);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
+nav.sections a:hover{color:var(--ink);border-color:var(--rule-strong)}
+.disclose{font:500 12px/1.3 var(--mono);color:var(--ink-2);background:var(--panel-2);border:1px solid var(--rule);border-radius:4px;padding:5px 9px;letter-spacing:.01em}
+.disclose b{color:var(--critical);font-weight:500}
+main .wrap{padding-block:34px 60px;display:grid;gap:44px}
+section{scroll-margin-top:70px}
+h1{font:600 clamp(30px,5vw,44px)/1.08 var(--display);margin:0 0 12px;text-wrap:balance;letter-spacing:-.005em}
+h2{font:600 26px/1.15 var(--display);margin:0 0 6px;text-wrap:balance}
+h3{font:600 17px/1.3 var(--body);margin:0 0 6px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px}
+.lede{font-size:18px;line-height:1.5;max-width:62ch;color:var(--ink-2);margin:0}
+p{max-width:68ch}
+.muted{color:var(--ink-2)}
+.small{font-size:13px}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:22px}
+.tile{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;display:grid;gap:4px;align-content:start}
+.tile .k{font:500 12px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.tile .v{font:600 34px/1.05 var(--display);font-variant-numeric:tabular-nums;color:var(--ink)}
+.tile .v small{font:500 15px/1 var(--body);color:var(--ink-2);margin-left:4px}
+.tile .d{font-size:13px;color:var(--ink-2)}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:18px 20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+.toggle{display:inline-flex;border:1px solid var(--rule-strong);border-radius:5px;overflow:hidden;font-size:13px}
+.toggle button{background:var(--panel);color:var(--ink-2);border:0;padding:6px 12px;cursor:pointer;font:inherit}
+.toggle button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0 14px}
+svg.chart{width:100%;height:auto;display:block;font-family:var(--body)}
+svg.chart text{fill:var(--ink-2);font-size:12px}
+svg.chart .lbl{fill:var(--ink);font-size:13px}
+svg.chart .val{fill:var(--ink);font-size:12px;font-family:var(--mono)}
+svg.chart .grid{stroke:var(--rule);stroke-width:1}
+svg.chart .axis{stroke:var(--rule-strong);stroke-width:1}
+svg.chart .bar{fill:var(--s1)}
+svg.chart .bar.dim{fill:var(--seq-2)}
+svg.chart .bar.kw{fill:var(--ink-3)}
+svg.chart .line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+svg.chart .dot{stroke:var(--panel);stroke-width:2}
+svg.chart .marker{stroke:var(--s2);stroke-dasharray:3 3;stroke-width:1.5}
+svg.chart .hit{fill:transparent}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:6px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font:12px/1.35 var(--body);padding:6px 9px;border-radius:4px;max-width:260px;z-index:20;opacity:0;transition:opacity .08s}
+.tip b{font-family:var(--mono);font-weight:500}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:500 12px/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+td.n{font-family:var(--mono);font-size:13px}
+.tablewrap{overflow-x:auto}
+.chip{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.04em;padding:4px 7px;border-radius:3px;border:1px solid var(--rule-strong);color:var(--ink-2);vertical-align:middle}
+.chip.safety{border-color:var(--critical);color:var(--critical)}
+.chip.sig{border-color:var(--good);color:var(--good)}
+.chip.ns{border-color:var(--rule-strong);color:var(--ink-3)}
+.chip.up{border-color:var(--s2);color:var(--s2)}
+.quote{border-left:3px solid var(--rule-strong);padding:6px 12px;margin:8px 0;color:var(--ink-2);font-size:14px}
+.quote mark{background:color-mix(in srgb,var(--s4) 30%,transparent);color:inherit;padding:0 2px;border-radius:2px}
+.quote .who{display:block;font:500 11px/1.4 var(--mono);color:var(--ink-3);margin-top:3px;letter-spacing:.03em}
+details{border-top:1px solid var(--rule);padding:8px 0}
+details summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";font-family:var(--mono);color:var(--ink-3)}
+details[open] summary::after{content:"–"}
+.modes{display:grid;gap:0}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;counter-reset:s}
+.step{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:14px;position:relative}
+.step h3{font:600 15px/1.3 var(--body);margin:0 0 4px}
+.step p{font-size:13px;color:var(--ink-2);margin:0}
+.step .io{font:500 11px/1.3 var(--mono);color:var(--ink-3);letter-spacing:.03em;margin-bottom:8px}
+.callout{border:1px solid var(--rule-strong);border-left:4px solid var(--accent);border-radius:6px;padding:14px 18px;background:var(--panel)}
+.callout p{margin:0}
+.limits li{margin-bottom:6px}
+footer{border-top:1px solid var(--rule);padding-block:26px 40px;color:var(--ink-2);font-size:13px}
+footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
+.conf{display:inline-block;width:54px;height:6px;background:var(--panel-2);border-radius:3px;vertical-align:middle;margin-right:6px;overflow:hidden}
+.conf i{display:block;height:100%;background:var(--s1)}
+.hm{display:grid;gap:2px;font-size:10px}
+.loading{color:var(--ink-3);font-family:var(--mono);font-size:13px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+.memo{max-width:760px;margin:0 auto;padding:36px 20px 80px}
+.memo h1{font-size:clamp(28px,4.5vw,38px);margin-bottom:18px}
+.memo h2{margin-top:38px;font-size:23px}.memo h3{margin-top:22px}
+.memo p,.memo li{max-width:70ch;font-size:15.5px}
+.memo table{margin:12px 0 18px;display:block;overflow-x:auto;white-space:nowrap}
+.memo td,.memo th{white-space:normal;min-width:90px}
+.memo hr{border:0;border-top:1px solid var(--rule);margin:22px 0}
+.memo blockquote{border-left:3px solid var(--rule-strong);margin:0;padding:4px 14px;color:var(--ink-2)}
+.memo strong{font-weight:600}
+</style></head><body>
+<header class="top"><div class="wrap"><a class="brand" href="index.html">← Credit Signal</a><span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + disclosed synthetic credits.</span></div></header>
+<main><div class="memo"><h1>Credit Signal — decision memo</h1>
+<p><strong>Subject:</strong> Finding the root causes behind customer credits with a language model, and what it would take to run it for real
+<strong>Prepared by:</strong> [Name] · September 2026
+<strong>Status:</strong> Portfolio prototype on public and disclosed synthetic data. Not McMaster-Carr data.</p>
+<hr />
+<h2>1. Summary</h2>
+<p>Customer credits are a symptom log. Each one carries a coarse reason code and a sentence of free text that says what actually happened. At volume, nobody reads the sentence, so the same failure gets credited repeatedly instead of fixed once.</p>
+<p>I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 15-item taxonomy written from shop experience, joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in <strong>downtime</strong> rather than what was refunded. Low-confidence results go to a person.</p>
+<p>Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 256 failure-mode × metadata cells ranked the primary seeded pattern <strong>#1</strong>, at <strong>3.6× lift</strong> (p &lt; 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Accuracy against synthetic ground truth: <strong>94.3%</strong> on the bulk model, <strong>96.4%</strong> on the reference model; against my own hand labels on 200 records: <strong>▢%</strong> (labeling in progress). Cost: <strong>$2.06 per thousand records</strong> on the bulk model.</p>
+<p><strong>Recommendation if this were real:</strong> a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.</p>
+<h2>2. The problem, from the customer's side</h2>
+<p>A $40 credit on a damaged shaft collar is a rounding error on the P&amp;L. The four hours a line sat idle waiting for the reship is not — and it is what the customer remembers. Running a service bureau, I placed those orders and took those deliveries. The credit never captured the cost.</p>
+<p>Reason codes ("damaged", "wrong item") cannot distinguish a packaging spec that chews threads from a carrier lane that dents boxes from a warehouse that ships aged o-rings. The distinction lives in the note. That is the gap this closes.</p>
+<h2>3. What was built</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What happens</th>
+<th>Model?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Collect</td>
+<td>The customer's own words from the credit request, email, or review. PII redacted before anything reaches a model.</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Extract</td>
+<td>One of 15 failure modes, a calibrated confidence, a verbatim evidence quote, and where in the chain it likely originated. Structured output, validated on every record.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Join</td>
+<td>Product class, packaging spec, carrier, origin DC, date, credit amount from the order system.</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Rank &amp; test</td>
+<td>Count, dollars, expected downtime. Lift and significance for every metadata cut. Trend by month.</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Route</td>
+<td>Confident results file automatically; uncertain ones go to a reviewer whose labels feed the next accuracy check.</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>The taxonomy (thread damage, out-of-tolerance, wrong part in the right bag, short count, bent long stock, aged elastomers, corrosion on arrival, …) is mine, from years of receiving parts. It is in <code>taxonomy/failure_modes.yaml</code> with the phrasings customers actually use.</p>
+<h2>4. Data, and what it can and cannot prove</h2>
+<p><strong>Real:</strong> 2,000 one- and two-star reviews of industrial products from a public academic dataset (Amazon Reviews 2023, Industrial &amp; Scientific, UCSD). Genuine language; no credit amounts, carriers, or warehouses.</p>
+<p><strong>Synthetic:</strong> 1,500 credit records with product class, packaging spec, carrier, origin DC, date, and credit amount, mimicking the structure a distributor holds. Notes written by a model that saw only the failure mode and product class. Two patterns seeded deliberately:</p>
+<ul>
+<li><strong>Seed A.</strong> Fasteners in bulk poly bags (PB-2) after a May spec change: thread damage at ~4× the base rate. Mechanism: large fasteners loose in a bulk bag chew each other's threads in transit.</li>
+<li><strong>Seed B.</strong> Elastomers and consumables from DC-4: aged-stock failures at ~3×. Mechanism: stock rotation.</li>
+</ul>
+<p>A third cut (Carrier-C transit damage) was given only a weak nudge, to see whether the method would correctly report "not significant."</p>
+<p><strong>What this proves:</strong> the method recovers a known signal from language alone. <strong>What it does not prove:</strong> what any real credit dataset contains. The synthetic layer is labeled as synthetic everywhere it appears.</p>
+<h2>5. Findings</h2>
+<h3>5.1 Ranking by refund and ranking by customer impact disagree</h3>
+<table>
+<thead>
+<tr>
+<th>Failure mode</th>
+<th>Credits</th>
+<th>Refunded</th>
+<th>Rank by refund</th>
+<th>Rank by impact</th>
+<th>Est. customer impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Premature failure in service</td>
+<td>118</td>
+<td>$13,545</td>
+<td>#3</td>
+<td><strong>#1</strong></td>
+<td>$710k</td>
+</tr>
+<tr>
+<td>Wrong part in the right bag</td>
+<td>171</td>
+<td>$16,015</td>
+<td>#2</td>
+<td>#2</td>
+<td>$484k</td>
+</tr>
+<tr>
+<td>Material or hardness nonconformance</td>
+<td>102</td>
+<td>$11,795</td>
+<td>#6</td>
+<td><strong>#3</strong></td>
+<td>$444k</td>
+</tr>
+<tr>
+<td>Short count or missing components</td>
+<td>153</td>
+<td>$11,945</td>
+<td>#5</td>
+<td>#4</td>
+<td>$309k</td>
+</tr>
+<tr>
+<td>Assembly or mechanism failure on first use</td>
+<td>153</td>
+<td>$16,944</td>
+<td><strong>#1</strong></td>
+<td>#5</td>
+<td>$308k</td>
+</tr>
+<tr>
+<td>Bent or crushed long stock</td>
+<td>35</td>
+<td>$9,343</td>
+<td>#10</td>
+<td><strong>#6</strong></td>
+<td>$168k</td>
+</tr>
+<tr>
+<td>Aged or degraded elastomers &amp; consumables</td>
+<td>126</td>
+<td>$5,138</td>
+<td>#13</td>
+<td><strong>#7</strong></td>
+<td>$127k</td>
+</tr>
+<tr>
+<td>Out of straight, flat, or round</td>
+<td>57</td>
+<td>$9,603</td>
+<td>#9</td>
+<td>#8</td>
+<td>$112k</td>
+</tr>
+</tbody>
+</table>
+<p>Across 1,500 credits: $156k refunded, roughly $3.0M in estimated customer downtime at $500/hour. The ratio is the assumption to test first — but even at $250/hour the order above holds.</p>
+<p>Downtime hours per mode are my estimate (<code>impact_weights.yaml</code>), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: wrong part in the bag, bent long stock, material nonconformance.</p>
+<h3>5.2 The pattern keyword search misses</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Lift</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seeded (hidden ground truth)</td>
+<td>4.1×</td>
+<td>—</td>
+</tr>
+<tr>
+<td>LLM extraction</td>
+<td><strong>3.6×</strong></td>
+<td>&lt; 0.00001</td>
+</tr>
+<tr>
+<td>Generic search ("damaged", "broke", "bent", "dent", "defect")</td>
+<td>no signal</td>
+<td>0.76</td>
+</tr>
+<tr>
+<td>Regex tuned to thread damage, written after you suspect it</td>
+<td>4.5×</td>
+<td>&lt; 0.00001</td>
+</tr>
+</tbody>
+</table>
+<p>The trend chart in the demo shows the step in May. Two things worth saying plainly. First, generic damage words appear in under 1% of these notes — customers describe symptoms ("wouldn't start the nut"), not categories. Second, a regex written <em>after</em> you know what to look for works fine; that is not a weakness of regex, it is the definition of the problem. The model checks all 15 modes at once with no hypothesis, and the blind scan below is the real test.</p>
+<p>"Damaged" matches dents, corrosion, kinked tube, and thread damage alike; the specific signal is diluted. <strong>The blind scan.</strong> Every failure mode × every packaging spec, carrier, and warehouse, within each product class: 256 cells, ranked by significance, with no one telling the scan where the seeds were. The seeded PB-2 cell ranked #1. After Bonferroni correction (p &lt; 0.0002), it was the <em>only</em> survivor — seven other cells looked interesting at p &lt; 0.01 and would have been chased on a smaller dataset. Stratifying by product class matters: without it, packaging just proxies product (long stock ships in crates; crates "cause" bent tube).</p>
+<p><strong>Seed B</strong> was seeded too weakly to matter (ground truth 1.5×) and the method correctly does not claim it: 1.3×, p = 0.07, rank 32 of 256. <strong>Carrier-C</strong> was given only a nudge (1.2×) and comes back 1.2×, p = 0.24 — not significant, which is the right answer. A method that only ever says "yes" is not a method.</p>
+<h3>5.3 Coverage vs. precision</h3>
+<table>
+<thead>
+<tr>
+<th>Confidence threshold</th>
+<th>Auto-filed (coverage)</th>
+<th>Precision of auto-filed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≥ 0.5</td>
+<td>98%</td>
+<td>94.6%</td>
+</tr>
+<tr>
+<td>≥ 0.6</td>
+<td>94%</td>
+<td>96.4%</td>
+</tr>
+<tr>
+<td>≥ 0.7</td>
+<td>91%</td>
+<td>97.5%</td>
+</tr>
+<tr>
+<td>≥ 0.8</td>
+<td>80%</td>
+<td>99.5%</td>
+</tr>
+<tr>
+<td>≥ 0.9</td>
+<td>44%</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<p>At 0.8, four in five records file automatically and 199 of every 200 are right; the fifth goes to a person. On the real reviews — messier than the synthetic notes — about one in five falls below 0.6. The reviewer sees the model's evidence quote and a suggested mode, which makes a review take seconds rather than a full read.</p>
+<h3>5.4 Accuracy, three ways</h3>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>n</th>
+<th>Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bulk model (Sonnet 5) vs. synthetic ground truth</td>
+<td>1,500</td>
+<td>94.3% (macro-F1 0.95)</td>
+</tr>
+<tr>
+<td>Reference model (Opus 5) vs. synthetic ground truth</td>
+<td>550</td>
+<td>96.4% (macro-F1 0.97)</td>
+</tr>
+<tr>
+<td>Bulk model on the same 550</td>
+<td>550</td>
+<td>94.2% — agreement with reference 96.7%</td>
+</tr>
+<tr>
+<td>Bulk model vs. human gold set (150 real reviews + 50 synthetic)</td>
+<td>200</td>
+<td>▢% (in progress)</td>
+</tr>
+<tr>
+<td>Haiku 4.5 vs. human gold set</td>
+<td>200</td>
+<td>▢% (in progress)</td>
+</tr>
+</tbody>
+</table>
+<p>Top confusions: premature failure → material nonconformance (19 — "snapped at half the rated torque" is both); other/unclear → aged elastomers (13); other/unclear → material nonconformance (12); mechanism failure on first use → aged elastomers (8). These are neighbors an experienced reviewer would also debate (corrosion on arrival vs. plating failure; wrong part vs. thread mismatch).</p>
+<h3>5.5 Cost</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Per 1,000 records</th>
+<th>50,000 credits/month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bulk (Sonnet 5)</td>
+<td>$2.06</td>
+<td>$103</td>
+</tr>
+<tr>
+<td>Reference (Opus 5)</td>
+<td>$5.58</td>
+<td>$279</td>
+</tr>
+<tr>
+<td>Haiku 4.5 (uncached)</td>
+<td>$2.37</td>
+<td>$119</td>
+</tr>
+</tbody>
+</table>
+<p>Whole project: $20.47, including a $3 run I threw away. One lesson worth the price: the cheapest model per token (Haiku 4.5) will not cache a prompt under 4,096 tokens, so it cost <em>more per record</em> than Sonnet with caching. Cheaper per token is not cheaper per record.</p>
+<h2>6. What I would do with the top three causes</h2>
+<p><em>Illustrative, based on the synthetic findings — the shape of the action matters more than the specifics.</em></p>
+<table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Owner</th>
+<th>Fix</th>
+<th>Metric that says it worked</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thread damage · bulk-bag fasteners · post-May</td>
+<td>Packaging engineering</td>
+<td>Revert PB-2 for fastener SKUs above a size threshold, or add a divider. Test on the top 20 SKUs by credit count.</td>
+<td>Thread-damage credits on those SKUs, next 8 weeks, vs. the 8 before</td>
+</tr>
+<tr>
+<td>Aged elastomers · DC-4</td>
+<td>DC operations + inventory</td>
+<td>FIFO audit on elastomer bins; date-code check at pick.</td>
+<td>Aged-consumable credits from DC-4 vs. other DCs</td>
+</tr>
+<tr>
+<td>Wrong part in the right bag</td>
+<td>Fulfillment QA</td>
+<td>Trace to the bagging line or supplier lot; add a scan-verify at bagging for the top 50 SKUs.</td>
+<td>Wrong-part credits per 10k lines shipped</td>
+</tr>
+</tbody>
+</table>
+<p>North-star metric for the program: <strong>credit recurrence rate</strong> — the share of credits this quarter whose cause was already in last quarter's top ten.</p>
+<h2>7. How to run this on real data</h2>
+<ul>
+<li><strong>Inputs needed:</strong> six months of credits with note text, reason code, product/SKU class, packaging spec, carrier, origin DC, ship and credit dates, credit amount, order value, and a line-down flag if one exists.</li>
+<li><strong>Privacy:</strong> redact names, emails, phone numbers, and account numbers from the note before it reaches a model. Nothing else in the record is sensitive. Run under the API's standard data-retention terms; no training on inputs.</li>
+<li><strong>Pilot (4 weeks):</strong> week 1 — load and run; week 2 — two CS reps hand-label 300 records, set the threshold from the curve; week 3 — take the top three causes with evidence quotes to the owning teams; week 4 — agree the metric and the review cadence.</li>
+<li><strong>What it would cost:</strong> at ~$2 per thousand records, a year of 50,000 credits a month is about $1,200 in model calls. The reviewer time is the real cost, and the threshold controls it.</li>
+<li><strong>What to expect:</strong> the first run finds things people already suspected and could not prove. That is the useful outcome — proof is what moves packaging engineering.</li>
+</ul>
+<h2>8. Limitations</h2>
+<ul>
+<li>The synthetic notes and the classifier are both Claude models. The human gold set is the check on that circularity; the public reviews are the check on the language.</li>
+<li>The public reviews skew consumer. The industrial share is real; the mix is not a distributor's.</li>
+<li>Downtime estimates are mine. The toggle in the demo exists so that assumption is visible, not buried.</li>
+<li>The taxonomy has 15 modes because that is what I have seen. A real dataset will want a few I have not.</li>
+<li>The seeded test proves the method finds a known signal; it says nothing about what a real dataset contains.</li>
+</ul>
+<h2>9. Why I built it this way</h2>
+<p>Static demo, no runtime model calls, no framework: the analysis runs once, the page serves results, and the whole thing deploys anywhere static files do. Every design choice here is one I can explain and defend, which was a constraint I set for myself.</p>
+<p><em>Demo: ▢ · Repository: ▢</em></p></div></main>
+</body></html>
