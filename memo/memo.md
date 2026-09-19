@@ -12,9 +12,9 @@ Customer credits are a symptom log. Each one carries a coarse reason code and a 
 
 I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 15-item taxonomy written from shop experience, joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in **downtime** rather than what was refunded. Low-confidence results go to a person.
 
-Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 256 failure-mode × metadata cells ranked the primary seeded pattern **#1**, at **3.6× lift** (p < 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Accuracy against synthetic ground truth: **94.3%** on the bulk model, **96.4%** on the reference model; against my own hand labels on 200 records: **▢%** (labeling in progress). Cost: **$2.06 per thousand records** on the bulk model.
+Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 256 failure-mode × metadata cells ranked the primary seeded pattern **#1**, at **3.6× lift** (p < 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Against synthetic ground truth the models score 94–96%. Against 200 records I labeled by hand — 150 of them real reviews — the honest number is **72%** for the reference model (Opus 5), **64%** for the bulk model, and **100% / 97%** on the 92 records where I was sure of my own label; disagreements cluster where I was unsure too. Real language is harder than clean text, and model tier matters on it in a way it does not on synthetic data. Cost: **$5.58 per thousand records** on the model I would actually deploy.
 
-**Recommendation if this were real:** a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.
+**Recommendation if this were real:** a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, run on the reference-tier model (the extra $3.50 per thousand records buys eight points of accuracy on real language), with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.
 
 ## 2. The problem, from the customer's side
 
@@ -91,29 +91,49 @@ The trend chart in the demo shows the step in May. Two things worth saying plain
 | ≥ 0.8 | 80% | 99.5% |
 | ≥ 0.9 | 44% | 100% |
 
-At 0.8, four in five records file automatically and 199 of every 200 are right; the fifth goes to a person. On the real reviews — messier than the synthetic notes — about one in five falls below 0.6. The reviewer sees the model's evidence quote and a suggested mode, which makes a review take seconds rather than a full read.
+That is the synthetic curve. On the 150 real reviews, measured against my labels, the trade is much tighter:
+
+| Threshold | Auto-filed | Precision (Opus 5) | Precision (Sonnet 5) |
+|---|---|---|---|
+| ≥ 0.6 | 59% | 83% | 75% |
+| ≥ 0.7 | 39% | 90% | 82% |
+| ≥ 0.8 | 19% | 100% | 100% |
+
+Two things to take from that. The model's confidence is honest: where it says 0.8 on a real review, it is right. And the review queue on real data is real work — at 0.7, six in ten records go to a person. That is the correct design, not a failure of it; the reviewer sees a suggested mode and the evidence quote, so each review takes seconds, and every reviewed label feeds the next accuracy check. The reviewer sees the model's evidence quote and a suggested mode, which makes a review take seconds rather than a full read.
 
 ### 5.4 Accuracy, three ways
 
 | Check | n | Accuracy |
 |---|---|---|
-| Bulk model (Sonnet 5) vs. synthetic ground truth | 1,500 | 94.3% (macro-F1 0.95) |
-| Reference model (Opus 5) vs. synthetic ground truth | 550 | 96.4% (macro-F1 0.97) |
-| Bulk model on the same 550 | 550 | 94.2% — agreement with reference 96.7% |
-| Bulk model vs. human gold set (150 real reviews + 50 synthetic) | 200 | ▢% (in progress) |
-| Haiku 4.5 vs. human gold set | 200 | ▢% (in progress) |
+| Sonnet 5 vs. synthetic ground truth | 1,500 | 94.3% (macro-F1 0.95) |
+| Opus 5 vs. synthetic ground truth | 550 | 96.4% (macro-F1 0.97) — agrees with Sonnet 96.7% |
+| **Opus 5 vs. my labels, real reviews** | 150 | **72%** |
+| Sonnet 5 vs. my labels, real reviews | 150 | 64% |
+| Haiku 4.5 vs. my labels, real reviews | 150 | 57% |
+| Any model vs. my labels, synthetic notes | 50 | 96–100% |
+| My labels vs. the hidden synthetic ground truth | 50 | 49 of 50 — the generator writes what a person reads |
 
-Top confusions: premature failure → material nonconformance (19 — "snapped at half the rated torque" is both); other/unclear → aged elastomers (13); other/unclear → material nonconformance (12); mechanism failure on first use → aged elastomers (8). These are neighbors an experienced reviewer would also debate (corrosion on arrival vs. plating failure; wrong part vs. thread mismatch).
+I tagged each of my labels with how sure I was. That split is the most useful table in this memo:
+
+| My confidence | Records | Opus 5 agrees | Sonnet 5 | Haiku 4.5 |
+|---|---|---|---|---|
+| high | 92 | **100%** | 97% | 91% |
+| medium | 77 | 68% | 55% | 55% |
+| low | 31 | 45% | 42% | 29% |
+
+Where a careful human is sure, the reference model agrees every time. Where the human is unsure, the disagreement is real ambiguity: a regulator that "chokes flow from first use" is a mechanism failure to me and a premature failure to the model; nails that bend during driving are "flimsy" — material, or premature failure, or a customer using the wrong nail. Top disagreements on real reviews: premature failure ↔ other/unclear (6), other/unclear → mechanism failure (6), premature failure → material nonconformance (5).
+
+The lesson that changed a decision: on synthetic text all three models look interchangeable (96–100%). On real language they are not — 57 → 64 → 72. The cheap-model question is answered by real data, not clean data. These are neighbors an experienced reviewer would also debate (corrosion on arrival vs. plating failure; wrong part vs. thread mismatch).
 
 ### 5.5 Cost
 
 | | Per 1,000 records | 50,000 credits/month |
 |---|---|---|
-| Bulk (Sonnet 5) | $2.06 | $103 |
-| Reference (Opus 5) | $5.58 | $279 |
+| Sonnet 5 | $2.06 | $103 |
+| **Opus 5 — the one I would deploy** | $5.58 | $279 |
 | Haiku 4.5 (uncached) | $2.37 | $119 |
 
-Whole project: $20.47, including a $3 run I threw away. One lesson worth the price: the cheapest model per token (Haiku 4.5) will not cache a prompt under 4,096 tokens, so it cost *more per record* than Sonnet with caching. Cheaper per token is not cheaper per record.
+Whole project: $20.47, including a $3 run I threw away. The production decision: Opus costs $176 a month more at 50,000 credits and is eight points more accurate on real language. That is not a close call. One lesson worth the price: the cheapest model per token (Haiku 4.5) will not cache a prompt under 4,096 tokens, so it cost *more per record* than Sonnet with caching. Cheaper per token is not cheaper per record.
 
 ## 6. What I would do with the top three causes
 
@@ -132,12 +152,13 @@ North-star metric for the program: **credit recurrence rate** — the share of c
 - **Inputs needed:** six months of credits with note text, reason code, product/SKU class, packaging spec, carrier, origin DC, ship and credit dates, credit amount, order value, and a line-down flag if one exists.
 - **Privacy:** redact names, emails, phone numbers, and account numbers from the note before it reaches a model. Nothing else in the record is sensitive. Run under the API's standard data-retention terms; no training on inputs.
 - **Pilot (4 weeks):** week 1 — load and run; week 2 — two CS reps hand-label 300 records, set the threshold from the curve; week 3 — take the top three causes with evidence quotes to the owning teams; week 4 — agree the metric and the review cadence.
-- **What it would cost:** at ~$2 per thousand records, a year of 50,000 credits a month is about $1,200 in model calls. The reviewer time is the real cost, and the threshold controls it.
+- **What it would cost:** at ~$5.60 per thousand records on the reference model, a year of 50,000 credits a month is about $3,400 in model calls. The reviewer time is the real cost, and the threshold controls it.
 - **What to expect:** the first run finds things people already suspected and could not prove. That is the useful outcome — proof is what moves packaging engineering.
 
 ## 8. Limitations
 
-- The synthetic notes and the classifier are both Claude models. The human gold set is the check on that circularity; the public reviews are the check on the language.
+- The synthetic notes and the classifier are both Claude models. The human gold set is the check on that circularity — and it shows the synthetic accuracy (94–96%) overstates real-world accuracy (64–72%) by a wide margin. Treat the synthetic numbers as an upper bound.
+- The gold set has one labeler (me). Two CS reps labeling the same 300 records, with disagreements adjudicated, is the right way to do it for real.
 - The public reviews skew consumer. The industrial share is real; the mix is not a distributor's.
 - Downtime estimates are mine. The toggle in the demo exists so that assumption is visible, not buried.
 - The taxonomy has 15 modes because that is what I have seen. A real dataset will want a few I have not.

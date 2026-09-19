@@ -195,20 +195,23 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 <section id="review">
   <p class="eyebrow">04 · Coverage and precision</p>
   <h2>The model is allowed to say "I'm not sure." That's what makes it deployable.</h2>
-  <p class="muted">Every classification carries a confidence. Above the threshold it's auto-filed; below, it goes to a person. Move the threshold and you trade coverage for precision — measured here against ground truth.</p>
+  <p class="muted">Every classification carries a confidence. Above the threshold it's auto-filed; below, it goes to a person. Move the threshold and you trade coverage for precision. On clean synthetic text the trade is generous; on real reviews it is not — and the model's confidence knows the difference.</p>
   <div class="grid2">
-    <div class="panel"><h3>Auto-filed share vs. accuracy of what's auto-filed</h3><div id="chart-curve"></div><div class="legend"><span style="--c:var(--s1)">Coverage</span><span style="--c:var(--s3)">Precision</span></div></div>
+    <div class="panel"><h3>Synthetic ground truth (n = 1,500)</h3><div id="chart-curve"></div><div class="legend"><span style="--c:var(--s1)">Coverage</span><span style="--c:var(--s3)">Precision</span></div>
+      <h3 style="margin-top:16px">Real reviews vs. human labels (n = 150)</h3><div class="tablewrap"><table id="real-curve"></table></div></div>
     <div class="panel"><h3 id="queue-title">Review queue</h3><div id="queue"></div></div>
   </div>
 </section>
 
 <section id="accuracy">
   <p class="eyebrow">05 · How accurate is it, and where does it fail</p>
-  <h2>Measured, not assumed — including the cheap model versus the expensive one.</h2>
+  <h2>Measured three ways — and real language is harder than synthetic.</h2>
+  <p class="muted">Against synthetic ground truth every model looks great. Against 200 records hand-labeled by the author — 150 of them real reviews, each with a confidence tag and a note — the picture is honest: models agree with a careful human where the human is sure, and disagree where the human was unsure too. Model tier matters on real language in a way it does not on clean text.</p>
   <div class="tiles" id="acc-tiles"></div>
+  <div class="panel" style="margin-top:12px"><h3>Agreement with the human labeler, by how sure the human was</h3><div class="tablewrap"><table id="gold-table"></table></div><p class="small muted" style="margin-top:8px">The 50 synthetic records in the gold set also check the generator: the human agreed with the hidden ground truth on <span id="gen-check"></span>.</p></div>
   <div class="grid2" style="margin-top:12px">
     <div class="panel"><h3>Where it gets confused</h3><div class="tablewrap"><table id="confusions"></table></div><p class="small muted" style="margin-top:8px">Most confusions are between neighboring modes an experienced person would also debate.</p></div>
-    <div class="panel"><h3>Errors, with the model's own evidence</h3><div id="errors"></div></div>
+    <div class="panel"><h3>Where the human and the model disagreed, with the human's note</h3><div id="errors"></div></div>
   </div>
 </section>
 
