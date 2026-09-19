@@ -168,4 +168,4 @@ North-star metric for the program: **credit recurrence rate** — the share of c
 
 Static demo, no runtime model calls, no framework: the analysis runs once, the page serves results, and the whole thing deploys anywhere static files do. Every design choice here is one I can explain and defend, which was a constraint I set for myself.
 
-*Demo: ▢ · Repository: ▢*
+*Demo: [https://credit-signal-self.vercel.app](https://credit-signal-self.vercel.app) · Repository: [github.com/muireadhach/credit-signal](https://github.com/muireadhach/credit-signal)*
