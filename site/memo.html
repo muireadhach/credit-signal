@@ -38,8 +38,16 @@ nav.sections a{color:var(--ink-2);text-decoration:none;padding:4px 0;border-bott
 nav.sections a:hover{color:var(--ink);border-color:var(--rule-strong)}
 .disclose{font:500 12px/1.3 var(--mono);color:var(--ink-2);background:var(--panel-2);border:1px solid var(--rule);border-radius:4px;padding:5px 9px;letter-spacing:.01em}
 .disclose b{color:var(--critical);font-weight:500}
-main .wrap{padding-block:34px 60px;display:grid;gap:44px}
-section{scroll-margin-top:70px}
+@media (max-width:760px){
+  header.top .wrap{gap:8px 12px}
+  nav.sections{order:3;width:100%;margin-left:0;flex-wrap:nowrap;overflow-x:auto;gap:0 16px;padding-bottom:2px;scrollbar-width:none}
+  nav.sections::-webkit-scrollbar{display:none}
+  nav.sections a{white-space:nowrap}
+  .disclose{margin-left:auto}
+}
+main .wrap{padding-block:34px 60px;display:grid;grid-template-columns:minmax(0,1fr);gap:44px}
+section{scroll-margin-top:70px;min-width:0}
+.grid2>*,.panel{min-width:0}
 h1{font:600 clamp(30px,5vw,44px)/1.08 var(--display);margin:0 0 12px;text-wrap:balance;letter-spacing:-.005em}
 h2{font:600 26px/1.15 var(--display);margin:0 0 6px;text-wrap:balance}
 h3{font:600 17px/1.3 var(--body);margin:0 0 6px}
@@ -86,7 +94,7 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);verti
 th{font:500 12px/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 td.n{font-family:var(--mono);font-size:13px}
-.tablewrap{overflow-x:auto}
+.tablewrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
 .chip{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.04em;padding:4px 7px;border-radius:3px;border:1px solid var(--rule-strong);color:var(--ink-2);vertical-align:middle}
 .chip.safety{border-color:var(--critical);color:var(--critical)}
 .chip.sig{border-color:var(--good);color:var(--good)}
