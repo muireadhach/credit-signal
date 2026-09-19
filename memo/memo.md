@@ -12,7 +12,7 @@ Customer credits are a symptom log. Each one carries a coarse reason code and a 
 
 I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 15-item taxonomy written from shop experience, joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in **downtime** rather than what was refunded. Low-confidence results go to a person.
 
-Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. The pipeline recovered the primary pattern at **▢× lift** (keyword search: ▢×). Accuracy against my own hand labels on 200 records: **▢%**. Cost: about **▢ per thousand records** on the bulk model.
+Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 256 failure-mode × metadata cells ranked the primary seeded pattern **#1**, at **3.6× lift** (p < 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Accuracy against synthetic ground truth: **94.3%** on the bulk model, **96.4%** on the reference model; against my own hand labels on 200 records: **▢%** (labeling in progress). Cost: **$2.06 per thousand records** on the bulk model.
 
 **Recommendation if this were real:** a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.
 
@@ -51,41 +51,69 @@ A third cut (Carrier-C transit damage) was given only a weak nudge, to see wheth
 
 ### 5.1 Ranking by refund and ranking by customer impact disagree
 
-▢ *[table: top 8 modes, rank by credit $, rank by impact, movers]*
+| Failure mode | Credits | Refunded | Rank by refund | Rank by impact | Est. customer impact |
+|---|---|---|---|---|---|
+| Premature failure in service | 118 | $13,545 | #3 | **#1** | $710k |
+| Wrong part in the right bag | 171 | $16,015 | #2 | #2 | $484k |
+| Material or hardness nonconformance | 102 | $11,795 | #6 | **#3** | $444k |
+| Short count or missing components | 153 | $11,945 | #5 | #4 | $309k |
+| Assembly or mechanism failure on first use | 153 | $16,944 | **#1** | #5 | $308k |
+| Bent or crushed long stock | 35 | $9,343 | #10 | **#6** | $168k |
+| Aged or degraded elastomers & consumables | 126 | $5,138 | #13 | **#7** | $127k |
+| Out of straight, flat, or round | 57 | $9,603 | #9 | #8 | $112k |
+
+Across 1,500 credits: $156k refunded, roughly $3.0M in estimated customer downtime at $500/hour. The ratio is the assumption to test first — but even at $250/hour the order above holds.
 
 Downtime hours per mode are my estimate (`impact_weights.yaml`), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: wrong part in the bag, bent long stock, material nonconformance.
 
 ### 5.2 The pattern keyword search misses
 
-▢ *[Seed A: LLM lift ▢× (p ▢) vs keyword ▢× (p ▢); trend chart shows the May step]*
+| Method | Lift | p |
+|---|---|---|
+| Seeded (hidden ground truth) | 4.1× | — |
+| LLM extraction | **3.6×** | < 0.00001 |
+| Generic search ("damaged", "broke", "bent", "dent", "defect") | no signal | 0.76 |
+| Regex tuned to thread damage, written after you suspect it | 4.5× | < 0.00001 |
 
-"Damaged" matches dents, corrosion, kinked tube, and thread damage alike; the specific signal is diluted. Extraction isolates thread damage across a dozen phrasings and the packaging correlation appears. Seed B: ▢× (p ▢). Carrier-C: ▢× (p ▢) — reported as not significant, which is the correct answer.
+The trend chart in the demo shows the step in May. Two things worth saying plainly. First, generic damage words appear in under 1% of these notes — customers describe symptoms ("wouldn't start the nut"), not categories. Second, a regex written *after* you know what to look for works fine; that is not a weakness of regex, it is the definition of the problem. The model checks all 15 modes at once with no hypothesis, and the blind scan below is the real test.
+
+"Damaged" matches dents, corrosion, kinked tube, and thread damage alike; the specific signal is diluted. **The blind scan.** Every failure mode × every packaging spec, carrier, and warehouse, within each product class: 256 cells, ranked by significance, with no one telling the scan where the seeds were. The seeded PB-2 cell ranked #1. After Bonferroni correction (p < 0.0002), it was the *only* survivor — seven other cells looked interesting at p < 0.01 and would have been chased on a smaller dataset. Stratifying by product class matters: without it, packaging just proxies product (long stock ships in crates; crates "cause" bent tube).
+
+**Seed B** was seeded too weakly to matter (ground truth 1.5×) and the method correctly does not claim it: 1.3×, p = 0.07, rank 32 of 256. **Carrier-C** was given only a nudge (1.2×) and comes back 1.2×, p = 0.24 — not significant, which is the right answer. A method that only ever says "yes" is not a method.
 
 ### 5.3 Coverage vs. precision
 
-▢ *[curve: threshold 0.5–0.9 → coverage %, precision %]*
+| Confidence threshold | Auto-filed (coverage) | Precision of auto-filed |
+|---|---|---|
+| ≥ 0.5 | 98% | 94.6% |
+| ≥ 0.6 | 94% | 96.4% |
+| ≥ 0.7 | 91% | 97.5% |
+| ≥ 0.8 | 80% | 99.5% |
+| ≥ 0.9 | 44% | 100% |
 
-At a 0.7 threshold, ▢% of records file automatically at ▢% precision; ▢% go to review. The reviewer sees the model's evidence quote and a suggested mode, which makes a review take seconds rather than a full read.
+At 0.8, four in five records file automatically and 199 of every 200 are right; the fifth goes to a person. On the real reviews — messier than the synthetic notes — about one in five falls below 0.6. The reviewer sees the model's evidence quote and a suggested mode, which makes a review take seconds rather than a full read.
 
 ### 5.4 Accuracy, three ways
 
 | Check | n | Accuracy |
 |---|---|---|
-| Bulk model vs. synthetic ground truth | ▢ | ▢% |
-| Reference model vs. synthetic ground truth | ▢ | ▢% |
-| Bulk model vs. human gold set (150 real reviews + 50 synthetic) | 200 | ▢% |
-| Cheap model vs. human gold set | 200 | ▢% |
+| Bulk model (Sonnet 5) vs. synthetic ground truth | 1,500 | 94.3% (macro-F1 0.95) |
+| Reference model (Opus 5) vs. synthetic ground truth | 550 | 96.4% (macro-F1 0.97) |
+| Bulk model on the same 550 | 550 | 94.2% — agreement with reference 96.7% |
+| Bulk model vs. human gold set (150 real reviews + 50 synthetic) | 200 | ▢% (in progress) |
+| Haiku 4.5 vs. human gold set | 200 | ▢% (in progress) |
 
-Top confusions: ▢. These are neighbors an experienced reviewer would also debate (corrosion on arrival vs. plating failure; wrong part vs. thread mismatch).
+Top confusions: premature failure → material nonconformance (19 — "snapped at half the rated torque" is both); other/unclear → aged elastomers (13); other/unclear → material nonconformance (12); mechanism failure on first use → aged elastomers (8). These are neighbors an experienced reviewer would also debate (corrosion on arrival vs. plating failure; wrong part vs. thread mismatch).
 
 ### 5.5 Cost
 
 | | Per 1,000 records | 50,000 credits/month |
 |---|---|---|
-| Bulk (Sonnet 5) | ▢ | ▢ |
-| Reference (Opus 5) | ▢ | ▢ |
+| Bulk (Sonnet 5) | $2.06 | $103 |
+| Reference (Opus 5) | $5.58 | $279 |
+| Haiku 4.5 (uncached) | $2.37 | $119 |
 
-Whole project: under $25. One lesson worth the price: the cheapest model per token (Haiku 4.5) will not cache a prompt under 4,096 tokens, so it cost *more per record* than Sonnet with caching. Cheaper per token is not cheaper per record.
+Whole project: $20.47, including a $3 run I threw away. One lesson worth the price: the cheapest model per token (Haiku 4.5) will not cache a prompt under 4,096 tokens, so it cost *more per record* than Sonnet with caching. Cheaper per token is not cheaper per record.
 
 ## 6. What I would do with the top three causes
 
@@ -104,7 +132,7 @@ North-star metric for the program: **credit recurrence rate** — the share of c
 - **Inputs needed:** six months of credits with note text, reason code, product/SKU class, packaging spec, carrier, origin DC, ship and credit dates, credit amount, order value, and a line-down flag if one exists.
 - **Privacy:** redact names, emails, phone numbers, and account numbers from the note before it reaches a model. Nothing else in the record is sensitive. Run under the API's standard data-retention terms; no training on inputs.
 - **Pilot (4 weeks):** week 1 — load and run; week 2 — two CS reps hand-label 300 records, set the threshold from the curve; week 3 — take the top three causes with evidence quotes to the owning teams; week 4 — agree the metric and the review cadence.
-- **What it would cost:** at ▢ per thousand records, a year of credits is a few hundred dollars. The reviewer time is the real cost, and the threshold controls it.
+- **What it would cost:** at ~$2 per thousand records, a year of 50,000 credits a month is about $1,200 in model calls. The reviewer time is the real cost, and the threshold controls it.
 - **What to expect:** the first run finds things people already suspected and could not prove. That is the useful outcome — proof is what moves packaging engineering.
 
 ## 8. Limitations
