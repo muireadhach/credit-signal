@@ -1,0 +1,28 @@
+{
+ "bulk_per_1k": 2.24,
+ "bulk_calls": 1454,
+ "reference_per_1k": null,
+ "reference_calls": 0,
+ "scale": [
+  {
+   "credits_per_month": 10000,
+   "bulk_usd": 22,
+   "reference_usd": null
+  },
+  {
+   "credits_per_month": 50000,
+   "bulk_usd": 112,
+   "reference_usd": null
+  },
+  {
+   "credits_per_month": 200000,
+   "bulk_usd": 448,
+   "reference_usd": null
+  }
+ ],
+ "total_spend_usd": 5.38,
+ "by_purpose": {
+  "classify_bulk": 3.26,
+  "synthetic_notes": 2.12
+ }
+}

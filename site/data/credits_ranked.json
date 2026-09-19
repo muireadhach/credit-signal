@@ -1,0 +1,333 @@
+{
+ "n": 0,
+ "total_credit_usd": 0,
+ "total_impact_typical_usd": 0,
+ "rate_per_hour": 500,
+ "sensitivity": [
+  250,
+  500,
+  1500
+ ],
+ "modes": [
+  {
+   "mode": "thread_damage",
+   "name": "Thread damage",
+   "category": "Manufacturing & dimensional",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0.0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 1,
+   "rank_by_impact": 1
+  },
+  {
+   "mode": "out_of_tolerance",
+   "name": "Out-of-tolerance dimensions",
+   "category": "Manufacturing & dimensional",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 2,
+   "rank_by_impact": 2
+  },
+  {
+   "mode": "thread_mismatch",
+   "name": "Thread mismatch / wrong pitch or class",
+   "category": "Manufacturing & dimensional",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0.0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 3,
+   "rank_by_impact": 3
+  },
+  {
+   "mode": "burrs_finish",
+   "name": "Burrs & poor finishing",
+   "category": "Manufacturing & dimensional",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0.0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": true,
+   "rank_by_credit": 4,
+   "rank_by_impact": 4
+  },
+  {
+   "mode": "out_of_true",
+   "name": "Out of straight, flat, or round",
+   "category": "Manufacturing & dimensional",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 5,
+   "rank_by_impact": 5
+  },
+  {
+   "mode": "material_nonconformance",
+   "name": "Material or hardness nonconformance",
+   "category": "Manufacturing & dimensional",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": true,
+   "rank_by_credit": 6,
+   "rank_by_impact": 6
+  },
+  {
+   "mode": "plating_coating",
+   "name": "Plating or coating defects",
+   "category": "Manufacturing & dimensional",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0.0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 7,
+   "rank_by_impact": 7
+  },
+  {
+   "mode": "corrosion_on_arrival",
+   "name": "Corrosion on arrival",
+   "category": "Storage & handling",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0.0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 8,
+   "rank_by_impact": 8
+  },
+  {
+   "mode": "transit_surface_damage",
+   "name": "Surface damage from transit",
+   "category": "Storage & handling",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 9,
+   "rank_by_impact": 9
+  },
+  {
+   "mode": "aged_consumables",
+   "name": "Aged or degraded elastomers & consumables",
+   "category": "Storage & handling",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 10,
+   "rank_by_impact": 10
+  },
+  {
+   "mode": "wrong_part",
+   "name": "Wrong part in the right bag",
+   "category": "Fulfillment",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 11,
+   "rank_by_impact": 11
+  },
+  {
+   "mode": "short_count",
+   "name": "Short count or missing components",
+   "category": "Fulfillment",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 12,
+   "rank_by_impact": 12
+  },
+  {
+   "mode": "bent_long_stock",
+   "name": "Bent or crushed long stock",
+   "category": "Fulfillment",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 13,
+   "rank_by_impact": 13
+  },
+  {
+   "mode": "doa_mechanism",
+   "name": "Assembly or mechanism failure on first use",
+   "category": "Functional & in-service",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 14,
+   "rank_by_impact": 14
+  },
+  {
+   "mode": "premature_failure",
+   "name": "Premature failure in service",
+   "category": "Functional & in-service",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": true,
+   "rank_by_credit": 15,
+   "rank_by_impact": 15
+  },
+  {
+   "mode": "other_unclear",
+   "name": "Other / unclear",
+   "category": "Unclear",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 16,
+   "rank_by_impact": 16
+  }
+ ]
+}

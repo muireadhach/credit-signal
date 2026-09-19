@@ -1,0 +1,148 @@
+{
+ "spec_change": "2026-05-01",
+ "tests": [
+  {
+   "name": "Seed A: bulk poly bag (PB-2) fasteners after May spec change",
+   "target": "Thread damage",
+   "n_in": 0,
+   "n_out": 0,
+   "llm": {
+    "rate_in": 0.0,
+    "rate_out": 0.0,
+    "lift": null,
+    "p": null
+   },
+   "keyword": {
+    "rate_in": 0.0,
+    "rate_out": 0.0,
+    "lift": null,
+    "p": null
+   },
+   "ground_truth_lift": null
+  },
+  {
+   "name": "Seed B: DC-4 elastomers & consumables",
+   "target": "Aged or degraded elastomers & consumables",
+   "n_in": 0,
+   "n_out": 0,
+   "llm": {
+    "rate_in": 0.0,
+    "rate_out": 0.0,
+    "lift": null,
+    "p": null
+   },
+   "keyword": {
+    "rate_in": 0.0,
+    "rate_out": 0.0,
+    "lift": null,
+    "p": null
+   },
+   "ground_truth_lift": null
+  },
+  {
+   "name": "Carrier-C transit damage (weak, may not be significant)",
+   "target": "Surface damage from transit",
+   "n_in": 0,
+   "n_out": 0,
+   "llm": {
+    "rate_in": 0.0,
+    "rate_out": 0.0,
+    "lift": null,
+    "p": null
+   },
+   "keyword": {
+    "rate_in": 0.0,
+    "rate_out": 0.0,
+    "lift": null,
+    "p": null
+   },
+   "ground_truth_lift": null
+  }
+ ],
+ "trend": [
+  {
+   "month": "2025-09",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2025-10",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2025-11",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2025-12",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2026-01",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2026-02",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2026-03",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2026-04",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2026-05",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2026-06",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2026-07",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  },
+  {
+   "month": "2026-08",
+   "pb2_rate": null,
+   "pb2_n": 0,
+   "other_rate": null,
+   "other_n": 0
+  }
+ ]
+}

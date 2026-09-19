@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gold Set Labeler</title>
+<style>
+:root{color-scheme:light dark;--bg:#f4f6f3;--panel:#fff;--ink:#151815;--ink2:#555b55;--rule:#d9ded6;--acc:#1c5cab}
+@media(prefers-color-scheme:dark){:root{--bg:#171817;--panel:#202220;--ink:#f1f2ee;--ink2:#c3c6bf;--rule:#353935;--acc:#6da7ec}}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:20px}
+h1{font-size:20px;margin:0 0 4px}.muted{color:var(--ink2)}.small{font-size:13px}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:18px 20px;margin:14px 0}
+.text{font-size:17px;line-height:1.55;white-space:pre-wrap}
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px;margin-top:14px}
+.modes button{text-align:left;border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:6px;padding:8px 10px;cursor:pointer;font:inherit;display:flex;gap:8px;align-items:baseline}
+.modes button b{font-family:ui-monospace,monospace;font-size:12px;color:var(--ink2);min-width:18px}
+.modes button.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,var(--panel))}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.bar button{font:inherit;padding:7px 12px;border-radius:6px;border:1px solid var(--rule);background:var(--panel);color:var(--ink);cursor:pointer}
+.bar button.primary{background:var(--acc);color:#fff;border-color:var(--acc)}
+progress{width:100%;height:8px}
+kbd{font:12px ui-monospace,monospace;border:1px solid var(--rule);border-radius:4px;padding:1px 5px}
+textarea{width:100%;font:inherit;padding:8px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--ink)}
+</style></head><body><div class="wrap">
+<h1>Gold set labeler</h1>
+<p class="muted small">Read the text, pick the ONE failure mode that best explains the primary complaint. Keys <kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd>, <kbd>q</kbd>–<kbd>y</kbd> select; <kbd>Enter</kbd> or <kbd>→</kbd> next; <kbd>←</kbd> back; <kbd>?</kbd> marks "genuinely can't tell" (that's a valid label too). Progress saves in this browser automatically. When done, click <b>Export labels</b> and save the file as <code>data/gold/gold_labels.jsonl</code>.</p>
+<progress id="prog" max="1" value="0"></progress>
+<div class="card">
+  <div class="small muted" id="meta"></div>
+  <div class="text" id="text"></div>
+  <div class="modes" id="modes"></div>
+  <div style="margin-top:10px"><label class="small muted">Optional note (why it was hard):</label><textarea id="note" rows="1"></textarea></div>
+  <div class="bar"><button id="prev">← Back</button><button id="next" class="primary">Next →</button><span class="small muted" id="count"></span><span style="flex:1"></span><button id="export">Export labels</button></div>
+</div>
+</div>
+<script id="pool" type="application/json">__POOL__</script>
+<script>
+const {records, modes} = JSON.parse(document.getElementById('pool').textContent);
+const KEYS = "1234567890qwerty".split("");
+let i = 0, labels = {};
+try { labels = JSON.parse(localStorage.getItem('gold_labels') || '{}'); i = +localStorage.getItem('gold_i') || 0; } catch (e) {}
+const $ = s => document.querySelector(s);
+function save(){ try{ localStorage.setItem('gold_labels', JSON.stringify(labels)); localStorage.setItem('gold_i', i);}catch(e){} }
+function render(){
+  const r = records[i]; const L = labels[r.id] || {};
+  $('#meta').textContent = `${i+1} of ${records.length} · ${r.source === 'public_review' ? 'public review' : 'synthetic credit note'} · id ${r.id}`;
+  $('#text').textContent = r.text;
+  $('#modes').innerHTML = modes.map((m, k) => `<button data-id="${m.id}" class="${L.label===m.id?'sel':''}"><b>${KEYS[k]}</b>${m.name}</button>`).join('');
+  $('#note').value = L.note || '';
+  $('#prog').value = Object.keys(labels).length / records.length;
+  $('#count').textContent = `${Object.keys(labels).length} labeled`;
+  document.querySelectorAll('#modes button').forEach(b => b.onclick = () => pick(b.dataset.id));
+}
+function pick(id){ const r = records[i]; labels[r.id] = {id: r.id, source: r.source, label: id, note: $('#note').value}; save(); render(); }
+function go(d){ const r = records[i]; if (labels[r.id]) labels[r.id].note = $('#note').value; i = Math.max(0, Math.min(records.length-1, i+d)); save(); render(); window.scrollTo(0,0); }
+$('#prev').onclick = () => go(-1); $('#next').onclick = () => go(1);
+$('#export').onclick = () => { const lines = Object.values(labels).map(l => JSON.stringify(l)).join('\n') + '\n'; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([lines], {type:'application/jsonl'})); a.download = 'gold_labels.jsonl'; a.click(); };
+document.addEventListener('keydown', e => { if (e.target.tagName === 'TEXTAREA') return; const k = KEYS.indexOf(e.key); if (k >= 0 && k < modes.length) pick(modes[k].id); else if (e.key === 'Enter' || e.key === 'ArrowRight') go(1); else if (e.key === 'ArrowLeft') go(-1); else if (e.key === '?') pick('other_unclear'); });
+render();
+</script></body></html>

@@ -1,0 +1,11 @@
+{
+ "public_classified": 1425,
+ "synthetic_classified": 0,
+ "synthetic_total": 1500,
+ "reference_classified": 0,
+ "review_threshold": 0.6,
+ "models": {
+  "bulk": "claude-haiku-4-5",
+  "reference": "claude-opus-5"
+ }
+}
