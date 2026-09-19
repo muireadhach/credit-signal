@@ -1,30 +1,32 @@
 {
- "bulk_per_1k": 2.22,
- "bulk_calls": 2424,
- "reference_per_1k": 8.76,
- "reference_calls": 46,
+ "bulk_per_1k": 2.06,
+ "bulk_calls": 3515,
+ "reference_per_1k": 5.58,
+ "reference_calls": 700,
+ "cheap_per_1k": 2.37,
+ "cheap_calls": 1897,
  "scale": [
   {
    "credits_per_month": 10000,
-   "bulk_usd": 22,
-   "reference_usd": 88
+   "bulk_usd": 21,
+   "reference_usd": 56
   },
   {
    "credits_per_month": 50000,
-   "bulk_usd": 111,
-   "reference_usd": 438
+   "bulk_usd": 103,
+   "reference_usd": 279
   },
   {
    "credits_per_month": 200000,
-   "bulk_usd": 444,
-   "reference_usd": 1752
+   "bulk_usd": 412,
+   "reference_usd": 1116
   }
  ],
- "total_spend_usd": 10.91,
+ "total_spend_usd": 20.47,
  "by_purpose": {
-  "classify_bulk": 5.38,
-  "classify_cheap": 0.31,
-  "classify_reference": 0.4,
+  "classify_bulk": 11.07,
+  "classify_cheap": 0.67,
+  "classify_reference": 3.91,
   "synthetic_notes": 4.82
  }
 }

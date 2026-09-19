@@ -4,6 +4,7 @@
   const D = {};
   await Promise.all(files.map(async f => { try { D[f] = await (await fetch(`data/${f}.json`)).json(); } catch (e) { D[f] = null; } }));
   const $ = s => document.querySelector(s);
+  const fp = p => p == null ? "—" : (p === 0 ? "<0.00001" : p < 0.001 ? p.toExponential(1) : p.toFixed(3));
   const fmt = { usd: n => n == null ? "—" : "$" + Math.round(n).toLocaleString(), pct: n => n == null ? "—" : (n * 100).toFixed(n < .1 ? 1 : 0) + "%", n: n => n == null ? "—" : n.toLocaleString(), x: n => n == null ? "—" : n.toFixed(1) + "×" };
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const tip = $("#tip");
@@ -64,7 +65,7 @@
   $("#hero-tiles").innerHTML = [
     ["Records analyzed", fmt.n((S?.public_classified || 0) + (S?.synthetic_classified || 0)), `${fmt.n(S?.public_classified)} real reviews · ${fmt.n(S?.synthetic_classified)} synthetic credits`],
     ["#1 cause by customer impact", topImpact ? topImpact.name : "—", topImpact ? `#${topImpact.rank_by_credit} when ranked by refund alone` : ""],
-    ["Seeded pattern, found", seedA?.llm?.lift ? fmt.x(seedA.llm.lift) + " lift" : "—", seedA ? `keyword search: ${fmt.x(seedA.keyword?.lift)}` : ""],
+    ["Seeded pattern, found blind", seedA?.llm?.lift ? fmt.x(seedA.llm.lift) + " lift" : "—", ST?.scan_cells ? `ranked #${ST.scan_seeded_ranks?.[0]} of ${ST.scan_cells} cells scanned · generic search: no signal` : ""],
     ["Accuracy vs. ground truth", AC?.bulk ? fmt.pct(AC.bulk.accuracy) : "—", AC?.gold_bulk ? `human gold set: ${fmt.pct(AC.gold_bulk.accuracy)}` : "human gold set pending"],
   ].map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${esc(v)}</div><div class="d">${esc(d)}</div></div>`).join("");
 
@@ -96,13 +97,20 @@
     if (seedA) {
       hbars($("#chart-lift"), [
         { label: "LLM extraction", segs: [{ v: seedA.llm.lift || 0, tip: `${fmt.pct(seedA.llm.rate_in)} in group vs ${fmt.pct(seedA.llm.rate_out)} outside · p=${seedA.llm.p}` }] },
-        { label: "Keyword “damaged…”", segs: [{ v: seedA.keyword.lift || 0, cls: "kw", tip: `${fmt.pct(seedA.keyword.rate_in)} vs ${fmt.pct(seedA.keyword.rate_out)} · p=${seedA.keyword.p}` }] },
+        { label: "Search “damaged / broke…”", suffix: seedA.keyword.lift ? "" : "no signal", segs: [{ v: seedA.keyword.lift || 0, cls: "kw", tip: `naive keyword · ${fmt.pct(seedA.keyword.rate_in)} vs ${fmt.pct(seedA.keyword.rate_out)} · p=${seedA.keyword.p}` }] },
+        { label: "Regex tuned to thread damage", segs: [{ v: seedA.keyword_tuned?.lift || 0, cls: "kw", tip: `written after you suspect the answer · ${fmt.pct(seedA.keyword_tuned?.rate_in)} vs ${fmt.pct(seedA.keyword_tuned?.rate_out)}` }] },
         { label: "Ground truth (hidden)", segs: [{ v: seedA.ground_truth_lift || 0, cls: "dim", tip: "the lift that was actually seeded" }] },
       ], { valueFmt: fmt.x, labelW: 200, rowH: 34 });
-      $("#lift-note").textContent = `Thread damage in ${seedA.n_in} bulk-bagged fastener credits after the spec change vs ${seedA.n_out} other fastener credits. The keyword baseline matches "damaged", "broke", "bent", "stripped", "cross-thread" and similar — it catches too much to see the specific problem.`;
+      $("#lift-note").textContent = `Thread damage in ${seedA.n_in} bulk-bagged fastener credits after the spec change vs ${seedA.n_out} other fastener credits. A generic search catches dents, corrosion and kinked tube alike and the signal drowns. A regex tuned to thread damage works — if you already know to write it. The model checks all 15 modes at once without a hypothesis.`;
     }
-    $("#seed-table").innerHTML = `<thead><tr><th>Check</th><th>Target</th><th class="n">n in / out</th><th class="n">LLM lift</th><th class="n">p</th><th class="n">Keyword lift</th><th>Verdict</th></tr></thead><tbody>` +
-      ST.tests.map(t => { const sig = t.llm.p != null && t.llm.p < .01; return `<tr><td>${esc(t.name)}</td><td>${esc(t.target)}</td><td class="n">${t.n_in} / ${t.n_out}</td><td class="n">${fmt.x(t.llm.lift)}</td><td class="n">${t.llm.p ?? "—"}</td><td class="n">${fmt.x(t.keyword.lift)}</td><td>${sig ? '<span class="chip sig">SIGNIFICANT</span>' : '<span class="chip ns">NOT SIGNIFICANT</span>'}</td></tr>`; }).join("") + "</tbody>";
+    $("#seed-table").innerHTML = `<thead><tr><th>Check</th><th>Target</th><th class="n">n in / out</th><th class="n">Seeded</th><th class="n">LLM lift</th><th class="n">p</th><th class="n">Naive keyword</th><th>Verdict</th></tr></thead><tbody>` +
+      ST.tests.map(t => { const sig = t.llm.p != null && t.llm.p < .01; return `<tr><td>${esc(t.name)}</td><td>${esc(t.target)}</td><td class="n">${t.n_in} / ${t.n_out}</td><td class="n">${fmt.x(t.ground_truth_lift)}</td><td class="n">${fmt.x(t.llm.lift)}</td><td class="n">${fp(t.llm.p)}</td><td class="n">${t.keyword.lift ? fmt.x(t.keyword.lift) : "no signal"}</td><td>${sig ? '<span class="chip sig">SIGNIFICANT</span>' : '<span class="chip ns">NOT SIGNIFICANT</span>'}</td></tr>`; }).join("") + "</tbody>";
+    if (ST.scan) {
+      $("#scan-cells").textContent = `${fmt.n(ST.scan_cells)}`;
+      $("#scan-cells").insertAdjacentHTML("afterend", ` After correcting for that many comparisons (p &lt; ${ST.bonferroni_p.toExponential(1)}), <b>${ST.scan_survivors}</b> cell${ST.scan_survivors === 1 ? "" : "s"} survive${ST.scan_survivors === 1 ? "s" : ""}.`);
+      $("#scan-table").innerHTML = `<thead><tr><th>#</th><th>Product class</th><th>Failure mode</th><th>Cut</th><th class="n">n</th><th class="n">rate in / out</th><th class="n">Lift</th><th class="n">p</th></tr></thead><tbody>` +
+        ST.scan.slice(0, 8).map((c, i) => `<tr${c.seeded ? ' style="font-weight:600"' : ""}><td class="n">${i + 1}</td><td>${esc(c.product_class.replace(/_/g, " "))}</td><td>${esc(c.mode)}${c.seeded ? ' <span class="chip up">SEEDED</span>' : ""}</td><td class="mono small">${esc(c.field.replace("_", " "))} = ${esc(c.value)}</td><td class="n">${c.n_in}</td><td class="n">${fmt.pct(c.rate_in)} / ${fmt.pct(c.rate_out)}</td><td class="n">${fmt.x(c.lift)}</td><td class="n">${fp(c.p)}${c.survives_correction ? ' <span class="chip sig">SURVIVES</span>' : ""}</td></tr>`).join("") + "</tbody>";
+    }
   }
 
   /* ---------- voice ---------- */
@@ -131,6 +139,8 @@
     if (AC.reference) tiles.push(["Reference model (Opus 5)", fmt.pct(AC.reference.accuracy), `${fmt.n(AC.reference.n)} records · agreement with bulk ${fmt.pct(AC.agreement)}`]);
     if (AC.bulk_on_reference_subset) tiles.push(["Bulk, same subset", fmt.pct(AC.bulk_on_reference_subset.accuracy), "apples-to-apples with the reference"]);
     if (AC.gold_bulk) tiles.push(["Human gold set", fmt.pct(AC.gold_bulk.accuracy), `${AC.gold_bulk.n} hand-labeled · ${AC.gold_bulk.public_n} real reviews`]); else tiles.push(["Human gold set", "pending", "200 records being hand-labeled"]);
+    if (AC.gold_cheap) tiles.push(["Haiku 4.5 on gold set", fmt.pct(AC.gold_cheap.accuracy), `${AC.gold_cheap.n} records`]);
+    if (AC.gold_reference) tiles.push(["Opus 5 on gold set", fmt.pct(AC.gold_reference.accuracy), `${AC.gold_reference.n} records`]);
     $("#acc-tiles").innerHTML = tiles.map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${esc(d)}</div></div>`).join("");
     if (AC.bulk) $("#confusions").innerHTML = `<thead><tr><th>Truth</th><th>Predicted</th><th class="n">n</th></tr></thead><tbody>` + AC.bulk.top_confusions.map(c => `<tr><td>${esc(c.truth)}</td><td>${esc(c.predicted)}</td><td class="n">${c.n}</td></tr>`).join("") + "</tbody>";
     $("#errors").innerHTML = (AC.error_examples || []).slice(0, 5).map(e => `<div class="quote">${esc(e.text).replace(esc(e.evidence), `<mark>${esc(e.evidence)}</mark>`)}<span class="who">truth: ${esc(e.truth)} · predicted: ${esc(e.predicted)} (${e.conf})</span></div>`).join("");
@@ -141,6 +151,7 @@
     $("#cost-tiles").innerHTML = [
       ["Bulk model, per 1,000", EC.bulk_per_1k != null ? "$" + EC.bulk_per_1k.toFixed(2) : "—", `${fmt.n(EC.bulk_calls)} calls measured`],
       ["Reference model, per 1,000", EC.reference_per_1k != null ? "$" + EC.reference_per_1k.toFixed(2) : "—", `${fmt.n(EC.reference_calls)} calls measured`],
+      ["Haiku 4.5, per 1,000", EC.cheap_per_1k != null ? "$" + EC.cheap_per_1k.toFixed(2) : "—", "cheapest per token — but it can't cache this prompt"],
       ["This whole project", fmt.usd(EC.total_spend_usd), "generation + classification + evaluation"],
     ].map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${esc(d)}</div></div>`).join("");
     $("#scale").innerHTML = `<thead><tr><th>Credits per month</th><th class="n">Bulk model</th><th class="n">Reference model</th></tr></thead><tbody>` + EC.scale.map(r => `<tr><td>${fmt.n(r.credits_per_month)}</td><td class="n">${fmt.usd(r.bulk_usd)}</td><td class="n">${fmt.usd(r.reference_usd)}</td></tr>`).join("") + "</tbody>";

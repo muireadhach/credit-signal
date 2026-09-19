@@ -156,7 +156,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 
 <section id="pattern">
   <p class="eyebrow">02 · The pattern keyword search misses</p>
-  <h2>A packaging change in May quadrupled thread damage on bulk-bagged fasteners. "Damaged" finds none of it.</h2>
+  <h2>A packaging change in May quadrupled thread damage on bulk-bagged fasteners. Searching "damaged" barely moves.</h2>
   <p class="muted">Two patterns were deliberately seeded into the synthetic credit records so the method could be tested against a known answer. The model that wrote the customer notes never saw packaging, carrier, or warehouse — so if the pipeline finds the pattern, it found it in the language.</p>
   <div class="grid2">
     <div class="panel">
@@ -171,9 +171,14 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
     </div>
   </div>
   <div class="panel" style="margin-top:12px">
-    <h3>All three checks, including the one that didn't clear</h3>
+    <h3>Nobody told the scan where to look</h3>
+    <p class="small muted" style="margin:0 0 10px">Every failure mode × every packaging spec, carrier, and warehouse, within each product class — <span id="scan-cells"></span> cells, ranked by significance. The seeded cell is where it should be.</p>
+    <div class="tablewrap"><table id="scan-table"></table></div>
+  </div>
+  <div class="panel" style="margin-top:12px">
+    <h3>All three checks, including the ones that didn't clear</h3>
     <div class="tablewrap"><table id="seed-table"></table></div>
-    <p class="small muted" style="margin-top:8px">Lift = rate inside the suspect group ÷ rate outside it. p is a one-sided two-proportion z-test. Reporting the non-significant one on purpose: the method should say "no" as clearly as it says "yes".</p>
+    <p class="small muted" style="margin-top:8px">Lift = rate inside the suspect group ÷ rate outside it. p is a one-sided two-proportion z-test. Two keyword baselines: <em>naive</em> is what a reason code or a search for "damaged" gives you; <em>tuned</em> is a regex written after you already suspect thread damage — it works, which is the point: keyword search finds what you already know to look for. Reporting the non-significant checks on purpose: the method should say "no" as clearly as it says "yes".</p>
   </div>
 </section>
 

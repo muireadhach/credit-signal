@@ -1,8 +1,8 @@
 {
- "public_classified": 711,
- "synthetic_classified": 0,
+ "public_classified": 1998,
+ "synthetic_classified": 1500,
  "synthetic_total": 1500,
- "reference_classified": 46,
+ "reference_classified": 700,
  "review_threshold": 0.6,
  "models": {
   "bulk": "claude-sonnet-5",

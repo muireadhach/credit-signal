@@ -72,8 +72,9 @@ dump("credits_ranked", dict(n=len(syn_cls), total_credit_usd=round(sum(r["credit
 
 # ---------- 3. seeded-pattern test: LLM extraction vs keyword search ----------
 import re
-KW = re.compile(r"damag|broke|bent|dent|chew|mash|stripp|cross.?thread|won.?t start|wouldn.?t start", re.I)
-def seed_test(name, target_mode, in_group, out_group, keyword_re):
+KW_NAIVE = re.compile(r"damag|broke|bent|dent|defect", re.I)   # what a reason code or generic search gives you
+KW_TUNED = re.compile(r"chew|mash|stripp|cross.?thread|won.?t start|wouldn.?t start|won.?t go on|start(ed)? by hand", re.I)  # written AFTER you suspect thread damage
+def seed_test(name, target_mode, in_group, out_group, keyword_re, tuned_re=None):
     g_in = [frame[i] for i in bulk if i in frame and in_group(frame[i])]
     g_out = [frame[i] for i in bulk if i in frame and out_group(frame[i])]
     llm_in = sum(bulk[r["credit_id"]]["failure_mode"] == target_mode for r in g_in)
@@ -84,16 +85,21 @@ def seed_test(name, target_mode, in_group, out_group, keyword_re):
     l_llm, p_llm = ztest(llm_in, len(g_in), llm_out, len(g_out))
     l_kw, p_kw = ztest(kw_in, len(g_in), kw_out, len(g_out))
     l_tr, _ = ztest(tr_in, len(g_in), tr_out, len(g_out))
-    return dict(name=name, target=NAME[target_mode], n_in=len(g_in), n_out=len(g_out),
+    out = dict(name=name, target=NAME[target_mode], n_in=len(g_in), n_out=len(g_out),
         llm=dict(rate_in=round(llm_in / max(len(g_in), 1), 3), rate_out=round(llm_out / max(len(g_out), 1), 3), lift=l_llm, p=p_llm),
         keyword=dict(rate_in=round(kw_in / max(len(g_in), 1), 3), rate_out=round(kw_out / max(len(g_out), 1), 3), lift=l_kw, p=p_kw),
         ground_truth_lift=l_tr)
+    if tuned_re is not None:
+        t_in = sum(bool(tuned_re.search(r["note"] or "")) for r in g_in); t_out = sum(bool(tuned_re.search(r["note"] or "")) for r in g_out)
+        l_t, p_t = ztest(t_in, len(g_in), t_out, len(g_out))
+        out["keyword_tuned"] = dict(rate_in=round(t_in / max(len(g_in), 1), 3), rate_out=round(t_out / max(len(g_out), 1), 3), lift=l_t, p=p_t)
+    return out
 post = lambda r: r["date"] >= SPEC_CHANGE
 seeds = [
   seed_test("Seed A: bulk poly bag (PB-2) fasteners after May spec change", "thread_damage",
             lambda r: r["product_class"] == "fasteners" and r["packaging_spec"] == "PB-2" and post(r),
-            lambda r: r["product_class"] == "fasteners" and r["packaging_spec"] != "PB-2", KW),
-  seed_test("Seed B: DC-4 elastomers & consumables", "aged_consumables",
+            lambda r: r["product_class"] == "fasteners" and r["packaging_spec"] != "PB-2", KW_NAIVE, KW_TUNED),
+  seed_test("Seed B: DC-4 elastomers & consumables (seeded weakly)", "aged_consumables",
             lambda r: r["origin_dc"] == "DC-4" and r["product_class"] in ("seals_elastomers", "adhesives_consumables"),
             lambda r: r["origin_dc"] != "DC-4" and r["product_class"] in ("seals_elastomers", "adhesives_consumables"),
             re.compile(r"old|crack|dry|hard|stale|shelf|expired|brittle", re.I)),
@@ -110,7 +116,34 @@ for mo in months:
     a, na = rt(lambda r: r["product_class"] == "fasteners" and r["packaging_spec"] == "PB-2")
     b, nb = rt(lambda r: r["product_class"] == "fasteners" and r["packaging_spec"] != "PB-2")
     trend.append(dict(month=mo, pb2_rate=a, pb2_n=na, other_rate=b, other_n=nb))
-dump("seeded_test", dict(spec_change=SPEC_CHANGE, tests=seeds, trend=trend))
+# Hypothesis-free scan: for every product class, every failure mode, every packaging / carrier / DC value,
+# compare the rate inside the cell to the rate outside it (same product class). No one told the scan
+# where the seeds were. Stratifying by product class stops packaging from simply proxying product.
+SEEDED = {("fasteners", "thread_damage", "packaging_spec", "PB-2"), ("seals_elastomers", "aged_consumables", "origin_dc", "DC-4"), ("adhesives_consumables", "aged_consumables", "origin_dc", "DC-4")}
+scan = []
+syn_rows = [frame[i] for i in bulk if i in frame]
+for pc in sorted({r["product_class"] for r in syn_rows}):
+    rows_pc = [r for r in syn_rows if r["product_class"] == pc]
+    for field in ("packaging_spec", "carrier", "origin_dc"):
+        for val in sorted({r[field] for r in rows_pc}):
+            g_in = [r for r in rows_pc if r[field] == val]; g_out = [r for r in rows_pc if r[field] != val]
+            if len(g_in) < 25 or len(g_out) < 25: continue
+            for m in MODES:
+                if m == "other_unclear": continue
+                k_in = sum(bulk[r["credit_id"]]["failure_mode"] == m for r in g_in); k_out = sum(bulk[r["credit_id"]]["failure_mode"] == m for r in g_out)
+                if k_in < 6: continue
+                lift, p = ztest(k_in, len(g_in), k_out, len(g_out))
+                if lift is None: continue
+                scan.append(dict(product_class=pc, mode=NAME[m], field=field, value=val, n_in=len(g_in), k_in=k_in, rate_in=round(k_in / len(g_in), 3),
+                                 rate_out=round(k_out / len(g_out), 3), lift=lift, p=p, seeded=(pc, m, field, val) in SEEDED))
+scan.sort(key=lambda c: (c["p"], -c["lift"]))
+n_cells = len(scan)
+# 256-odd comparisons means a handful will look significant by chance. Bonferroni: only cells with
+# p < 0.05 / n_cells count. This is the difference between a finding and a fishing trip.
+bonf = 0.05 / max(n_cells, 1)
+for c in scan: c["survives_correction"] = c["p"] < bonf
+dump("seeded_test", dict(spec_change=SPEC_CHANGE, tests=seeds, trend=trend, scan=scan[:12], scan_cells=n_cells, bonferroni_p=bonf, scan_survivors=sum(c["survives_correction"] for c in scan),
+                         scan_seeded_ranks=[i + 1 for i, c in enumerate(scan) if c["seeded"]]))
 
 # ---------- 4. review queue + coverage/precision curve ----------
 allc = list(bulk.values())
@@ -161,12 +194,12 @@ if gold:
 dump("accuracy", acc)
 
 # ---------- 6. unit economics ----------
-def cost_per_1k(purpose_prefix):
-    u = [x for x in usage if x["purpose"].startswith(purpose_prefix)]
+def cost_per_1k(model):
+    u = [x for x in usage if x["purpose"].startswith("classify") and x["model"] == model]
     return (round(sum(x["cost_usd"] for x in u) / len(u) * 1000, 2), len(u)) if u else (None, 0)
-b, nb = cost_per_1k("classify_bulk"); r, nr = cost_per_1k("classify_reference")
+b, nb = cost_per_1k("claude-sonnet-5"); r, nr = cost_per_1k("claude-opus-5"); h, nh = cost_per_1k("claude-haiku-4-5")
 scale = [dict(credits_per_month=n, bulk_usd=round(n / 1000 * b) if b else None, reference_usd=round(n / 1000 * r) if r else None) for n in (10_000, 50_000, 200_000)]
-dump("economics", dict(bulk_per_1k=b, bulk_calls=nb, reference_per_1k=r, reference_calls=nr, scale=scale,
+dump("economics", dict(bulk_per_1k=b, bulk_calls=nb, reference_per_1k=r, reference_calls=nr, cheap_per_1k=h, cheap_calls=nh, scale=scale,
     total_spend_usd=round(sum(x["cost_usd"] for x in usage), 2), by_purpose={k: round(v, 2) for k, v in Counter({}).items()} or
     {p: round(sum(x["cost_usd"] for x in usage if x["purpose"] == p), 2) for p in sorted({x["purpose"] for x in usage})}))
 

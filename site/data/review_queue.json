@@ -1,36 +1,60 @@
 {
  "threshold": 0.6,
- "n_total": 711,
- "n_queue": 224,
- "share": 0.315,
+ "n_total": 3498,
+ "n_queue": 724,
+ "share": 0.207,
  "curve": [
   {
    "threshold": 0.5,
-   "coverage": 0.0,
-   "precision": null
+   "coverage": 0.983,
+   "precision": 0.946
   },
   {
    "threshold": 0.6,
-   "coverage": 0.0,
-   "precision": null
+   "coverage": 0.938,
+   "precision": 0.964
   },
   {
    "threshold": 0.7,
-   "coverage": 0.0,
-   "precision": null
+   "coverage": 0.906,
+   "precision": 0.975
   },
   {
    "threshold": 0.8,
-   "coverage": 0.0,
-   "precision": null
+   "coverage": 0.802,
+   "precision": 0.995
   },
   {
    "threshold": 0.9,
-   "coverage": 0.0,
-   "precision": null
+   "coverage": 0.441,
+   "precision": 1.0
   }
  ],
  "examples": [
+  {
+   "id": "is_AEGX3MVE_B001TMEX7E_1301127824000",
+   "source": "public_review",
+   "mode": "Material or hardness nonconformance",
+   "conf": 0.3,
+   "secondary": "Other / unclear",
+   "text": "Solid Top, Flimsy System. Like many of the buyers, I wanted an inexpensive but solid workspace until I can renovate my kitchen. The pieces of this cart are very sturdy, but the plastic pieces they supply to hold the whole thing up leave much to be desired. There are two semicircular pieces for each corner of the top and shelf that fit together, around the leg, but do not snap together, and are hel"
+  },
+  {
+   "id": "is_AHT4KKBW_B084T5VZKY_1654624328436",
+   "source": "public_review",
+   "mode": "Other / unclear",
+   "conf": 0.35,
+   "secondary": null,
+   "text": "Piece of crap. An uneven cracked piece of cardboard covered with ripped paper. Better off cutting a box & covering with aluminum foil."
+  },
+  {
+   "id": "CR-100369",
+   "source": "synthetic_credit",
+   "mode": "Other / unclear",
+   "conf": 0.35,
+   "secondary": null,
+   "text": "Guys in the shop flagged something with the air regulators from the last batch but I'm getting a fuzzy story \u2014 something about it not behaving like the last ones we had. Can someone give me a call so I can put you on with the carpenter who actually used them? I don't want to file the wrong thing."
+  },
   {
    "id": "is_AEN7UKKZ_B07S8QJYCZ_1601233593779",
    "source": "public_review",
@@ -102,30 +126,6 @@
    "conf": 0.4,
    "secondary": "Aged or degraded elastomers & consumables",
    "text": "Don\u2019t buy this. Total crap. The adhesive fell off, the plastic part kept coming off, it scratched the crap out of my neck."
-  },
-  {
-   "id": "is_AEQCVMT3_B01LXW28II_1650490614861",
-   "source": "public_review",
-   "mode": "Material or hardness nonconformance",
-   "conf": 0.4,
-   "secondary": "Other / unclear",
-   "text": "Uses. Lightweight but very flimsy. Horrible suction. Very very disappointing. Short vacuum tubing and not very well-made. All plastic is very weak."
-  },
-  {
-   "id": "is_AHL35FAU_B07KYWVCP6_1665616368010",
-   "source": "public_review",
-   "mode": "Material or hardness nonconformance",
-   "conf": 0.4,
-   "secondary": "Other / unclear",
-   "text": "From 5-stars to 1-star. I've gotten so I would rather not handle raw meat, so I use these nearly every day. The only thing I would mention for improvement is that sometimes when you pull them on, they rip. Then, you need to get another one. This happens when I am being fairly careful putting them on. Still, I would recommend them. The price is right.<br />--------------------------------------<br "
-  },
-  {
-   "id": "is_AGVLWC2Z_B08GS4CNWB_1641431307530",
-   "source": "public_review",
-   "mode": "Other / unclear",
-   "conf": 0.4,
-   "secondary": null,
-   "text": "Breaking. This package I've gone thru quickly, that aren't that great. They fall apart easily."
   }
  ]
 }

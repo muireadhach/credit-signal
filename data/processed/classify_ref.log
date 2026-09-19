@@ -1,7 +1,8 @@
-model=claude-opus-5 classifying 700 records (skipping 0 already done)
-  100/700  spend $10.91
-  200/700  spend $10.91
-  300/700  spend $10.91
-  400/700  spend $10.91
-  500/700  spend $10.91
-  600/700  spend $10.91
+model=claude-opus-5 classifying 654 records (skipping 46 already done)
+  100/654  spend $12.30
+  200/654  spend $13.05
+  300/654  spend $13.78
+  400/654  spend $14.51
+  500/654  spend $15.26
+  600/654  spend $16.03
+done -> data/processed/classified_reference.jsonl | errors in file: 0 | total spend $16.39
