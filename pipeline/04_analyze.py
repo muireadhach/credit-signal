@@ -227,6 +227,8 @@ other_v2 = {r["id"]: r for r in load("data/gold/gold_v2_other.jsonl")}
 if v1_gold:
     relab = [dict(r, label=V1MAP.get(r["label"], r["label"])) for r in v1_gold]
     relab = [other_v2.get(r["id"], r) if r["label"] == "other_unclear" else r for r in relab]
+    repool = {r["id"]: r for r in load("data/gold/gold_v2_repool.jsonl")}  # v1 defect labels that fit v2's new modes better
+    relab = [repool.get(r["id"], r) for r in relab]
     acc["gold_v2_relabeled"] = gold_block(relab, cms_v2, "v2"); acc["gold_v2_relabeled"]["other_resorted"] = len(other_v2)
 # v2 clean: 100 fresh reviews labeled under v2, never seen before -- the headline number
 clean_gold = load("data/gold/gold_v2_clean.jsonl")

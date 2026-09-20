@@ -1,10 +1,4 @@
-# Failure taxonomy for incoming industrial parts -- VERSION 2.
-# v1 was written from the applicant's experience receiving parts (service bureau, production floor,
-# machine shop). Hand-labeling 200 real reviews under v1 showed two things: customers often cannot
-# distinguish "failed on first use" from "failed early in service" (merged here, with a timing field),
-# and real complaints include whole categories a parts-receiving view never sees: the part works but
-# does not do the job, the listing was wrong, the customer chose wrong, it was not worth the price,
-# it never arrived. v2 adds those. v1_map and other_bucket let v1 ground truth be scored under v2.
+# Failure taxonomy for incoming industrial parts -- VERSION 2 (boundary rules from hand-labeling 200 real reviews).
 categories:
   manufacturing_dimensional: Manufacturing & dimensional
   storage_handling: Storage & handling
@@ -136,15 +130,20 @@ failure_modes:
   - title says 10-pack, it's one roll
   - not the size stated on the page
   - description said stainless, it's plated
-  note: The right SKU shipped and the bag matches it; the catalog page was wrong. Distinct from wrong_part.
+  note: A physical attribute that differs from the listing -- thread length, finish, quantity, geometry -- is listing mismatch. A rating the part
+    fails to perform to is performance_shortfall. The right SKU shipped and the bag matches it; the catalog page was wrong. Distinct from wrong_part.
 - id: customer_selection
-  name: Customer ordered or applied the wrong part
+  name: Customer selection or misuse
   category: customer_experience
   phrasings:
   - my mistake, ordered the wrong length
   - didn't realize it was metric
   - doesn't fit my application, my fault
   - should have ordered the heavier duty one
+  - ran it on the hot end while it was still cooling, my bad
+  - crimped it with vise grips instead of the right tool
+  note: Only when the reviewer does not fault the product. Where the reviewer blames the product and domain knowledge says misapplication, use
+    performance_shortfall with customer_selection as secondary.
 - id: value_complaint
   name: Works, but not worth the price
   category: customer_experience
