@@ -26,6 +26,7 @@
   --seq-2:#1c5cab; --seq-5:#6da7ec; }
 *{box-sizing:border-box}
 html,body{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}  /* stop iOS Safari inflating text in landscape */
 body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);-webkit-font-smoothing:antialiased}
 a{color:var(--accent)}
 .wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
@@ -43,7 +44,7 @@ nav.sections a:hover{color:var(--ink);border-color:var(--rule-strong)}
   header.top .wrap{gap:6px 12px;padding-block:8px}
   nav.sections{order:3;width:100%;margin-left:0;flex-wrap:wrap;gap:2px 14px;font-size:12.5px}
   nav.sections a{padding:2px 0}
-  .disclose{margin-left:auto;font-size:11px}
+  .disclose{margin-left:auto;font-size:11px;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.4}
 }
 html{scroll-padding-top:var(--header-h,70px)}
 main .wrap{padding-block:34px 60px;display:grid;grid-template-columns:minmax(0,1fr);gap:44px}
