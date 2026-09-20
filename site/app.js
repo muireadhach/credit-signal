@@ -62,6 +62,17 @@
   const hdr = document.querySelector("header.top");
   const setH = () => document.documentElement.style.setProperty("--header-h", (hdr.offsetHeight + 12) + "px");
   setH(); new ResizeObserver(setH).observe(hdr);
+  /* scroll-spy: underline the nav link for the section currently under the header */
+  const navLinks = [...document.querySelectorAll("nav.sections a")];
+  const spySections = navLinks.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+  const spy = () => {
+    const line = hdr.offsetHeight + 24, bottom = innerHeight + scrollY >= document.body.scrollHeight - 2;
+    let cur = spySections[0];
+    for (const sec of spySections) if (sec.getBoundingClientRect().top <= line) cur = sec;
+    if (bottom) cur = spySections[spySections.length - 1];
+    navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + cur.id));
+  };
+  addEventListener("scroll", spy, { passive: true }); addEventListener("resize", spy); spy();
   /* mark tables that actually overflow, so the "scroll sideways" hint only shows when true */
   const markScroll = () => document.querySelectorAll(".scrollwrap").forEach(w => {
     const t = w.querySelector(".tablewrap"); const sc = t.scrollWidth > t.clientWidth + 2;

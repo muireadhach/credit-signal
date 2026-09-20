@@ -41,6 +41,7 @@ header.top .wrap{display:flex;align-items:center;gap:18px;min-height:52px;flex-w
 nav.sections{display:flex;gap:2px 14px;flex-wrap:wrap;font-size:13px;margin-left:auto}
 nav.sections a{color:var(--ink-2);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
 nav.sections a:hover{color:var(--ink);border-color:var(--rule-strong)}
+nav.sections a.active{color:var(--ink);border-color:var(--accent)}
 .disclose{font:500 11.5px/1.2 var(--mono);color:var(--ink-2);background:var(--panel-2);border:1px solid var(--rule);border-radius:4px;padding:5px 8px;letter-spacing:0;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .disclose b{color:var(--critical);font-weight:500}
 .disclose a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor}
@@ -143,7 +144,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 <header class="top"><div class="wrap">
   <a class="brand" href="#top"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="13" width="4" height="9" fill="var(--s1)"/><rect x="8" y="8" width="4" height="14" fill="var(--s1)"/><rect x="14" y="3" width="4" height="19" fill="var(--s2)"/><rect x="20" y="10" width="2" height="12" fill="var(--s1)"/></svg>Credit Signal</a>
   <nav class="sections" aria-label="Sections">
-    <a href="#drivers">Drivers</a><a href="#pattern">Hidden pattern</a><a href="#voice">Customer voice</a><a href="#review">Coverage</a><a href="#accuracy">Accuracy</a><a href="#cost">Cost</a><a href="#method">Method</a><a href="#data">Data</a>
+    <a href="#hero">Analysis</a><a href="#drivers">Drivers</a><a href="#pattern">Hidden pattern</a><a href="#voice">Customer voice</a><a href="#review">Coverage</a><a href="#accuracy">Accuracy</a><a href="#cost">Cost</a><a href="#method">Method</a><a href="#data">Data</a>
   </nav>
   <span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + synthetic credits · <a href="memo">Decision memo</a></span>
 </div></header>

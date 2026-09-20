@@ -37,6 +37,7 @@ header.top .wrap{display:flex;align-items:center;gap:18px;min-height:52px;flex-w
 nav.sections{display:flex;gap:2px 14px;flex-wrap:wrap;font-size:13px;margin-left:auto}
 nav.sections a{color:var(--ink-2);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
 nav.sections a:hover{color:var(--ink);border-color:var(--rule-strong)}
+nav.sections a.active{color:var(--ink);border-color:var(--accent)}
 .disclose{font:500 11.5px/1.2 var(--mono);color:var(--ink-2);background:var(--panel-2);border:1px solid var(--rule);border-radius:4px;padding:5px 8px;letter-spacing:0;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .disclose b{color:var(--critical);font-weight:500}
 .disclose a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor}
@@ -146,14 +147,14 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </style></head><body>
 <header class="top"><div class="wrap"><a class="brand" href="./">← Credit Signal</a><span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + synthetic credits · <a href="./">Live demo</a></span></div></header>
 <main><div class="memo"><h1>Credit Signal — decision memo</h1>
-<p><strong>Subject:</strong> Finding the root causes behind customer credits with a language model, and what it would take to run it for real
-<strong>Prepared by:</strong> Muireadhach Currie · September 2026
-<strong>Status:</strong> Portfolio prototype on public and disclosed synthetic data. Not McMaster-Carr data.</p>
+<p><strong>Subject:</strong> Finding the root causes behind customer credits with a language model, and what it would take to run it for real<br />
+<strong>Prepared by:</strong> Muireadhach Currie · September 2026<br />
+<strong>Status:</strong> Portfolio prototype on public and disclosed synthetic data. Not McMaster-Carr data.<br />
+<strong>Built:</strong> Deliberately plain — a static demo with no runtime model calls and no framework. The analysis runs once, the page serves the results, and it deploys anywhere static files do. Every design choice is one I can explain and defend; that was a constraint I set for myself.</p>
 <hr />
 <h2>1. Summary</h2>
 <p>Customer credits are a symptom log. Each one carries a coarse reason code and a sentence of free text that says what actually happened. At volume, nobody reads the sentence, so the same failure gets credited repeatedly instead of fixed once.</p>
 <p>I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 15-item taxonomy written from shop experience, joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in <strong>downtime</strong> rather than what was refunded. Low-confidence results go to a person.</p>
-<p>It is deliberately plain: a static demo with no runtime model calls and no framework — the analysis runs once, the page serves the results, and it deploys anywhere static files do. Every design choice in it is one I can explain and defend, which was a constraint I set for myself.</p>
 <p>Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 256 failure-mode × metadata cells ranked the primary seeded pattern <strong>#1</strong>, at <strong>3.6× lift</strong> (p &lt; 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Against synthetic ground truth the models score 94–96%. Against 200 records I labeled by hand — 150 of them real reviews — the honest number is <strong>72%</strong> for the reference model (Opus 5), <strong>64%</strong> for the bulk model, and <strong>100% / 97%</strong> on the 92 records where I was sure of my own label; disagreements cluster where I was unsure too. Real language is harder than clean text, and model tier matters on it in a way it does not on synthetic data. Cost: <strong>$5.58 per thousand records</strong> on the model I would actually deploy.</p>
 <p><strong>Recommendation if this were real:</strong> a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, run on the reference-tier model (the extra $3.50 per thousand records buys eight points of accuracy on real language), with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.</p>
 <h2>2. The problem, from the customer's side</h2>
