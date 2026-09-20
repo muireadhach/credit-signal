@@ -5,3 +5,4 @@ __pycache__/
 data/raw/
 *.pyc
 .DS_Store
+docs/private/

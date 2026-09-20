@@ -20,5 +20,6 @@ html = f"""<!doctype html>
 </style></head><body>
 <header class="top"><div class="wrap"><a class="brand" href="./">← Credit Signal</a><span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + synthetic credits · <a href="./">Live demo</a></span></div></header>
 <main><div class="memo">{body}</div></main>
+<script defer src="/_vercel/insights/script.js"></script>
 </body></html>"""
 open("site/memo.html", "w").write(html); print("site/memo.html written")

@@ -65,6 +65,6 @@ pipeline/   the six scripts above + llm.py (SDK wrapper, cost log)
 data/       raw/ (gitignored) · processed/ (samples, classifications, usage log) · gold/ (hand labels)
 site/       the static demo; site/data/*.json is what it renders
 memo/       decision memo
-docs/       interview kit, limitations
+docs/       notes (private material is gitignored)
 tools/      gold-set labeler
 ```
