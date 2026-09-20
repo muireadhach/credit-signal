@@ -4,19 +4,24 @@ as the pipeline. POST {"text": "..."} -> the extraction plus a routing decision.
 Guardrails: input capped at 600 characters, best-effort per-IP throttle, and the Anthropic
 console spend limit as the real backstop. The API key lives in Vercel's environment, never here.
 """
-import json, os, time
+import json, os, sys, time
 from http.server import BaseHTTPRequestHandler
 from typing import Literal, Optional
-from pydantic import BaseModel, Field
-import anthropic
-from _prompt import MODE_IDS, MODE_NAMES, MODE_CATEGORY, SYSTEM
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+IMPORT_ERROR = None
+try:
+    from pydantic import BaseModel, Field
+    import anthropic
+    from _prompt import MODE_IDS, MODE_NAMES, MODE_CATEGORY, SYSTEM
+except Exception as _e:  # surfaced on GET so a broken deploy is diagnosable without logs
+    IMPORT_ERROR = repr(_e); MODE_IDS = []; BaseModel = object; Field = lambda *a, **k: None  # noqa
 
 MODEL = os.environ.get("CS_MODEL", "claude-opus-5")
 REVIEW_THRESHOLD = 0.7
 MAX_CHARS = 600
 _hits = {}  # ip -> [timestamps]; per warm instance, best effort
 
-ModeId = Literal[tuple(MODE_IDS)]  # type: ignore
+ModeId = Literal[tuple(MODE_IDS)] if MODE_IDS else str  # type: ignore
 class Extraction(BaseModel):
     failure_mode: ModeId
     confidence: float = Field(ge=0, le=1)
@@ -36,6 +41,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json"); self.send_header("Cache-Control", "no-store")
         self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
     def do_POST(self):
+        if IMPORT_ERROR: return self._send(500, {"error": "classifier unavailable", "detail": IMPORT_ERROR})
         try:
             n = int(self.headers.get("Content-Length", 0)); data = json.loads(self.rfile.read(n) or b"{}")
         except Exception:
@@ -48,7 +54,7 @@ class handler(BaseHTTPRequestHandler):
         t0 = time.time()
         try:
             client = anthropic.Anthropic(max_retries=1, timeout=25.0)
-            kw = dict(model=MODEL, max_tokens=400, system=[{"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}],
+            kw = dict(model=MODEL, max_tokens=1500, system=[{"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}],
                       messages=[{"role": "user", "content": f"Text:\n\"\"\"\n{text}\n\"\"\""}], output_format=Extraction)
             if MODEL.startswith("claude-opus-5"):
                 kw["betas"] = ["server-side-fallback-2026-07-01"]; kw["fallbacks"] = "default"
@@ -70,4 +76,4 @@ class handler(BaseHTTPRequestHandler):
         except Exception as e:
             return self._send(502, {"error": "classifier unavailable", "detail": type(e).__name__})
     def do_GET(self):
-        self._send(200, {"ok": True, "model": MODEL, "modes": len(MODE_IDS)})
+        self._send(200 if not IMPORT_ERROR else 500, {"ok": not IMPORT_ERROR, "model": MODEL, "modes": len(MODE_IDS), "import_error": IMPORT_ERROR, "python": sys.version.split()[0]})

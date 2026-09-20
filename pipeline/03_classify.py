@@ -107,7 +107,7 @@ def main():
     from concurrent.futures import ThreadPoolExecutor
     def one(r):
         try:
-            x = llm.call_json(model, system, f"Text:\n\"\"\"\n{r['text']}\n\"\"\"", Extraction, max_tokens=400,
+            x = llm.call_json(model, system, f"Text:\n\"\"\"\n{r['text']}\n\"\"\"", Extraction, max_tokens=1500,
                               purpose=f"classify_{a.model}", effort="low")
             return dict(id=r["id"], source=r["source"], model=model, **x.model_dump())
         except anthropic.BadRequestError as e:
