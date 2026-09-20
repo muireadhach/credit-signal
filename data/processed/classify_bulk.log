@@ -1,31 +1,5 @@
-model=claude-sonnet-5 classifying 1288 records (skipping 711 already done)
-  100/1288  spend $12.07
-  200/1288  spend $12.72
-  300/1288  spend $13.35
-  400/1288  spend $14.00
-  500/1288  spend $14.68
-  600/1288  spend $15.32
-  700/1288  spend $15.99
-  800/1288  spend $16.47
-  900/1288  spend $16.68
-  1000/1288  spend $16.88
-  1100/1288  spend $17.09
-  1200/1288  spend $17.29
-done -> data/processed/classified_bulk.jsonl | errors in file: 0 | total spend $17.47
-model=claude-sonnet-5 classifying 1500 records (skipping 1998 already done)
-  100/1500  spend $17.67
-  200/1500  spend $17.87
-  300/1500  spend $18.07
-  400/1500  spend $18.27
-  500/1500  spend $18.47
-  600/1500  spend $18.67
-  700/1500  spend $18.87
-  800/1500  spend $19.07
-  900/1500  spend $19.26
-  1000/1500  spend $19.47
-  1100/1500  spend $19.67
-  1200/1500  spend $19.87
-  1300/1500  spend $20.07
-  1400/1500  spend $20.27
-  1500/1500  spend $20.47
-done -> data/processed/classified_bulk.jsonl | errors in file: 0 | total spend $20.47
+model=claude-sonnet-5 classifying 2000 records (skipping 0 already done)
+  100/2000  spend $21.98
+  200/2000  spend $22.97
+  300/2000  spend $23.66
+  400/2000  spend $24.40

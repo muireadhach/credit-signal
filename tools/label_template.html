@@ -21,7 +21,7 @@ kbd{font:12px ui-monospace,monospace;border:1px solid var(--rule);border-radius:
 textarea{width:100%;font:inherit;padding:8px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--ink)}
 </style></head><body><div class="wrap">
 <h1>Gold set labeler</h1>
-<p class="muted small">Read the text, pick the ONE failure mode that best explains the primary complaint. Keys <kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd>, <kbd>q</kbd>–<kbd>y</kbd> select; <kbd>Enter</kbd> or <kbd>→</kbd> next; <kbd>←</kbd> back; <kbd>?</kbd> marks "genuinely can't tell" (that's a valid label too). Progress saves in this browser automatically. When done, click <b>Export labels</b> and save the file as <code>data/gold/gold_labels.jsonl</code>.</p>
+<p class="muted small">Read the text, pick the ONE failure mode that best explains the primary complaint. Keys <kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd>, <kbd>q</kbd>–<kbd>p</kbd> select; <kbd>Enter</kbd> or <kbd>→</kbd> next; <kbd>←</kbd> back; <kbd>?</kbd> marks "genuinely can't tell" (that's a valid label too). Progress saves in this browser automatically. When done, click <b>Export labels</b> and save the file into <code>data/gold/</code> under the name it downloads with.</p>
 <progress id="prog" max="1" value="0"></progress>
 <div class="card">
   <div class="small muted" id="meta"></div>
@@ -33,12 +33,12 @@ textarea{width:100%;font:inherit;padding:8px;border:1px solid var(--rule);border
 </div>
 <script id="pool" type="application/json">__POOL__</script>
 <script>
-const {records, modes} = JSON.parse(document.getElementById('pool').textContent);
-const KEYS = "1234567890qwerty".split("");
+const {records, modes, store, outfile} = JSON.parse(document.getElementById('pool').textContent); const STORE = store;
+const KEYS = "1234567890qwertyuiop".split("");
 let i = 0, labels = {};
-try { labels = JSON.parse(localStorage.getItem('gold_labels') || '{}'); i = +localStorage.getItem('gold_i') || 0; } catch (e) {}
+try { labels = JSON.parse(localStorage.getItem(STORE) || '{}'); i = +localStorage.getItem(STORE+'_i') || 0; } catch (e) {}
 const $ = s => document.querySelector(s);
-function save(){ try{ localStorage.setItem('gold_labels', JSON.stringify(labels)); localStorage.setItem('gold_i', i);}catch(e){} }
+function save(){ try{ localStorage.setItem(STORE, JSON.stringify(labels)); localStorage.setItem(STORE+'_i', i);}catch(e){} }
 function render(){
   const r = records[i]; const L = labels[r.id] || {};
   $('#meta').textContent = `${i+1} of ${records.length} · ${r.source === 'public_review' ? 'public review' : 'synthetic credit note'} · id ${r.id}`;
@@ -52,7 +52,7 @@ function render(){
 function pick(id){ const r = records[i]; labels[r.id] = {id: r.id, source: r.source, label: id, note: $('#note').value}; save(); render(); }
 function go(d){ const r = records[i]; if (labels[r.id]) labels[r.id].note = $('#note').value; i = Math.max(0, Math.min(records.length-1, i+d)); save(); render(); window.scrollTo(0,0); }
 $('#prev').onclick = () => go(-1); $('#next').onclick = () => go(1);
-$('#export').onclick = () => { const lines = Object.values(labels).map(l => JSON.stringify(l)).join('\n') + '\n'; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([lines], {type:'application/jsonl'})); a.download = 'gold_labels.jsonl'; a.click(); };
+$('#export').onclick = () => { const lines = Object.values(labels).map(l => JSON.stringify(l)).join('\n') + '\n'; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([lines], {type:'application/jsonl'})); a.download = outfile; a.click(); };
 document.addEventListener('keydown', e => { if (e.target.tagName === 'TEXTAREA') return; const k = KEYS.indexOf(e.key); if (k >= 0 && k < modes.length) pick(modes[k].id); else if (e.key === 'Enter' || e.key === 'ArrowRight') go(1); else if (e.key === 'ArrowLeft') go(-1); else if (e.key === '?') pick('other_unclear'); });
 render();
 </script></body></html>

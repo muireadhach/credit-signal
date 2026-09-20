@@ -133,6 +133,19 @@ details[open] summary::after{content:"–"}
 .callout{border:1px solid var(--rule-strong);border-left:4px solid var(--accent);border-radius:6px;padding:14px 18px;background:var(--panel)}
 .callout p{margin:0}
 .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+textarea{width:100%;font:15px/1.5 var(--body);padding:10px 12px;border:1px solid var(--rule-strong);border-radius:5px;background:var(--panel);color:var(--ink);resize:vertical;margin-top:8px}
+textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.examples{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.examples button{font:13px/1.2 var(--body);padding:6px 10px;border:1px solid var(--rule-strong);background:var(--panel-2);color:var(--ink-2);border-radius:4px;cursor:pointer}
+.examples button:hover{color:var(--ink);border-color:var(--ink-3)}
+.result .mode{font:600 24px/1.15 var(--display);margin:2px 0 4px}
+.result .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.result .route{font:600 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:4px}
+.result .route.auto{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.result .route.review{background:color-mix(in srgb,var(--warn) 25%,transparent);color:var(--ink)}
+.result .in{white-space:pre-wrap;font-size:14px;color:var(--ink-2);border-left:3px solid var(--rule-strong);padding:6px 12px;margin:10px 0}
+.result .in mark{background:color-mix(in srgb,var(--s4) 35%,transparent);color:var(--ink);padding:0 2px;border-radius:2px}
+.btn:disabled{opacity:.6;cursor:wait}
 .btn{display:inline-block;font:600 14px/1 var(--body);padding:10px 16px;border-radius:5px;background:var(--accent);color:var(--accent-ink);text-decoration:none;border:1px solid var(--accent)}
 .btn:hover{filter:brightness(1.08)}
 .btn.ghost{background:transparent;color:var(--accent)}
@@ -151,7 +164,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 <header class="top"><div class="wrap">
   <a class="brand" href="#top"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="13" width="4" height="9" fill="var(--s1)"/><rect x="8" y="8" width="4" height="14" fill="var(--s1)"/><rect x="14" y="3" width="4" height="19" fill="var(--s2)"/><rect x="20" y="10" width="2" height="12" fill="var(--s1)"/></svg>Credit Signal</a>
   <nav class="sections" aria-label="Sections">
-    <a href="#hero">Analysis</a><a href="#drivers">Drivers</a><a href="#pattern">Hidden pattern</a><a href="#plan">Action plan</a><a href="#voice">Customer voice</a><a href="#review">Coverage</a><a href="#accuracy">Accuracy</a><a href="#cost">Cost</a><a href="#method">Method</a><a href="#data">Data</a>
+    <a href="#hero">Analysis</a><a href="#try">Try it</a><a href="#drivers">Drivers</a><a href="#pattern">Hidden pattern</a><a href="#plan">Action plan</a><a href="#voice">Customer voice</a><a href="#review">Coverage</a><a href="#accuracy">Accuracy</a><a href="#cost">Cost</a><a href="#method">Method</a><a href="#data">Data</a>
   </nav>
   <span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + synthetic credits · <a href="memo">Decision memo</a></span>
 </div></header>
@@ -174,8 +187,23 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <div class="tiles" id="hero-tiles"><div class="loading">Loading results…</div></div>
 </section>
 
+<section id="try">
+  <p class="eyebrow">01 · Try it</p>
+  <h2>Paste a complaint. Watch it get filed.</h2>
+  <p class="muted">This is the same classifier the numbers below were measured on, running live on the model the memo recommends. It returns the failure mode, how sure it is, the words it based that on, and whether it would file the record automatically or send it to a person.</p>
+  <div class="grid2">
+    <div class="panel">
+      <label for="try-text" class="small muted">Customer's note — or pick an example</label>
+      <div class="examples" id="try-examples"></div>
+      <textarea id="try-text" rows="5" maxlength="600" placeholder="e.g. Half the 3/8-16 nuts in the bag won't start on a bolt by hand, the first couple threads look mashed flat…"></textarea>
+      <div class="controls" style="margin:10px 0 0"><button class="btn" id="try-go">Classify</button><span class="small muted" id="try-status"></span></div>
+    </div>
+    <div class="panel" id="try-result"><p class="muted small">Result appears here.</p></div>
+  </div>
+</section>
+
 <section id="drivers">
-  <p class="eyebrow">01 · What drives credits</p>
+  <p class="eyebrow">02 · What drives credits</p>
   <h2>Ranked by refund, the list looks one way. Ranked by customer downtime, it reorders.</h2>
   <p class="muted">A $40 credit on a damaged shaft collar is trivial. The four hours a line sat idle waiting for the reship is not. Downtime hours per failure mode are an operator's estimate (see <a href="#data">Data</a>); the toggle shows how much the ranking depends on them.</p>
   <div class="panel">
@@ -190,7 +218,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </section>
 
 <section id="pattern">
-  <p class="eyebrow">02 · The pattern keyword search misses</p>
+  <p class="eyebrow">03 · The pattern keyword search misses</p>
   <h2>A packaging change in May quadrupled thread damage on bulk-bagged fasteners. Searching "damaged" barely moves.</h2>
   <p class="muted">Two patterns were deliberately seeded into the synthetic credit records so the method could be tested against a known answer. The model that wrote the customer notes never saw packaging, carrier, or warehouse — so if the pipeline finds the pattern, it found it in the language.</p>
   <div class="grid2">
@@ -218,7 +246,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </section>
 
 <section id="plan">
-  <p class="eyebrow">03 · What I would do about it</p>
+  <p class="eyebrow">04 · What I would do about it</p>
   <h2>Finding the cause is the easy half.</h2>
   <p class="muted">The hard half is getting packaging engineering, carrier management, and DC operations to change something because a model read customer notes. That takes an owner, a fix small enough to say yes to, and a metric agreed before anyone starts. From the memo, for the top causes above:</p>
   <div class="panel">
@@ -238,7 +266,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </section>
 
 <section id="voice">
-  <p class="eyebrow">04 · What real customers say</p>
+  <p class="eyebrow">05 · What real customers say</p>
   <h2>Two thousand real one- and two-star reviews of industrial products, sorted into an operator's failure taxonomy.</h2>
   <p class="muted">The taxonomy is 15 failure modes written from shop experience, not from a catalog. Expand a mode to read what the model quoted as its evidence.</p>
   <div class="grid2">
@@ -248,7 +276,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </section>
 
 <section id="review">
-  <p class="eyebrow">05 · Coverage and precision</p>
+  <p class="eyebrow">06 · Coverage and precision</p>
   <h2>The model is allowed to say "I'm not sure." That's what makes it deployable.</h2>
   <p class="muted">Every classification carries a confidence. Above the threshold it's auto-filed; below, it goes to a person. Move the threshold and you trade coverage for precision. On clean synthetic text the trade is generous; on real reviews it is not — and the model's confidence knows the difference.</p>
   <div class="grid2">
@@ -259,7 +287,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </section>
 
 <section id="accuracy">
-  <p class="eyebrow">06 · How accurate is it, and where does it fail</p>
+  <p class="eyebrow">07 · How accurate is it, and where does it fail</p>
   <h2>Measured three ways — and real language is harder than synthetic.</h2>
   <p class="muted">Against synthetic ground truth every model looks great. Against 200 records hand-labeled by the author — 150 of them real reviews, each with a confidence tag and a note — the picture is honest: models agree with a careful human where the human is sure, and disagree where the human was unsure too. Model tier matters on real language in a way it does not on clean text. For scale: always guessing the most common label would score <b>34%</b> on those reviews.</p>
   <div class="tiles" id="acc-tiles"></div>
@@ -271,14 +299,14 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </section>
 
 <section id="cost">
-  <p class="eyebrow">07 · What it costs to run</p>
+  <p class="eyebrow">08 · What it costs to run</p>
   <h2>Cents per thousand records.</h2>
   <div class="tiles" id="cost-tiles"></div>
   <div class="panel" style="margin-top:12px"><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="scale"></table></div></div><p class="small muted" style="margin-top:8px">Measured from this project's own API usage, with prompt caching on. A human reviewer reading 200 notes an hour costs more per record than either model by two orders of magnitude — the point is not to replace the reviewer, it's to send them only the records worth reading.</p></div>
 </section>
 
 <section id="method">
-  <p class="eyebrow">08 · Method</p>
+  <p class="eyebrow">09 · Method</p>
   <h2>Five steps, no magic.</h2>
   <div class="steps">
     <div class="step"><div class="io">IN · free text</div><h3>1. Collect the note</h3><p>The customer's own words from the credit request, email, or review. PII would be redacted here before anything reaches a model.</p></div>
@@ -290,7 +318,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </section>
 
 <section id="data">
-  <p class="eyebrow">09 · Data, honestly</p>
+  <p class="eyebrow">10 · Data, honestly</p>
   <div class="callout"><p><strong>None of this is McMaster-Carr data.</strong> Two sources, both disclosed everywhere they appear:</p></div>
   <div class="grid2" style="margin-top:12px">
     <div class="panel"><h3>Real: public product reviews</h3><p class="small">2,000 one- and two-star reviews from the <em>Industrial &amp; Scientific</em> category of the Amazon Reviews 2023 dataset (UCSD / McAuley Lab), stratified 70/30 toward reviews using shop vocabulary. They supply genuine, messy customer language. They have no credit amounts, carriers, or warehouses, so they appear only in the taxonomy and accuracy sections.</p></div>

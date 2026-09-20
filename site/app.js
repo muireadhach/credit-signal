@@ -195,4 +195,44 @@
     $("#scale").innerHTML = `<thead><tr><th>Credits per month</th><th class="n">Bulk model</th><th class="n">Reference model</th></tr></thead><tbody>` + EC.scale.map(r => `<tr><td>${fmt.n(r.credits_per_month)}</td><td class="n">${fmt.usd(r.bulk_usd)}</td><td class="n">${fmt.usd(r.reference_usd)}</td></tr>`).join("") + "</tbody>";
   }
   markScroll(); setTimeout(markScroll, 300);
+
+  /* ---------- try it: live classification via /api/classify ---------- */
+  const EX = [
+    ["Thread damage", "Pulled a handful of the 3/8-16 nuts out of the bag and couldn't get a single one started on the rod by hand. Under a light the first few threads are mashed flat on one side. About half the box is like that."],
+    ["Listing vs. part", "The picture on your site shows a fully threaded bolt. What showed up is threaded about an inch and a half. The bag label matches the part number I ordered, so it's the page that's wrong."],
+    ["Didn't do the job", "Used the leak sealer exactly per the directions on a slow drip at a compression fitting. It never stopped. Tried a second application, same result. Nothing broke, it just doesn't work."],
+    ["Vague", "Not happy with these at all. Poor quality for the money. Would not order again."],
+  ];
+  const tx = $("#try-text"), go = $("#try-go"), st = $("#try-status"), res = $("#try-result");
+  $("#try-examples").innerHTML = EX.map((e, i) => `<button type="button" data-i="${i}">${esc(e[0])}</button>`).join("");
+  $("#try-examples").querySelectorAll("button").forEach(b => b.onclick = () => { tx.value = EX[+b.dataset.i][1]; tx.focus(); });
+  const stage = { manufacturing: "made wrong", storage_handling: "degraded in storage or handling", fulfillment: "packing, shipping, or picking", in_service: "failed in use", customer_side: "customer's selection or expectation", unclear: "origin unclear" };
+  const timing = { first_use: "on first use", in_service: "after working for a while", unknown: "timing unclear" };
+  function show(r, text) {
+    const hl = r.evidence && text.includes(r.evidence) ? esc(text).replace(esc(r.evidence), `<mark>${esc(r.evidence)}</mark>`) : esc(text);
+    res.innerHTML = `<div class="result">
+      <div class="k small muted mono" style="text-transform:uppercase;letter-spacing:.06em">${esc(r.category)}</div>
+      <div class="mode">${esc(r.name)}</div>
+      <div class="row"><span class="conf" title="confidence"><i style="width:${r.confidence * 100}%"></i></span><span class="mono small">${r.confidence.toFixed(2)}</span>
+        <span class="route ${r.route === "auto_file" ? "auto" : "review"}">${r.route === "auto_file" ? "auto-file" : "send to review"}</span>
+        <span class="small muted">threshold ${r.threshold}</span></div>
+      <div class="in">${hl}</div>
+      <div class="small muted">Origin: ${esc(stage[r.origin_stage] || r.origin_stage)}${r.timing ? " · " + esc(timing[r.timing] || r.timing) : ""}${r.secondary_mode ? " · could also be: " + esc(r.secondary_mode) : ""}${r.part_type ? " · part: " + esc(r.part_type) : ""}</div>
+      <div class="small muted" style="margin-top:8px">${esc(r.model)} · ${r.seconds}s · about ${(r.cost_usd * 100).toFixed(1)}¢</div>
+    </div>`;
+  }
+  const FALLBACK = { failure_mode: "thread_damage", name: "Thread damage", category: "Manufacturing & dimensional", confidence: 0.92, evidence: "first few threads are mashed flat", origin_stage: "manufacturing", timing: null, secondary_mode: null, part_type: "3/8-16 nuts", route: "auto_file", threshold: 0.7, model: "example (live demo paused)", seconds: 0, cost_usd: 0 };
+  go.onclick = async () => {
+    const text = tx.value.trim(); if (!text) { tx.focus(); return; }
+    go.disabled = true; st.textContent = "reading the note…";
+    try {
+      const r = await fetch("/api/classify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || r.status);
+      show(j, text); st.textContent = "";
+    } catch (e) {
+      st.textContent = `Live demo unavailable (${e.message}). Showing a worked example instead.`;
+      show(FALLBACK, EX[0][1]);
+    } finally { go.disabled = false; }
+  };
 })();

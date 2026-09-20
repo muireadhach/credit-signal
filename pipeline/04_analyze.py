@@ -20,10 +20,15 @@ SPEC_CHANGE = "2026-05-01"
 
 def load(p): return [json.loads(l) for l in open(p)] if Path(p).exists() else []
 frame = {r["credit_id"]: r for r in load("data/processed/synthetic_frame.jsonl")}
+V1MAP = TAX.get("v1_map", {}); OTHER = set(TAX.get("other_bucket", ["other_unclear"]))
+for r in frame.values(): r["true_mode"] = V1MAP.get(r["true_mode"], r["true_mode"])
+def norm(m):  # synthetic truth only knows "other"; fold the v2 customer-experience modes into it for scoring
+    return "other_unclear" if m in OTHER else m
 import html as _html
 def _clean(t):  # reviews carry raw HTML (<br />, &#34;); strip it for display
     t = re.sub(r"<br\s*/?>", " ", t or "", flags=re.I); t = re.sub(r"<[^>]+>", " ", t); return re.sub(r"\s+", " ", _html.unescape(t)).strip()
 public = {r["id"]: r for r in load("data/processed/public_sample.jsonl")}
+for r in load("data/gold/clean_pool.jsonl"): public[r["id"]] = r
 for r in public.values(): r["text"] = _clean(r["text"])
 bulk = {r["id"]: r for r in load("data/processed/classified_bulk.jsonl") if "error" not in r}
 ref = {r["id"]: r for r in load("data/processed/classified_reference.jsonl") if "error" not in r}
@@ -133,7 +138,7 @@ for pc in sorted({r["product_class"] for r in syn_rows}):
             g_in = [r for r in rows_pc if r[field] == val]; g_out = [r for r in rows_pc if r[field] != val]
             if len(g_in) < 25 or len(g_out) < 25: continue
             for m in MODES:
-                if m == "other_unclear": continue
+                if m in OTHER: continue
                 k_in = sum(bulk[r["credit_id"]]["failure_mode"] == m for r in g_in); k_out = sum(bulk[r["credit_id"]]["failure_mode"] == m for r in g_out)
                 if k_in < 6: continue
                 lift, p = ztest(k_in, len(g_in), k_out, len(g_out))
@@ -155,7 +160,7 @@ queue = [c for c in allc if c["confidence"] < REVIEW_THRESHOLD]
 curve = []
 for t in [0.5, 0.6, 0.7, 0.8, 0.9]:
     auto = [c for c in syn_cls if c["confidence"] >= t]
-    acc = sum(c["failure_mode"] == frame[c["id"]]["true_mode"] for c in auto) / len(auto) if auto else None
+    acc = sum(norm(c["failure_mode"]) == norm(frame[c["id"]]["true_mode"]) for c in auto) / len(auto) if auto else None
     curve.append(dict(threshold=t, coverage=round(len(auto) / max(len(syn_cls), 1), 3), precision=round(acc, 3) if acc is not None else None))
 def txt(c): return (frame[c["id"]]["note"] if c["id"] in frame else public[c["id"]]["text"])[:400]
 dump("review_queue", dict(threshold=REVIEW_THRESHOLD, n_total=len(allc), n_queue=len(queue), share=round(len(queue) / max(len(allc), 1), 3),
@@ -164,7 +169,7 @@ dump("review_queue", dict(threshold=REVIEW_THRESHOLD, n_total=len(allc), n_queue
 
 # ---------- 5. accuracy vs synthetic ground truth (+ reference model, + human gold when present) ----------
 def scores(cls_map, ids):
-    pairs = [(frame[i]["true_mode"], cls_map[i]["failure_mode"]) for i in ids if i in cls_map and i in frame]
+    pairs = [(norm(frame[i]["true_mode"]), norm(cls_map[i]["failure_mode"])) for i in ids if i in cls_map and i in frame]
     if not pairs: return None
     acc = sum(t == p for t, p in pairs) / len(pairs)
     per = []
@@ -185,36 +190,53 @@ if ref:
     acc["bulk_on_reference_subset"] = scores(bulk, both)
     acc["agreement"] = round(sum(bulk[i]["failure_mode"] == ref[i]["failure_mode"] for i in both) / len(both), 3) if both else None
 # error examples for the memo
-errs = [c for c in syn_cls if c["failure_mode"] != frame[c["id"]]["true_mode"]]
+errs = [c for c in syn_cls if norm(c["failure_mode"]) != norm(frame[c["id"]]["true_mode"])]
 acc["error_examples"] = [dict(text=frame[c["id"]]["note"][:400], truth=NAME[frame[c["id"]]["true_mode"]], predicted=NAME[c["failure_mode"]], conf=c["confidence"], evidence=c["evidence"])
                          for c in sorted(errs, key=lambda c: -c["confidence"])[:10]]
-gold = load("data/gold/gold_labels.jsonl")
-cheap = {r["id"]: r for r in load("data/processed/classified_cheap.jsonl") if "error" not in r}
-if gold:
-    g = {r["id"]: r["label"] for r in gold}
-    gnote = {r["id"]: (r.get("note") or "") for r in gold}
+def gold_block(gold, cms, tag_prefix):
+    """Score classifier maps `cms` ({tag: {id: row}}) against a human label list."""
+    g = {r["id"]: r["label"] for r in gold}; gnote = {r["id"]: (r.get("note") or "") for r in gold}
     import re as _re
     hconf = {i: (_re.match(r"\[(high|medium|low)\]", n.strip()) or [None, None])[1] for i, n in gnote.items()}
-    acc["gold"] = dict(n=len(g), public_n=sum(i in public for i in g), synthetic_n=sum(i in frame for i in g))
-    # does the human agree with the synthetic ground truth? (checks the generator, not the model)
+    out = dict(n=len(g), public_n=sum(i in public for i in g), synthetic_n=sum(i in frame for i in g))
     hs = [(g[i], frame[i]["true_mode"]) for i in g if i in frame]
-    acc["gold"]["human_vs_synthetic_truth"] = dict(n=len(hs), agree=sum(a == b for a, b in hs))
-    for tag, cm in (("bulk", bulk), ("reference", ref), ("cheap", cheap)):
+    out["human_vs_synthetic_truth"] = dict(n=len(hs), agree=sum(norm(a) == norm(b) for a, b in hs))
+    pubc = Counter(g[i] for i in g if i in public); out["majority_baseline"] = round(pubc.most_common(1)[0][1] / max(sum(pubc.values()), 1), 3) if pubc else None
+    for tag, cm in cms.items():
         ids = [i for i in g if i in cm]
         if not ids: continue
         def A(sub): return round(sum(g[i] == cm[i]["failure_mode"] for i in sub) / len(sub), 3) if sub else None
-        pub_ids = [i for i in ids if i in public]; syn_ids_g = [i for i in ids if i in frame]
-        r = dict(n=len(ids), accuracy=A(ids), public_n=len(pub_ids), public_accuracy=A(pub_ids), synthetic_n=len(syn_ids_g), synthetic_accuracy=A(syn_ids_g))
-        # precision-by-confidence on REAL reviews: does the threshold still work where the language is messy?
-        r["public_curve"] = []
-        for t in (0.5, 0.6, 0.7, 0.8, 0.9):
-            auto = [i for i in pub_ids if cm[i]["confidence"] >= t]
-            r["public_curve"].append(dict(threshold=t, coverage=round(len(auto) / len(pub_ids), 3), precision=A(auto)))
-        # agreement by how sure the human was
+        pub_ids = [i for i in ids if i in public]; syn_g = [i for i in ids if i in frame]
+        r = dict(n=len(ids), accuracy=A(ids), public_n=len(pub_ids), public_accuracy=A(pub_ids), synthetic_n=len(syn_g), synthetic_accuracy=A(syn_g))
+        r["public_curve"] = [dict(threshold=t, coverage=round(len([i for i in pub_ids if cm[i]["confidence"] >= t]) / max(len(pub_ids), 1), 3), precision=A([i for i in pub_ids if cm[i]["confidence"] >= t])) for t in (0.5, 0.6, 0.7, 0.8, 0.9)]
         r["by_human_confidence"] = {h: dict(n=len(sub), accuracy=A(sub)) for h in ("high", "medium", "low") if (sub := [i for i in ids if hconf.get(i) == h])}
-        r["top_disagreements"] = [dict(human=NAME[a], model=NAME[b], n=n) for (a, b), n in Counter((g[i], cm[i]["failure_mode"]) for i in pub_ids if g[i] != cm[i]["failure_mode"]).most_common(6)]
-        r["examples"] = [dict(text=public[i]["text"][:300], human=NAME[g[i]], model=NAME[cm[i]["failure_mode"]], conf=cm[i]["confidence"], note=gnote[i][:160]) for i in pub_ids if g[i] != cm[i]["failure_mode"]][:6]
-        acc[f"gold_{tag}"] = r
+        r["top_disagreements"] = [dict(human=NAME.get(a, a), model=NAME.get(b, b), n=n) for (a, b), n in Counter((g[i], cm[i]["failure_mode"]) for i in pub_ids if g[i] != cm[i]["failure_mode"]).most_common(6)]
+        r["examples"] = [dict(text=public[i]["text"][:300], human=NAME.get(g[i], g[i]), model=NAME.get(cm[i]["failure_mode"]), conf=cm[i]["confidence"], note=gnote[i][:160]) for i in pub_ids if g[i] != cm[i]["failure_mode"]][:6]
+        out[tag] = r
+    return out
+
+cheap = {r["id"]: r for r in load("data/processed/classified_cheap.jsonl") if "error" not in r}
+cms_v2 = dict(bulk=bulk, reference=ref, cheap=cheap)
+# v1: the original 200 labels scored against the archived v1 classifier outputs (frozen, for the record)
+v1_gold = load("data/gold/gold_labels.jsonl")
+if v1_gold and Path("data/processed/v1/classified_reference.jsonl").exists():
+    cms_v1 = {t: {r["id"]: r for r in load(f"data/processed/v1/classified_{t}.jsonl") if "error" not in r} for t in ("bulk", "reference", "cheap")}
+    acc["gold_v1"] = gold_block(v1_gold, cms_v1, "v1")
+# v2 on the same 200: v1 labels mapped, with the 'other' records re-sorted by hand under v2
+other_v2 = {r["id"]: r for r in load("data/gold/gold_v2_other.jsonl")}
+if v1_gold:
+    relab = [dict(r, label=V1MAP.get(r["label"], r["label"])) for r in v1_gold]
+    relab = [other_v2.get(r["id"], r) if r["label"] == "other_unclear" else r for r in relab]
+    acc["gold_v2_relabeled"] = gold_block(relab, cms_v2, "v2"); acc["gold_v2_relabeled"]["other_resorted"] = len(other_v2)
+# v2 clean: 100 fresh reviews labeled under v2, never seen before -- the headline number
+clean_gold = load("data/gold/gold_v2_clean.jsonl")
+if clean_gold: acc["gold_v2_clean"] = gold_block(clean_gold, cms_v2, "v2clean")
+# keep the old keys the site reads, pointing at the best available v2 set
+best = acc.get("gold_v2_clean") or acc.get("gold_v2_relabeled")
+if best:
+    acc["gold"] = {k: best[k] for k in ("n", "public_n", "synthetic_n", "human_vs_synthetic_truth", "majority_baseline")}
+    for t in ("bulk", "reference", "cheap"):
+        if t in best: acc[f"gold_{t}"] = best[t]
 dump("accuracy", acc)
 
 # ---------- 6. unit economics ----------
@@ -227,7 +249,7 @@ dump("economics", dict(bulk_per_1k=b, bulk_calls=nb, reference_per_1k=r, referen
     total_spend_usd=round(sum(x["cost_usd"] for x in usage), 2), by_purpose={k: round(v, 2) for k, v in Counter({}).items()} or
     {p: round(sum(x["cost_usd"] for x in usage if x["purpose"] == p), 2) for p in sorted({x["purpose"] for x in usage})}))
 
-dump("summary", dict(public_classified=len(pub_cls), synthetic_classified=len(syn_cls), synthetic_total=len(frame),
+dump("summary", dict(taxonomy_version=TAX.get("version", 1), modes=len(MODES), public_classified=len(pub_cls), synthetic_classified=len(syn_cls), synthetic_total=len(frame),
     reference_classified=len(ref), review_threshold=REVIEW_THRESHOLD, models=dict(bulk="claude-sonnet-5", reference="claude-opus-5")))
 print("wrote", sorted(p.name for p in OUT.glob("*.json")))
 print("public:", len(pub_cls), "synthetic:", len(syn_cls), "| bulk acc:", acc["bulk"] and acc["bulk"]["accuracy"], "| seeds:", [(s["llm"]["lift"], s["keyword"]["lift"]) for s in seeds])

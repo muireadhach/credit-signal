@@ -3,5 +3,10 @@
   "framework": null,
   "buildCommand": "",
   "outputDirectory": "site",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "functions": {
+    "api/classify.py": {
+      "maxDuration": 30
+    }
+  }
 }

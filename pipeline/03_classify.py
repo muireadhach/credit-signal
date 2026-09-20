@@ -21,6 +21,7 @@ class Extraction(BaseModel):
     evidence: str = Field(description="Short verbatim quote from the text that supports the classification")
     origin_stage: Literal["manufacturing", "storage_handling", "fulfillment", "in_service", "customer_side", "unclear"]
     secondary_mode: Optional[ModeId] = None
+    timing: Optional[Literal["first_use", "in_service", "unknown"]] = Field(None, description="For functional_failure only: did it fail on first use, or after working for a while?")
     part_type_mentioned: Optional[str] = None
 
 def build_system():
@@ -42,7 +43,9 @@ def build_system():
         "- Choose the mode that best explains the PRIMARY reason for the complaint. If two apply, put the second in secondary_mode.",
         "- Distinguish carefully: corrosion_on_arrival (rust/oxide present when opened) vs plating_coating (coating itself defective). thread_damage (physically marred threads) vs thread_mismatch (wrong pitch/class, intact threads). wrong_part (label and contents disagree) vs customer ordering the wrong thing (other_unclear, origin customer_side).",
         "- transit_surface_damage and bent_long_stock are about the shipment; out_of_true is about how the part was made.",
-        "- doa_mechanism = did not work correctly on first use. premature_failure = worked, then failed early in service.",
+        "- functional_failure covers both 'broke on first use' and 'worked, then failed early'; set timing to first_use, in_service, or unknown. performance_shortfall is different: nothing broke, the part simply does not do the job well enough (sealant that never sealed, adhesive that peels, tool that cannot cut the material, grade too light).",
+        "- listing_mismatch: the bag matches the SKU that shipped, but the catalog page (photo, title, description) was wrong. wrong_part: the bag contents do not match the bag's own label. customer_selection: the customer chose or applied the wrong thing and says or implies so.",
+        "- value_complaint: it works; the complaint is price versus what you get. non_delivery: nothing arrived.",
         "- Use other_unclear freely when the text is vague, off-topic, or about price/timing/preference. Do not force a fit.",
         "- confidence is your calibrated probability that failure_mode is correct. Be honest; many notes deserve 0.5-0.7.",
         "- evidence must be a verbatim substring of the text, under 20 words.",
@@ -55,17 +58,23 @@ def build_system():
         "5. 'Zinc is flaking off the washers in the bag and the bare spots are already rusting.' -> plating_coating, 0.88, manufacturing. The coating itself failed; rust is secondary -> secondary_mode corrosion_on_arrival.",
         "6. 'Label on the bag says 3/8-16 x 2 but every bolt in it is 5/16.' -> wrong_part, 0.95, fulfillment.",
         "7. 'I ordered the wrong length, my mistake, can I return these?' -> other_unclear, 0.9, customer_side.",
-        "8. 'Bearing feels notchy when I spin it on the bench, never installed.' -> doa_mechanism, 0.9, manufacturing. Failed before use.",
-        "9. 'Ran the coupling for two days on a light conveyor and the spider disintegrated.' -> premature_failure, 0.88, in_service. Worked, then failed early.",
+        "8. 'Bearing feels notchy when I spin it on the bench, never installed.' -> functional_failure, timing first_use, 0.9, manufacturing.",
+        "9. 'Ran the coupling for two days on a light conveyor and the spider disintegrated.' -> functional_failure, timing in_service, 0.88, in_service.",
         "10. 'Tube arrived with a kink a foot from the end and the box was crushed on that side.' -> bent_long_stock, 0.9, fulfillment (shipment damage to long stock).",
         "11. 'The handles have scuffs and dents on the show face, nothing separating them in the carton.' -> transit_surface_damage, 0.88, fulfillment.",
         "12. 'The o-rings crack when I stretch them and the belt is stiff and chalky.' -> aged_consumables, 0.9, storage_handling.",
-        "13. 'Didn't work for my application, the flow was lower than I needed.' -> other_unclear, 0.6, customer_side. Could be doa_mechanism if a defect were described; it is not.",
+        "13. 'Didn't work for my application, the flow was lower than I needed.' -> customer_selection, 0.6, customer_side. Nothing is defective; the part was not right for the job. If the customer blames the part's rating rather than their choice, performance_shortfall.",
         "14. 'Not happy with these. Poor quality.' -> other_unclear, 0.4. Too vague for any specific mode.",
         "15. 'Pack of 50 had 46 and the set screws were missing from the kit.' -> short_count, 0.95, fulfillment.",
         "16. 'Every washer has a sharp flashing edge on the punched side, drew blood on the first one.' -> burrs_finish, 0.92, manufacturing.",
         "17. 'The 304 plate sticks to a magnet hard and cuts way softer than stainless should.' -> material_nonconformance, 0.85, manufacturing. If the customer stresses the label says 304 and contents are clearly a different material, wrong_part is the secondary_mode.",
         "18. 'Shaft rocks on the surface plate, will not spin true in the chuck.' -> out_of_true, 0.9, manufacturing.",
+        "19. 'Put the leak sealer in per the directions and the drip never stopped. Tried twice.' -> performance_shortfall, 0.85, unclear. It did not break; it did not perform.",
+        "20. 'The picture shows a fully threaded bolt. What I got is threaded an inch and a half. Bag label matches the SKU.' -> listing_mismatch, 0.9, customer_side origin is wrong here: use unclear; the fault is the catalog page.",
+        "21. 'I misread the listing and ordered 1/4 NPT when I needed 1/4 BSPP. Can I exchange?' -> customer_selection, 0.95, customer_side.",
+        "22. 'They work fine but forty dollars for six of these is robbery.' -> value_complaint, 0.9, customer_side.",
+        "23. 'Ordered three weeks ago, tracking still says label created, nothing has arrived.' -> non_delivery, 0.95, fulfillment.",
+        "24. 'The foil tape is so thin it tears coming off the roll and the liner will not release.' -> performance_shortfall, 0.7, manufacturing; secondary other_unclear. Grade too light for the job, plus a defect-like symptom.",
         "",
         "Calibration: 0.9+ means a reviewer would agree without reading twice. 0.7-0.89 means clear primary mode with a plausible alternative. 0.5-0.69 means genuinely ambiguous. Below 0.5 means you are guessing; prefer other_unclear."]
     return "\n".join(lines)
@@ -73,7 +82,7 @@ def build_system():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", choices=["bulk", "reference", "cheap"], default="bulk")
-    ap.add_argument("--source", choices=["public", "synthetic", "both"], default="both")
+    ap.add_argument("--source", choices=["public", "synthetic", "both", "clean"], default="both")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--ids", help="file of record ids to classify (e.g. the gold set)")
     a = ap.parse_args()
@@ -84,6 +93,8 @@ def main():
     records = []
     if a.source in ("public", "both"):
         records += [dict(id=r["id"], source="public_review", text=r["text"]) for r in map(json.loads, open("data/processed/public_sample.jsonl"))]
+    if a.source == "clean":
+        records += [dict(id=r["id"], source="public_review_clean", text=r["text"]) for r in map(json.loads, open("data/gold/clean_pool.jsonl"))]
     if a.source in ("synthetic", "both"):
         records += [dict(id=r["credit_id"], source="synthetic_credit", text=r["note"]) for r in map(json.loads, open("data/processed/synthetic_frame.jsonl")) if r.get("note")]
     if a.ids:

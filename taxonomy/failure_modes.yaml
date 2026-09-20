@@ -1,76 +1,178 @@
-# Failure taxonomy for incoming industrial parts.
-# Written from the applicant's own experience running an additive-manufacturing service
-# bureau, a 3D-printer production floor, and machine-shop work. Phrasings are how
-# customers actually describe the problem, not how a catalog would.
-
+# Failure taxonomy for incoming industrial parts -- VERSION 2.
+# v1 was written from the applicant's experience receiving parts (service bureau, production floor,
+# machine shop). Hand-labeling 200 real reviews under v1 showed two things: customers often cannot
+# distinguish "failed on first use" from "failed early in service" (merged here, with a timing field),
+# and real complaints include whole categories a parts-receiving view never sees: the part works but
+# does not do the job, the listing was wrong, the customer chose wrong, it was not worth the price,
+# it never arrived. v2 adds those. v1_map and other_bucket let v1 ground truth be scored under v2.
 categories:
-  manufacturing_dimensional: "Manufacturing & dimensional"
-  storage_handling: "Storage & handling"
-  fulfillment: "Fulfillment"
-  functional: "Functional & in-service"
-
+  manufacturing_dimensional: Manufacturing & dimensional
+  storage_handling: Storage & handling
+  fulfillment: Fulfillment
+  functional: Functional & in-service
+  customer_experience: Customer experience & expectations
 failure_modes:
-  - id: thread_damage
-    name: "Thread damage"
-    category: manufacturing_dimensional
-    phrasings: ["wouldn't start the nut", "chewed up out of the bag", "cross-threaded on the first turn"]
-  - id: out_of_tolerance
-    name: "Out-of-tolerance dimensions"
-    category: manufacturing_dimensional
-    phrasings: ["won't fit the bore", "calipers say it's 5 thou over", "sloppy in the hole"]
-  - id: thread_mismatch
-    name: "Thread mismatch / wrong pitch or class"
-    category: manufacturing_dimensional
-    phrasings: ["goes two turns and binds", "it's metric-ish", "wobbles on the bolt"]
-  - id: burrs_finish
-    name: "Burrs & poor finishing"
-    category: manufacturing_dimensional
-    phrasings: ["sliced my finger open", "had to deburr every one", "flash still on the part"]
-  - id: out_of_true
-    name: "Out of straight, flat, or round"
-    category: manufacturing_dimensional
-    phrasings: ["rod's bowed like a banana", "rocks on the surface plate", "shaft won't spin true"]
-  - id: material_nonconformance
-    name: "Material or hardness nonconformance"
-    category: manufacturing_dimensional
-    phrasings: ["drills way too easy for 4140", "magnet sticks to my 'stainless'", "snapped at half the rated torque"]
-  - id: plating_coating
-    name: "Plating or coating defects"
-    category: manufacturing_dimensional
-    phrasings: ["zinc flaking off in the bag", "bare spots already rusting", "coating built up in the threads"]
-  - id: corrosion_on_arrival
-    name: "Corrosion on arrival"
-    category: storage_handling
-    phrasings: ["rusty right out of the box", "white crusty stuff on the aluminum", "pitted under the oil"]
-  - id: transit_surface_damage
-    name: "Surface damage from transit"
-    category: storage_handling
-    phrasings: ["dinged up from rattling around loose", "scratched the polished face", "o-ring sealing surface is gouged"]
-  - id: aged_consumables
-    name: "Aged or degraded elastomers & consumables"
-    category: storage_handling
-    phrasings: ["o-rings cracked when I stretched them", "belt feels dry-rotted", "adhesive was past its shelf date", "gasket took a permanent set"]
-  - id: wrong_part
-    name: "Wrong part in the right bag"
-    category: fulfillment
-    phrasings: ["label says 1/4-20, contents are 10-32", "got left-hand thread", "bag of mixed lengths"]
-  - id: short_count
-    name: "Short count or missing components"
-    category: fulfillment
-    phrasings: ["pack of 50 had 46", "no hardware kit in the box", "missing the set screw"]
-  - id: bent_long_stock
-    name: "Bent or crushed long stock"
-    category: fulfillment
-    phrasings: ["tube showed up kinked", "box looked like it got forklifted", "sheet corner folded over"]
-  - id: doa_mechanism
-    name: "Assembly or mechanism failure on first use"
-    category: functional
-    phrasings: ["bearing feels gritty out of the box", "caster won't swivel", "valve leaks past the seat", "gauge reads 5 psi sitting on my desk"]
-  - id: premature_failure
-    name: "Premature failure in service"
-    category: functional
-    phrasings: ["head sheared off while torquing", "hex stripped out with the right key", "spring went soft in a week", "cracked at the weld"]
-  - id: other_unclear
-    name: "Other / unclear"
-    category: null
-    phrasings: []
+- id: thread_damage
+  name: Thread damage
+  category: manufacturing_dimensional
+  phrasings:
+  - wouldn't start the nut
+  - chewed up out of the bag
+  - cross-threaded on the first turn
+- id: out_of_tolerance
+  name: Out-of-tolerance dimensions
+  category: manufacturing_dimensional
+  phrasings:
+  - won't fit the bore
+  - calipers say it's 5 thou over
+  - sloppy in the hole
+- id: thread_mismatch
+  name: Thread mismatch / wrong pitch or class
+  category: manufacturing_dimensional
+  phrasings:
+  - goes two turns and binds
+  - it's metric-ish
+  - wobbles on the bolt
+- id: burrs_finish
+  name: Burrs & poor finishing
+  category: manufacturing_dimensional
+  phrasings:
+  - sliced my finger open
+  - had to deburr every one
+  - flash still on the part
+- id: out_of_true
+  name: Out of straight, flat, or round
+  category: manufacturing_dimensional
+  phrasings:
+  - rod's bowed like a banana
+  - rocks on the surface plate
+  - shaft won't spin true
+- id: material_nonconformance
+  name: Material or hardness nonconformance
+  category: manufacturing_dimensional
+  phrasings:
+  - drills way too easy for 4140
+  - magnet sticks to my 'stainless'
+  - snapped at half the rated torque
+- id: plating_coating
+  name: Plating or coating defects
+  category: manufacturing_dimensional
+  phrasings:
+  - zinc flaking off in the bag
+  - bare spots already rusting
+  - coating built up in the threads
+- id: corrosion_on_arrival
+  name: Corrosion on arrival
+  category: storage_handling
+  phrasings:
+  - rusty right out of the box
+  - white crusty stuff on the aluminum
+  - pitted under the oil
+- id: transit_surface_damage
+  name: Surface damage from transit
+  category: storage_handling
+  phrasings:
+  - dinged up from rattling around loose
+  - scratched the polished face
+  - o-ring sealing surface is gouged
+- id: aged_consumables
+  name: Aged or degraded elastomers & consumables
+  category: storage_handling
+  phrasings:
+  - o-rings cracked when I stretched them
+  - belt feels dry-rotted
+  - adhesive was past its shelf date
+  - gasket took a permanent set
+- id: wrong_part
+  name: Wrong part in the right bag
+  category: fulfillment
+  phrasings:
+  - label says 1/4-20, contents are 10-32
+  - got left-hand thread
+  - bag of mixed lengths
+- id: short_count
+  name: Short count or missing components
+  category: fulfillment
+  phrasings:
+  - pack of 50 had 46
+  - no hardware kit in the box
+  - missing the set screw
+- id: bent_long_stock
+  name: Bent or crushed long stock
+  category: fulfillment
+  phrasings:
+  - tube showed up kinked
+  - box looked like it got forklifted
+  - sheet corner folded over
+- id: functional_failure
+  name: Functional failure (first use or early in service)
+  category: functional
+  phrasings:
+  - bearing feels gritty out of the box
+  - caster won't swivel
+  - valve leaks past the seat
+  - gauge reads 5 psi sitting on my desk
+  - head sheared off while torquing
+  - hex stripped out with the right key
+  - spring went soft in a week
+  - cracked at the weld
+  note: Merged from v1 'assembly or mechanism failure on first use' and 'premature failure in service'. Customers often cannot say which; the
+    timing field captures it when they can.
+- id: performance_shortfall
+  name: Performance shortfall (works, but doesn't do the job)
+  category: functional
+  phrasings:
+  - the leak sealant never stopped the leak
+  - adhesive peels with a little heat
+  - ring cutter won't touch tungsten
+  - tape is thin as foil
+  - not strong enough for what it's rated
+  - filter clogs in a day
+- id: listing_mismatch
+  name: Product differs from the listing
+  category: customer_experience
+  phrasings:
+  - photo shows full thread, the 4-inch is partial thread
+  - title says 10-pack, it's one roll
+  - not the size stated on the page
+  - description said stainless, it's plated
+  note: The right SKU shipped and the bag matches it; the catalog page was wrong. Distinct from wrong_part.
+- id: customer_selection
+  name: Customer ordered or applied the wrong part
+  category: customer_experience
+  phrasings:
+  - my mistake, ordered the wrong length
+  - didn't realize it was metric
+  - doesn't fit my application, my fault
+  - should have ordered the heavier duty one
+- id: value_complaint
+  name: Works, but not worth the price
+  category: customer_experience
+  phrasings:
+  - overpriced for what it is
+  - should cost half this
+  - not worth the money
+  - you're paying for the name
+- id: non_delivery
+  name: Never arrived
+  category: fulfillment
+  phrasings:
+  - never showed up
+  - tracking never updated
+  - package lost
+  - still waiting three weeks later
+- id: other_unclear
+  name: Other / unclear
+  category: null
+  phrasings: []
+version: 2
+v1_map:
+  doa_mechanism: functional_failure
+  premature_failure: functional_failure
+other_bucket:
+- other_unclear
+- performance_shortfall
+- listing_mismatch
+- customer_selection
+- value_complaint
+- non_delivery
