@@ -233,6 +233,10 @@ if v1_gold:
 # v2 clean: 100 fresh reviews labeled under v2, never seen before -- the headline number
 clean_gold = load("data/gold/gold_v2_clean.jsonl")
 if clean_gold: acc["gold_v2_clean"] = gold_block(clean_gold, cms_v2, "v2clean")
+# frozen-protocol result: classifier prompt frozen BEFORE the clean set was labeled (archived outputs)
+if clean_gold and Path("data/processed/v2_frozen/classified_reference.jsonl").exists():
+    cms_fr = {t: {r["id"]: r for r in load(f"data/processed/v2_frozen/classified_{t}.jsonl") if "error" not in r} for t in ("bulk", "reference", "cheap")}
+    acc["gold_v2_clean_frozen"] = gold_block(clean_gold, cms_fr, "v2frozen")
 # keep the old keys the site reads, pointing at the best available v2 set
 best = acc.get("gold_v2_clean") or acc.get("gold_v2_relabeled")
 if best:

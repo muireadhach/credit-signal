@@ -1,24 +1,33 @@
 model=claude-sonnet-5 classifying 2000 records (skipping 0 already done)
-  100/2000  spend $21.98
-  200/2000  spend $22.97
-  300/2000  spend $23.66
-  400/2000  spend $24.40
-  500/2000  spend $25.13
-  600/2000  spend $25.89
-  700/2000  spend $26.61
-  800/2000  spend $27.30
-  900/2000  spend $27.73
-  1000/2000  spend $27.95
-  1100/2000  spend $28.18
-  1200/2000  spend $28.41
-  1300/2000  spend $28.64
-  1400/2000  spend $28.87
-  1500/2000  spend $29.13
-  1600/2000  spend $29.33
-  1700/2000  spend $29.56
-  1800/2000  spend $29.78
-  1900/2000  spend $30.02
-  2000/2000  spend $30.24
-done -> data/processed/classified_bulk.jsonl | errors in file: 0 | total spend $30.24
+  100/2000  spend $32.03
+  200/2000  spend $33.33
+  300/2000  spend $34.12
+  400/2000  spend $34.93
+  500/2000  spend $35.64
+  600/2000  spend $36.40
+  700/2000  spend $36.64
+  800/2000  spend $36.88
+  900/2000  spend $37.11
+  1000/2000  spend $37.34
+  1100/2000  spend $37.57
+  1200/2000  spend $37.82
+  1300/2000  spend $38.06
+  1400/2000  spend $38.29
+  1500/2000  spend $38.52
+  1600/2000  spend $38.76
+  1700/2000  spend $39.00
+  1800/2000  spend $39.23
+  1900/2000  spend $39.47
+  2000/2000  spend $39.70
+done -> data/processed/classified_bulk.jsonl | errors in file: 0 | total spend $39.70
 model=claude-sonnet-5 classifying 1500 records (skipping 1998 already done)
-STOP: API credit balance exhausted (CR-100000)
+  100/1500  spend $39.93
+  200/1500  spend $40.16
+  300/1500  spend $40.39
+  400/1500  spend $40.62
+  500/1500  spend $40.86
+  600/1500  spend $41.08
+  700/1500  spend $41.32
+  800/1500  spend $41.54
+  900/1500  spend $41.77
+  1000/1500  spend $41.99
