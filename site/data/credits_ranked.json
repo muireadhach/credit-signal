@@ -1,7 +1,7 @@
 {
  "n": 1500,
  "total_credit_usd": 156149.33,
- "total_impact_typical_usd": 3043148,
+ "total_impact_typical_usd": 2887524,
  "rate_per_hour": 500,
  "sensitivity": [
   250,
@@ -26,7 +26,7 @@
     "high": 116106
    },
    "safety": false,
-   "rank_by_credit": 14,
+   "rank_by_credit": 13,
    "rank_by_impact": 12
   },
   {
@@ -34,39 +34,39 @@
    "name": "Out-of-tolerance dimensions",
    "category": "Manufacturing & dimensional",
    "n": 94,
-   "credit_usd": 12399.54,
+   "credit_usd": 12982.64,
    "downtime_hours": {
-    "low": 49.0,
-    "typical": 196.0,
-    "high": 784.0
+    "low": 48.2,
+    "typical": 193.0,
+    "high": 772.0
    },
    "impact_usd": {
-    "low": 36900,
-    "typical": 110400,
-    "high": 404400
+    "low": 37108,
+    "typical": 109483,
+    "high": 398983
    },
    "safety": false,
-   "rank_by_credit": 4,
-   "rank_by_impact": 9
+   "rank_by_credit": 3,
+   "rank_by_impact": 7
   },
   {
    "mode": "thread_mismatch",
    "name": "Thread mismatch / wrong pitch or class",
    "category": "Manufacturing & dimensional",
-   "n": 68,
-   "credit_usd": 5519.26,
+   "n": 67,
+   "credit_usd": 5456.3,
    "downtime_hours": {
-    "low": 16.8,
-    "typical": 67.0,
-    "high": 268.0
+    "low": 16.6,
+    "typical": 66.5,
+    "high": 266.0
    },
    "impact_usd": {
-    "low": 13894,
-    "typical": 39019,
-    "high": 139519
+    "low": 13769,
+    "typical": 38706,
+    "high": 138456
    },
    "safety": false,
-   "rank_by_credit": 12,
+   "rank_by_credit": 11,
    "rank_by_impact": 13
   },
   {
@@ -93,17 +93,17 @@
    "mode": "out_of_true",
    "name": "Out of straight, flat, or round",
    "category": "Manufacturing & dimensional",
-   "n": 57,
-   "credit_usd": 9602.93,
+   "n": 54,
+   "credit_usd": 8914.39,
    "downtime_hours": {
-    "low": 51.0,
-    "typical": 204.0,
-    "high": 612.0
+    "low": 48.0,
+    "typical": 192.0,
+    "high": 576.0
    },
    "impact_usd": {
-    "low": 35103,
-    "typical": 111603,
-    "high": 315603
+    "low": 32914,
+    "typical": 104914,
+    "high": 296914
    },
    "safety": false,
    "rank_by_credit": 9,
@@ -113,17 +113,17 @@
    "mode": "material_nonconformance",
    "name": "Material or hardness nonconformance",
    "category": "Manufacturing & dimensional",
-   "n": 102,
-   "credit_usd": 11795.04,
+   "n": 92,
+   "credit_usd": 10518.68,
    "downtime_hours": {
-    "low": 216.0,
-    "typical": 864.0,
-    "high": 3888.0
+    "low": 200.0,
+    "typical": 800.0,
+    "high": 3600.0
    },
    "impact_usd": {
-    "low": 119795,
-    "typical": 443795,
-    "high": 1955795
+    "low": 110519,
+    "typical": 410519,
+    "high": 1810519
    },
    "safety": true,
    "rank_by_credit": 6,
@@ -147,7 +147,7 @@
    },
    "safety": false,
    "rank_by_credit": 16,
-   "rank_by_impact": 16
+   "rank_by_impact": 17
   },
   {
    "mode": "corrosion_on_arrival",
@@ -166,7 +166,7 @@
     "high": 155012
    },
    "safety": false,
-   "rank_by_credit": 11,
+   "rank_by_credit": 8,
    "rank_by_impact": 11
   },
   {
@@ -186,44 +186,44 @@
     "high": 289683
    },
    "safety": false,
-   "rank_by_credit": 7,
-   "rank_by_impact": 10
+   "rank_by_credit": 5,
+   "rank_by_impact": 9
   },
   {
    "mode": "aged_consumables",
    "name": "Aged or degraded elastomers & consumables",
    "category": "Storage & handling",
-   "n": 126,
-   "credit_usd": 5138.44,
+   "n": 112,
+   "credit_usd": 4443.99,
    "downtime_hours": {
-    "low": 60.8,
-    "typical": 243.0,
-    "high": 1458.0
+    "low": 55.8,
+    "typical": 223.0,
+    "high": 1338.0
    },
    "impact_usd": {
-    "low": 35513,
-    "typical": 126638,
-    "high": 734138
+    "low": 32319,
+    "typical": 115944,
+    "high": 673444
    },
    "safety": false,
-   "rank_by_credit": 13,
-   "rank_by_impact": 7
+   "rank_by_credit": 14,
+   "rank_by_impact": 6
   },
   {
    "mode": "wrong_part",
    "name": "Wrong part in the right bag",
    "category": "Fulfillment",
-   "n": 171,
-   "credit_usd": 16015.02,
+   "n": 170,
+   "credit_usd": 15850.07,
    "downtime_hours": {
-    "low": 312.0,
-    "typical": 936.0,
-    "high": 3744.0
+    "low": 308.0,
+    "typical": 924.0,
+    "high": 3696.0
    },
    "impact_usd": {
-    "low": 172015,
-    "typical": 484015,
-    "high": 1888015
+    "low": 169850,
+    "typical": 477850,
+    "high": 1863850
    },
    "safety": false,
    "rank_by_credit": 2,
@@ -246,88 +246,168 @@
     "high": 902945
    },
    "safety": false,
-   "rank_by_credit": 5,
+   "rank_by_credit": 4,
    "rank_by_impact": 4
   },
   {
    "mode": "bent_long_stock",
    "name": "Bent or crushed long stock",
    "category": "Fulfillment",
-   "n": 35,
-   "credit_usd": 9343.18,
+   "n": 36,
+   "credit_usd": 9686.26,
    "downtime_hours": {
-    "low": 106.0,
-    "typical": 318.0,
-    "high": 954.0
+    "low": 114.0,
+    "typical": 342.0,
+    "high": 1026.0
    },
    "impact_usd": {
-    "low": 62343,
-    "typical": 168343,
-    "high": 486343
+    "low": 66686,
+    "typical": 180686,
+    "high": 522686
    },
    "safety": false,
-   "rank_by_credit": 10,
-   "rank_by_impact": 6
-  },
-  {
-   "mode": "doa_mechanism",
-   "name": "Assembly or mechanism failure on first use",
-   "category": "Functional & in-service",
-   "n": 153,
-   "credit_usd": 16944.1,
-   "downtime_hours": {
-    "low": 145.5,
-    "typical": 582.0,
-    "high": 1746.0
-   },
-   "impact_usd": {
-    "low": 89694,
-    "typical": 307944,
-    "high": 889944
-   },
-   "safety": false,
-   "rank_by_credit": 1,
+   "rank_by_credit": 7,
    "rank_by_impact": 5
   },
   {
-   "mode": "premature_failure",
-   "name": "Premature failure in service",
+   "mode": "functional_failure",
+   "name": "Functional failure (first use or early in service)",
    "category": "Functional & in-service",
-   "n": 118,
-   "credit_usd": 13545.36,
+   "n": 281,
+   "credit_usd": 30821.26,
    "downtime_hours": {
-    "low": 464.0,
-    "typical": 1392.0,
-    "high": 5568.0
+    "low": 527.0,
+    "typical": 1581.0,
+    "high": 6324.0
    },
    "impact_usd": {
-    "low": 245545,
-    "typical": 709545,
-    "high": 2797545
+    "low": 294321,
+    "typical": 821321,
+    "high": 3192821
    },
    "safety": true,
-   "rank_by_credit": 3,
+   "rank_by_credit": 1,
    "rank_by_impact": 1
+  },
+  {
+   "mode": "performance_shortfall",
+   "name": "Performance shortfall (works, but doesn't do the job)",
+   "category": "Functional & in-service",
+   "n": 21,
+   "credit_usd": 2073.63,
+   "downtime_hours": {
+    "low": 22.5,
+    "typical": 67.5,
+    "high": 270.0
+   },
+   "impact_usd": {
+    "low": 13324,
+    "typical": 35824,
+    "high": 137074
+   },
+   "safety": false,
+   "rank_by_credit": 17,
+   "rank_by_impact": 14
+  },
+  {
+   "mode": "listing_mismatch",
+   "name": "Product differs from the listing",
+   "category": "Customer experience & expectations",
+   "n": 2,
+   "credit_usd": 245.4,
+   "downtime_hours": {
+    "low": 4.0,
+    "typical": 16.0,
+    "high": 48.0
+   },
+   "impact_usd": {
+    "low": 2245,
+    "typical": 8245,
+    "high": 24245
+   },
+   "safety": false,
+   "rank_by_credit": 18,
+   "rank_by_impact": 18
+  },
+  {
+   "mode": "customer_selection",
+   "name": "Customer selection or misuse",
+   "category": "Customer experience & expectations",
+   "n": 64,
+   "credit_usd": 5750.73,
+   "downtime_hours": {
+    "low": 29.5,
+    "typical": 118.0,
+    "high": 354.0
+   },
+   "impact_usd": {
+    "low": 20501,
+    "typical": 64751,
+    "high": 182751
+   },
+   "safety": false,
+   "rank_by_credit": 10,
+   "rank_by_impact": 10
+  },
+  {
+   "mode": "value_complaint",
+   "name": "Works, but not worth the price",
+   "category": "Customer experience & expectations",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0.0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 19,
+   "rank_by_impact": 19
+  },
+  {
+   "mode": "non_delivery",
+   "name": "Never arrived",
+   "category": "Fulfillment",
+   "n": 0,
+   "credit_usd": 0,
+   "downtime_hours": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "impact_usd": {
+    "low": 0,
+    "typical": 0,
+    "high": 0
+   },
+   "safety": false,
+   "rank_by_credit": 20,
+   "rank_by_impact": 20
   },
   {
    "mode": "other_unclear",
    "name": "Other / unclear",
    "category": "Unclear",
-   "n": 118,
-   "credit_usd": 11578.44,
+   "n": 49,
+   "credit_usd": 5137.96,
    "downtime_hours": {
     "low": 0.0,
-    "typical": 53.5,
-    "high": 214.0
+    "typical": 21.2,
+    "high": 85.0
    },
    "impact_usd": {
-    "low": 11578,
-    "typical": 38328,
-    "high": 118578
+    "low": 5138,
+    "typical": 15763,
+    "high": 47638
    },
    "safety": false,
-   "rank_by_credit": 8,
-   "rank_by_impact": 14
+   "rank_by_credit": 12,
+   "rank_by_impact": 16
   }
  ]
 }

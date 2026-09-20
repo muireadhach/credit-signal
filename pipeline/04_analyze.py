@@ -199,7 +199,7 @@ def gold_block(gold, cms, tag_prefix):
     import re as _re
     hconf = {i: (_re.match(r"\[(high|medium|low)\]", n.strip()) or [None, None])[1] for i, n in gnote.items()}
     out = dict(n=len(g), public_n=sum(i in public for i in g), synthetic_n=sum(i in frame for i in g))
-    hs = [(g[i], frame[i]["true_mode"]) for i in g if i in frame]
+    hs = [(V1MAP.get(g[i], g[i]), frame[i]["true_mode"]) for i in g if i in frame]  # v1 human labels mapped so the merge is not counted as disagreement
     out["human_vs_synthetic_truth"] = dict(n=len(hs), agree=sum(norm(a) == norm(b) for a, b in hs))
     pubc = Counter(g[i] for i in g if i in public); out["majority_baseline"] = round(pubc.most_common(1)[0][1] / max(sum(pubc.values()), 1), 3) if pubc else None
     for tag, cm in cms.items():

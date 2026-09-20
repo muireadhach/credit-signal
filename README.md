@@ -4,7 +4,7 @@ Root-cause analysis of customer credits and complaints with a language model.
 
 **The problem.** When a distributor issues a credit, the *reason* lives in free text: a service rep's note, a returned-goods comment, a complaint email. Reason codes are coarse ("damaged", "wrong item"). The real driver — a packaging spec, a carrier lane, a product class, a warehouse — is buried in prose nobody reads at volume, so the same failure gets credited over and over instead of fixed once.
 
-**What this does.** Reads the free text → extracts a structured failure mode (from a 15-item taxonomy written from shop experience), a confidence, and a verbatim evidence quote → joins to the metadata the order system already holds → ranks causes by estimated **customer downtime**, not just refund dollars → routes low-confidence records to a human review queue.
+**What this does.** Reads the free text → extracts a structured failure mode (from a 20-item taxonomy: 15 written from shop experience, revised after hand-labeling 200 real reviews), a confidence, and a verbatim evidence quote → joins to the metadata the order system already holds → ranks causes by estimated **customer downtime**, not just refund dollars → routes low-confidence records to a human review queue.
 
 **What it is not.** Not McMaster-Carr data. Not a chatbot. Not a claim about anyone's operation. It is a method, tested against a known answer on proxy data, with the accuracy and cost measured and reported.
 
@@ -16,7 +16,7 @@ See the live demo: [credit-signal-self.vercel.app](https://credit-signal-self.ve
 
 | Layer | What | Why |
 |---|---|---|
-| **Real** | 2,000 one- and two-star reviews from the *Industrial & Scientific* category of [Amazon Reviews 2023](https://amazon-reviews-2023.github.io/) (UCSD / McAuley Lab), stratified 70/30 toward reviews using shop vocabulary | Genuine, messy customer language about industrial products |
+| **Real** | 2,100 one- and two-star reviews (2,000 + a 100-review clean test set) from the *Industrial & Scientific* category of [Amazon Reviews 2023](https://amazon-reviews-2023.github.io/) (UCSD / McAuley Lab), stratified 70/30 toward reviews using shop vocabulary | Genuine, messy customer language about industrial products |
 | **Synthetic** | 1,500 credit memos with product class, packaging spec, carrier, origin DC, date, credit amount; notes written by a model that saw *only* the failure mode and product class | The record structure no public dataset has. Two patterns seeded on purpose so the method can be checked against a known answer |
 
 Downtime hours per failure mode (`taxonomy/impact_weights.yaml`) are an operator's estimate, not measured. The demo shows the ranking under that assumption and makes the assumption visible.
@@ -30,14 +30,16 @@ pipeline/02_generate_synthetic.py --frame   metadata + hidden ground truth + see
 pipeline/02b_write_notes.py       Claude Opus 5 writes the free-text notes (sees mode + product class only)
 pipeline/03_classify.py --model bulk|reference|cheap   structured extraction with confidence + evidence
 pipeline/04_analyze.py            rankings, seeded-pattern tests, coverage/precision curve, accuracy, cost → site/data/*.json
-pipeline/05_build_gold_pool.py    200-record pool for hand labeling → tools/label.html
+pipeline/05_build_gold_pool.py    200-record pool for hand labeling → tools/label.html (v2 labelers: tools/label_v2_*.html)
+pipeline/06_build_memo.py         memo/memo.md → site/memo.html
+pipeline/07_build_api_prompt.py   freezes the classifier prompt into api/_prompt.py for the live demo endpoint
 ```
 
 Three models, on purpose: **Opus 5** writes the notes and is the accuracy reference; **Sonnet 5** classifies everything at ~⅓ the price; **Haiku 4.5** runs on the gold set only, for a three-way comparison. Whether the cheaper model is good enough is a measured result. (Haiku was the original bulk choice — it would not cache a ~2K-token prompt, which made it cost *more* per record than cached Sonnet. Cheaper per token is not cheaper per record.)
 
 Every API call logs its tokens and cost to `data/processed/usage.jsonl`; the demo's cost section is computed from that file.
 
-The demo (`site/`) is plain HTML + SVG with no framework and no runtime API calls: the analysis runs once, the site serves the results. It deploys anywhere static files do.
+The demo (`site/`) is plain HTML + SVG with no framework. The analysis runs once and the site serves the results; the one live piece is `api/classify.py`, a small serverless function that runs the same classifier on a note you paste in (key held in the host's environment, input capped, throttled).
 
 ## Setup
 
@@ -45,7 +47,7 @@ The demo (`site/`) is plain HTML + SVG with no framework and no runtime API call
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 echo 'ANTHROPIC_API_KEY=sk-ant-...' > .env
 .venv/bin/python pipeline/02_generate_synthetic.py --frame
-# ...then the scripts above in order. Total API spend for the full run is under $25.
+# ...then the scripts above in order. Total API spend for everything here, across two taxonomy versions, was $47.
 python3 -m http.server 8321 --directory site   # local preview
 ```
 

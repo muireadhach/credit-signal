@@ -89,7 +89,7 @@
     ["Records analyzed", fmt.n((S?.public_classified || 0) + (S?.synthetic_classified || 0)), `${fmt.n(S?.public_classified)} real reviews · ${fmt.n(S?.synthetic_classified)} synthetic credits`],
     ["#1 cause by customer impact", topImpact ? topImpact.name : "—", topImpact ? `#${topImpact.rank_by_credit} when ranked by refund alone` : ""],
     ["Seeded pattern, found blind", seedA?.llm?.lift ? fmt.x(seedA.llm.lift) + " lift" : "—", ST?.scan_cells ? `ranked #${ST.scan_seeded_ranks?.[0]} of ${ST.scan_cells} cells scanned · generic search: no signal` : ""],
-    ["Agrees with a human, real reviews", AC?.gold_reference ? fmt.pct(AC.gold_reference.public_accuracy) : "—", AC?.gold_reference ? `${fmt.pct(AC.gold_reference.by_human_confidence?.high?.accuracy)} on the ${AC.gold_reference.by_human_confidence?.high?.n} records the human was sure of · ${fmt.pct(AC.bulk?.accuracy)} vs synthetic truth` : "human gold set pending"],
+    ["Agrees with a human, 100 unseen reviews", AC?.gold_v2_clean?.reference ? fmt.pct(AC.gold_v2_clean.reference.public_accuracy) : "—", AC?.gold_v2_clean?.reference ? `${fmt.pct(AC.gold_v2_clean.reference.by_human_confidence?.high?.accuracy)} where the human was sure · was ${fmt.pct(AC.gold_v1?.reference?.public_accuracy)} under taxonomy v1` : "human gold set pending"],
   ].map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${esc(v)}</div><div class="d">${esc(d)}</div></div>`).join("");
 
   /* ---------- drivers ---------- */
@@ -164,24 +164,25 @@
   /* ---------- accuracy ---------- */
   if (AC) {
     const G = { bulk: AC.gold_bulk, reference: AC.gold_reference, cheap: AC.gold_cheap };
+    const V1 = AC.gold_v1, FR = AC.gold_v2_clean_frozen, CL = AC.gold_v2_clean, RL = AC.gold_v2_relabeled;
     const tiles = [];
-    if (AC.bulk) tiles.push(["Sonnet 5 vs synthetic truth", fmt.pct(AC.bulk.accuracy), `${fmt.n(AC.bulk.n)} records · macro-F1 ${AC.bulk.macro_f1}`]);
-    if (AC.reference) tiles.push(["Opus 5 vs synthetic truth", fmt.pct(AC.reference.accuracy), `${fmt.n(AC.reference.n)} records · agree with Sonnet ${fmt.pct(AC.agreement)}`]);
-    if (G.bulk) tiles.push(["Sonnet 5 vs human, real reviews", fmt.pct(G.bulk.public_accuracy), `${G.bulk.public_n} hand-labeled reviews`]);
-    if (G.reference) tiles.push(["Opus 5 vs human, real reviews", fmt.pct(G.reference.public_accuracy), `${G.reference.public_n} hand-labeled reviews`]);
-    if (G.cheap) tiles.push(["Haiku 4.5 vs human, real reviews", fmt.pct(G.cheap.public_accuracy), `${G.cheap.public_n} hand-labeled reviews`]);
+    if (V1?.reference) tiles.push(["v1 taxonomy · 150 real reviews", fmt.pct(V1.reference.public_accuracy), "Opus 5 vs the author's labels · 34% of labels were 'other'"]);
+    if (RL?.reference) tiles.push(["v2 taxonomy · same 150, re-labeled", fmt.pct(RL.reference.public_accuracy), "merged two modes, added five the reviews demanded"]);
+    if (FR?.reference) tiles.push(["v2 · 100 unseen reviews, rules frozen", fmt.pct(FR.reference.public_accuracy), "labeled after the classifier was fixed — the unarguable number"]);
+    if (CL?.reference) tiles.push(["v2 · same 100, written guideline", fmt.pct(CL.reference.public_accuracy), `8 boundary rules from labeling · Sonnet ${fmt.pct(CL.bulk?.public_accuracy)} · Haiku ${fmt.pct(CL.cheap?.public_accuracy)}`]);
+    if (AC.reference) tiles.push(["Synthetic ground truth", fmt.pct(AC.reference.accuracy), `Opus 5 · Sonnet ${fmt.pct(AC.bulk?.accuracy)} · agree ${fmt.pct(AC.agreement)}`]);
     $("#acc-tiles").innerHTML = tiles.map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${esc(d)}</div></div>`).join("");
-    if (G.reference) {
+    if (CL?.reference) {
       const H = ["high", "medium", "low"];
       $("#gold-table").innerHTML = `<thead><tr><th>Human confidence</th><th class="n">Records</th><th class="n">Opus 5</th><th class="n">Sonnet 5</th><th class="n">Haiku 4.5</th></tr></thead><tbody>` +
-        H.map(h => `<tr><td>${h}</td><td class="n">${G.reference.by_human_confidence[h]?.n ?? "—"}</td>` + ["reference", "bulk", "cheap"].map(m => `<td class="n">${fmt.pct(G[m]?.by_human_confidence?.[h]?.accuracy)}</td>`).join("") + `</tr>`).join("") +
-        `<tr><td><b>All 200</b></td><td class="n">200</td>` + ["reference", "bulk", "cheap"].map(m => `<td class="n"><b>${fmt.pct(G[m]?.accuracy)}</b></td>`).join("") + `</tr></tbody>`;
-      $("#gen-check").textContent = `${AC.gold.human_vs_synthetic_truth.agree} of ${AC.gold.human_vs_synthetic_truth.n}`;
+        H.map(h => `<tr><td>${h}</td><td class="n">${CL.reference.by_human_confidence[h]?.n ?? "—"}</td>` + ["reference", "bulk", "cheap"].map(m => `<td class="n">${fmt.pct(CL[m]?.by_human_confidence?.[h]?.accuracy)}</td>`).join("") + `</tr>`).join("") +
+        `<tr><td><b>All 100</b></td><td class="n">100</td>` + ["reference", "bulk", "cheap"].map(m => `<td class="n"><b>${fmt.pct(CL[m]?.accuracy)}</b></td>`).join("") + `</tr></tbody>`;
+      $("#gen-check").textContent = RL ? `${RL.human_vs_synthetic_truth.agree} of ${RL.human_vs_synthetic_truth.n}` : "—";
       $("#real-curve").innerHTML = `<thead><tr><th>Threshold</th><th class="n">Auto-filed</th><th class="n">Precision (Opus)</th><th class="n">Precision (Sonnet)</th></tr></thead><tbody>` +
-        G.reference.public_curve.map((c, i) => `<tr><td>≥ ${c.threshold}</td><td class="n">${fmt.pct(c.coverage)}</td><td class="n">${fmt.pct(c.precision)}</td><td class="n">${fmt.pct(G.bulk?.public_curve?.[i]?.precision)}</td></tr>`).join("") + "</tbody>";
+        CL.reference.public_curve.map((c, i) => `<tr><td>≥ ${c.threshold}</td><td class="n">${fmt.pct(c.coverage)}</td><td class="n">${fmt.pct(c.precision)}</td><td class="n">${fmt.pct(CL.bulk?.public_curve?.[i]?.precision)}</td></tr>`).join("") + "</tbody>";
     }
-    if (AC.bulk) $("#confusions").innerHTML = `<thead><tr><th>Human said</th><th>Opus 5 said</th><th class="n">n</th></tr></thead><tbody>` + (G.reference?.top_disagreements || AC.bulk.top_confusions.map(c => ({ human: c.truth, model: c.predicted, n: c.n }))).map(c => `<tr><td>${esc(c.human)}</td><td>${esc(c.model)}</td><td class="n">${c.n}</td></tr>`).join("") + "</tbody>";
-    $("#errors").innerHTML = (G.reference?.examples || []).slice(0, 5).map(e => `<div class="quote">${esc(e.text)}<span class="who">human: ${esc(e.human)} · model: ${esc(e.model)} (${e.conf})</span>${e.note ? `<span class="who">human's note: ${esc(e.note)}</span>` : ""}</div>`).join("");
+    if (AC.bulk) $("#confusions").innerHTML = `<thead><tr><th>Human said</th><th>Opus 5 said</th><th class="n">n</th></tr></thead><tbody>` + ((CL || RL)?.reference?.top_disagreements || AC.bulk.top_confusions.map(c => ({ human: c.truth, model: c.predicted, n: c.n }))).map(c => `<tr><td>${esc(c.human)}</td><td>${esc(c.model)}</td><td class="n">${c.n}</td></tr>`).join("") + "</tbody>";
+    $("#errors").innerHTML = ((CL || RL)?.reference?.examples || []).slice(0, 5).map(e => `<div class="quote">${esc(e.text)}<span class="who">human: ${esc(e.human)} · model: ${esc(e.model)} (${e.conf})</span>${e.note ? `<span class="who">human's note: ${esc(e.note)}</span>` : ""}</div>`).join("");
   }
 
   /* ---------- cost ---------- */

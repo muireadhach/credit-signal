@@ -1,8 +1,8 @@
 {
  "bulk": {
   "n": 1500,
-  "accuracy": 0.943,
-  "macro_f1": 0.948,
+  "accuracy": 0.965,
+  "macro_f1": 0.968,
   "per_mode": [
    {
     "mode": "thread_damage",
@@ -24,9 +24,9 @@
     "mode": "thread_mismatch",
     "name": "Thread mismatch / wrong pitch or class",
     "support": 64,
-    "precision": 0.926,
+    "precision": 0.94,
     "recall": 0.984,
-    "f1": 0.955
+    "f1": 0.962
    },
    {
     "mode": "burrs_finish",
@@ -40,17 +40,17 @@
     "mode": "out_of_true",
     "name": "Out of straight, flat, or round",
     "support": 55,
-    "precision": 0.947,
+    "precision": 1.0,
     "recall": 0.982,
-    "f1": 0.964
+    "f1": 0.991
    },
    {
     "mode": "material_nonconformance",
     "name": "Material or hardness nonconformance",
     "support": 69,
-    "precision": 0.676,
+    "precision": 0.75,
     "recall": 1.0,
-    "f1": 0.807
+    "f1": 0.857
    },
    {
     "mode": "plating_coating",
@@ -80,17 +80,17 @@
     "mode": "aged_consumables",
     "name": "Aged or degraded elastomers & consumables",
     "support": 104,
-    "precision": 0.825,
+    "precision": 0.929,
     "recall": 1.0,
-    "f1": 0.904
+    "f1": 0.963
    },
    {
     "mode": "wrong_part",
     "name": "Wrong part in the right bag",
     "support": 172,
-    "precision": 0.977,
-    "recall": 0.971,
-    "f1": 0.974
+    "precision": 0.988,
+    "recall": 0.977,
+    "f1": 0.982
    },
    {
     "mode": "short_count",
@@ -104,33 +104,65 @@
     "mode": "bent_long_stock",
     "name": "Bent or crushed long stock",
     "support": 36,
-    "precision": 0.971,
-    "recall": 0.944,
+    "precision": 0.972,
+    "recall": 0.972,
+    "f1": 0.972
+   },
+   {
+    "mode": "functional_failure",
+    "name": "Functional failure (first use or early in service)",
+    "support": 295,
+    "precision": 0.982,
+    "recall": 0.936,
     "f1": 0.958
    },
    {
-    "mode": "doa_mechanism",
-    "name": "Assembly or mechanism failure on first use",
-    "support": 163,
-    "precision": 0.98,
-    "recall": 0.92,
-    "f1": 0.949
+    "mode": "performance_shortfall",
+    "name": "Performance shortfall (works, but doesn't do the job)",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
    },
    {
-    "mode": "premature_failure",
-    "name": "Premature failure in service",
-    "support": 132,
-    "precision": 0.949,
-    "recall": 0.848,
-    "f1": 0.896
+    "mode": "listing_mismatch",
+    "name": "Product differs from the listing",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "customer_selection",
+    "name": "Customer selection or misuse",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "value_complaint",
+    "name": "Works, but not worth the price",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "non_delivery",
+    "name": "Never arrived",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
    },
    {
     "mode": "other_unclear",
     "name": "Other / unclear",
     "support": 157,
-    "precision": 1.0,
-    "recall": 0.752,
-    "f1": 0.858
+    "precision": 0.993,
+    "recall": 0.86,
+    "f1": 0.922
    }
   ],
   "confusion": [
@@ -150,6 +182,10 @@
     0,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
     0
    ],
    [
@@ -157,7 +193,6 @@
     89,
     1,
     0,
-    1,
     0,
     0,
     0,
@@ -168,12 +203,21 @@
     0,
     0,
     0,
-    0
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
    ],
    [
     0,
     1,
     63,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     0,
@@ -204,6 +248,10 @@
     0,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
     0
    ],
    [
@@ -220,6 +268,10 @@
     0,
     0,
     1,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     0
@@ -240,6 +292,10 @@
     0,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
     0
    ],
    [
@@ -250,6 +306,10 @@
     0,
     0,
     31,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     0,
@@ -276,6 +336,10 @@
     0,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
     0
    ],
    [
@@ -288,6 +352,10 @@
     0,
     0,
     69,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     0,
@@ -312,12 +380,16 @@
     0,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
     0
    ],
    [
     0,
     1,
-    2,
+    1,
     0,
     0,
     2,
@@ -325,7 +397,11 @@
     0,
     0,
     0,
-    167,
+    168,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     0,
@@ -348,42 +424,10 @@
     0,
     0,
     0,
-    0
-   ],
-   [
     0,
     0,
     0,
     0,
-    1,
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    34,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    2,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    8,
-    0,
-    0,
-    0,
-    150,
-    2,
     0
    ],
    [
@@ -392,7 +436,6 @@
     0,
     0,
     0,
-    19,
     0,
     0,
     0,
@@ -400,27 +443,168 @@
     0,
     0,
     0,
+    35,
     0,
-    112,
+    0,
+    0,
+    0,
+    0,
+    0,
     0
    ],
    [
     0,
     1,
-    1,
     0,
     1,
+    0,
     12,
     0,
     0,
     0,
-    13,
-    4,
+    5,
+    0,
+    0,
+    0,
+    276,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    1,
+    0,
+    0,
+    9,
+    0,
     0,
     0,
     3,
-    4,
-    118
+    2,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    135
    ]
   ],
   "labels": [
@@ -437,94 +621,98 @@
    "wrong_part",
    "short_count",
    "bent_long_stock",
-   "doa_mechanism",
-   "premature_failure",
+   "functional_failure",
+   "performance_shortfall",
+   "listing_mismatch",
+   "customer_selection",
+   "value_complaint",
+   "non_delivery",
    "other_unclear"
   ],
   "top_confusions": [
    {
-    "truth": "Premature failure in service",
-    "predicted": "Material or hardness nonconformance",
-    "n": 19
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Aged or degraded elastomers & consumables",
-    "n": 13
-   },
-   {
-    "truth": "Other / unclear",
+    "truth": "Functional failure (first use or early in service)",
     "predicted": "Material or hardness nonconformance",
     "n": 12
    },
    {
-    "truth": "Assembly or mechanism failure on first use",
+    "truth": "Other / unclear",
+    "predicted": "Material or hardness nonconformance",
+    "n": 9
+   },
+   {
+    "truth": "Other / unclear",
+    "predicted": "Functional failure (first use or early in service)",
+    "n": 5
+   },
+   {
+    "truth": "Functional failure (first use or early in service)",
     "predicted": "Aged or degraded elastomers & consumables",
-    "n": 8
+    "n": 5
    },
    {
     "truth": "Other / unclear",
-    "predicted": "Premature failure in service",
-    "n": 4
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Wrong part in the right bag",
-    "n": 4
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Assembly or mechanism failure on first use",
+    "predicted": "Aged or degraded elastomers & consumables",
     "n": 3
    },
    {
     "truth": "Wrong part in the right bag",
     "predicted": "Material or hardness nonconformance",
     "n": 2
+   },
+   {
+    "truth": "Other / unclear",
+    "predicted": "Wrong part in the right bag",
+    "n": 2
+   },
+   {
+    "truth": "Other / unclear",
+    "predicted": "Out-of-tolerance dimensions",
+    "n": 2
    }
   ]
  },
  "reference": {
-  "n": 550,
-  "accuracy": 0.964,
-  "macro_f1": 0.97,
+  "n": 250,
+  "accuracy": 0.988,
+  "macro_f1": 0.986,
   "per_mode": [
    {
     "mode": "thread_damage",
     "name": "Thread damage",
-    "support": 31,
-    "precision": 0.969,
-    "recall": 1.0,
-    "f1": 0.984
-   },
-   {
-    "mode": "out_of_tolerance",
-    "name": "Out-of-tolerance dimensions",
-    "support": 25,
-    "precision": 0.962,
-    "recall": 1.0,
-    "f1": 0.98
-   },
-   {
-    "mode": "thread_mismatch",
-    "name": "Thread mismatch / wrong pitch or class",
-    "support": 29,
+    "support": 19,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0
    },
    {
+    "mode": "out_of_tolerance",
+    "name": "Out-of-tolerance dimensions",
+    "support": 11,
+    "precision": 0.917,
+    "recall": 1.0,
+    "f1": 0.957
+   },
+   {
+    "mode": "thread_mismatch",
+    "name": "Thread mismatch / wrong pitch or class",
+    "support": 9,
+    "precision": 1.0,
+    "recall": 0.889,
+    "f1": 0.941
+   },
+   {
     "mode": "burrs_finish",
     "name": "Burrs & poor finishing",
-    "support": 21,
+    "support": 10,
     "precision": 1.0,
-    "recall": 0.952,
-    "f1": 0.976
+    "recall": 1.0,
+    "f1": 1.0
    },
    {
     "mode": "out_of_true",
     "name": "Out of straight, flat, or round",
-    "support": 22,
+    "support": 14,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0
@@ -532,15 +720,15 @@
    {
     "mode": "material_nonconformance",
     "name": "Material or hardness nonconformance",
-    "support": 28,
-    "precision": 0.771,
-    "recall": 0.964,
-    "f1": 0.857
+    "support": 10,
+    "precision": 0.909,
+    "recall": 1.0,
+    "f1": 0.952
    },
    {
     "mode": "plating_coating",
     "name": "Plating or coating defects",
-    "support": 10,
+    "support": 3,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0
@@ -548,7 +736,7 @@
    {
     "mode": "corrosion_on_arrival",
     "name": "Corrosion on arrival",
-    "support": 32,
+    "support": 20,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0
@@ -556,7 +744,7 @@
    {
     "mode": "transit_surface_damage",
     "name": "Surface damage from transit",
-    "support": 25,
+    "support": 15,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0
@@ -564,23 +752,23 @@
    {
     "mode": "aged_consumables",
     "name": "Aged or degraded elastomers & consumables",
-    "support": 44,
-    "precision": 0.863,
+    "support": 21,
+    "precision": 0.955,
     "recall": 1.0,
-    "f1": 0.926
+    "f1": 0.977
    },
    {
     "mode": "wrong_part",
     "name": "Wrong part in the right bag",
-    "support": 46,
-    "precision": 0.978,
-    "recall": 0.978,
-    "f1": 0.978
+    "support": 17,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
    },
    {
     "mode": "short_count",
     "name": "Short count or missing components",
-    "support": 63,
+    "support": 31,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0
@@ -588,39 +776,97 @@
    {
     "mode": "bent_long_stock",
     "name": "Bent or crushed long stock",
-    "support": 12,
+    "support": 7,
     "precision": 1.0,
     "recall": 1.0,
     "f1": 1.0
    },
    {
-    "mode": "doa_mechanism",
-    "name": "Assembly or mechanism failure on first use",
-    "support": 54,
-    "precision": 0.98,
-    "recall": 0.926,
-    "f1": 0.952
+    "mode": "functional_failure",
+    "name": "Functional failure (first use or early in service)",
+    "support": 45,
+    "precision": 1.0,
+    "recall": 0.978,
+    "f1": 0.989
    },
    {
-    "mode": "premature_failure",
-    "name": "Premature failure in service",
-    "support": 49,
-    "precision": 0.977,
-    "recall": 0.857,
-    "f1": 0.913
+    "mode": "performance_shortfall",
+    "name": "Performance shortfall (works, but doesn't do the job)",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "listing_mismatch",
+    "name": "Product differs from the listing",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "customer_selection",
+    "name": "Customer selection or misuse",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "value_complaint",
+    "name": "Works, but not worth the price",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "non_delivery",
+    "name": "Never arrived",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
    },
    {
     "mode": "other_unclear",
     "name": "Other / unclear",
-    "support": 59,
+    "support": 18,
     "precision": 1.0,
-    "recall": 0.898,
-    "f1": 0.946
+    "recall": 0.944,
+    "f1": 0.971
    }
   ],
   "confusion": [
    [
-    31,
+    19,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    11,
+    0,
+    0,
+    0,
     0,
     0,
     0,
@@ -639,42 +885,120 @@
    ],
    [
     0,
-    25,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    29,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
     1,
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    10,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    14,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    10,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     20,
@@ -696,7 +1020,11 @@
     0,
     0,
     0,
-    22,
+    0,
+    0,
+    0,
+    0,
+    15,
     0,
     0,
     0,
@@ -715,26 +1043,12 @@
     0,
     0,
     0,
-    27,
     0,
     0,
     0,
     0,
+    21,
     0,
-    0,
-    0,
-    0,
-    1,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    10,
     0,
     0,
     0,
@@ -753,7 +1067,11 @@
     0,
     0,
     0,
-    32,
+    0,
+    0,
+    0,
+    17,
+    0,
     0,
     0,
     0,
@@ -772,7 +1090,11 @@
     0,
     0,
     0,
-    25,
+    0,
+    0,
+    0,
+    31,
+    0,
     0,
     0,
     0,
@@ -789,89 +1111,6 @@
     0,
     0,
     0,
-    0,
-    0,
-    44,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    45,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    63,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    12,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    4,
-    0,
-    0,
-    0,
-    50,
-    0,
-    0
-   ],
-   [
     0,
     0,
     0,
@@ -884,391 +1123,15 @@
     0,
     0,
     0,
-    0,
-    0,
-    42,
     0
    ],
    [
     0,
-    1,
     0,
     0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    3,
-    1,
     0,
     0,
     1,
-    0,
-    53
-   ]
-  ],
-  "labels": [
-   "thread_damage",
-   "out_of_tolerance",
-   "thread_mismatch",
-   "burrs_finish",
-   "out_of_true",
-   "material_nonconformance",
-   "plating_coating",
-   "corrosion_on_arrival",
-   "transit_surface_damage",
-   "aged_consumables",
-   "wrong_part",
-   "short_count",
-   "bent_long_stock",
-   "doa_mechanism",
-   "premature_failure",
-   "other_unclear"
-  ],
-  "top_confusions": [
-   {
-    "truth": "Premature failure in service",
-    "predicted": "Material or hardness nonconformance",
-    "n": 7
-   },
-   {
-    "truth": "Assembly or mechanism failure on first use",
-    "predicted": "Aged or degraded elastomers & consumables",
-    "n": 4
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Aged or degraded elastomers & consumables",
-    "n": 3
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Assembly or mechanism failure on first use",
-    "n": 1
-   },
-   {
-    "truth": "Material or hardness nonconformance",
-    "predicted": "Premature failure in service",
-    "n": 1
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Out-of-tolerance dimensions",
-    "n": 1
-   },
-   {
-    "truth": "Wrong part in the right bag",
-    "predicted": "Material or hardness nonconformance",
-    "n": 1
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Wrong part in the right bag",
-    "n": 1
-   }
-  ]
- },
- "bulk_on_reference_subset": {
-  "n": 550,
-  "accuracy": 0.942,
-  "macro_f1": 0.947,
-  "per_mode": [
-   {
-    "mode": "thread_damage",
-    "name": "Thread damage",
-    "support": 31,
-    "precision": 0.969,
-    "recall": 1.0,
-    "f1": 0.984
-   },
-   {
-    "mode": "out_of_tolerance",
-    "name": "Out-of-tolerance dimensions",
-    "support": 25,
-    "precision": 0.926,
-    "recall": 1.0,
-    "f1": 0.962
-   },
-   {
-    "mode": "thread_mismatch",
-    "name": "Thread mismatch / wrong pitch or class",
-    "support": 29,
-    "precision": 1.0,
-    "recall": 0.966,
-    "f1": 0.982
-   },
-   {
-    "mode": "burrs_finish",
-    "name": "Burrs & poor finishing",
-    "support": 21,
-    "precision": 1.0,
-    "recall": 0.952,
-    "f1": 0.976
-   },
-   {
-    "mode": "out_of_true",
-    "name": "Out of straight, flat, or round",
-    "support": 22,
-    "precision": 0.917,
-    "recall": 1.0,
-    "f1": 0.957
-   },
-   {
-    "mode": "material_nonconformance",
-    "name": "Material or hardness nonconformance",
-    "support": 28,
-    "precision": 0.7,
-    "recall": 1.0,
-    "f1": 0.824
-   },
-   {
-    "mode": "plating_coating",
-    "name": "Plating or coating defects",
-    "support": 10,
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1": 1.0
-   },
-   {
-    "mode": "corrosion_on_arrival",
-    "name": "Corrosion on arrival",
-    "support": 32,
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1": 1.0
-   },
-   {
-    "mode": "transit_surface_damage",
-    "name": "Surface damage from transit",
-    "support": 25,
-    "precision": 0.962,
-    "recall": 1.0,
-    "f1": 0.98
-   },
-   {
-    "mode": "aged_consumables",
-    "name": "Aged or degraded elastomers & consumables",
-    "support": 44,
-    "precision": 0.846,
-    "recall": 1.0,
-    "f1": 0.917
-   },
-   {
-    "mode": "wrong_part",
-    "name": "Wrong part in the right bag",
-    "support": 46,
-    "precision": 0.938,
-    "recall": 0.978,
-    "f1": 0.957
-   },
-   {
-    "mode": "short_count",
-    "name": "Short count or missing components",
-    "support": 63,
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1": 1.0
-   },
-   {
-    "mode": "bent_long_stock",
-    "name": "Bent or crushed long stock",
-    "support": 12,
-    "precision": 1.0,
-    "recall": 0.833,
-    "f1": 0.909
-   },
-   {
-    "mode": "doa_mechanism",
-    "name": "Assembly or mechanism failure on first use",
-    "support": 54,
-    "precision": 0.962,
-    "recall": 0.926,
-    "f1": 0.943
-   },
-   {
-    "mode": "premature_failure",
-    "name": "Premature failure in service",
-    "support": 49,
-    "precision": 0.977,
-    "recall": 0.857,
-    "f1": 0.913
-   },
-   {
-    "mode": "other_unclear",
-    "name": "Other / unclear",
-    "support": 59,
-    "precision": 1.0,
-    "recall": 0.729,
-    "f1": 0.843
-   }
-  ],
-  "confusion": [
-   [
-    31,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    25,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    1,
-    28,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    1,
-    0,
-    0,
-    20,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    22,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    28,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    10,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    32,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    25,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
     0,
     0,
     0,
@@ -1290,12 +1153,38 @@
     0,
     0,
     0,
-    1,
     0,
     0,
     0,
     0,
-    45,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     0,
@@ -1314,26 +1203,12 @@
     0,
     0,
     0,
-    63,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
     0,
     0,
     0,
     0,
-    1,
     0,
     0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    10,
     0,
     0,
     0
@@ -1348,11 +1223,15 @@
     0,
     0,
     0,
-    4,
     0,
     0,
     0,
-    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
     0,
     0
    ],
@@ -1362,35 +1241,43 @@
     0,
     0,
     0,
-    6,
-    0,
-    0,
-    0,
-    1,
     0,
     0,
     0,
     0,
-    42,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
     0
    ],
    [
     0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
     1,
     0,
     0,
-    1,
-    5,
     0,
     0,
     0,
-    3,
-    3,
     0,
     0,
-    2,
-    1,
-    43
+    0,
+    0,
+    17
    ]
   ],
   "labels": [
@@ -1407,75 +1294,716 @@
    "wrong_part",
    "short_count",
    "bent_long_stock",
-   "doa_mechanism",
-   "premature_failure",
+   "functional_failure",
+   "performance_shortfall",
+   "listing_mismatch",
+   "customer_selection",
+   "value_complaint",
+   "non_delivery",
    "other_unclear"
   ],
   "top_confusions": [
    {
-    "truth": "Premature failure in service",
+    "truth": "Functional failure (first use or early in service)",
     "predicted": "Material or hardness nonconformance",
-    "n": 6
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Material or hardness nonconformance",
-    "n": 5
-   },
-   {
-    "truth": "Assembly or mechanism failure on first use",
-    "predicted": "Aged or degraded elastomers & consumables",
-    "n": 4
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Wrong part in the right bag",
-    "n": 3
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Aged or degraded elastomers & consumables",
-    "n": 3
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Assembly or mechanism failure on first use",
-    "n": 2
-   },
-   {
-    "truth": "Other / unclear",
-    "predicted": "Premature failure in service",
     "n": 1
    },
    {
-    "truth": "Bent or crushed long stock",
-    "predicted": "Surface damage from transit",
+    "truth": "Thread mismatch / wrong pitch or class",
+    "predicted": "Out-of-tolerance dimensions",
+    "n": 1
+   },
+   {
+    "truth": "Other / unclear",
+    "predicted": "Aged or degraded elastomers & consumables",
     "n": 1
    }
   ]
  },
- "agreement": 0.967,
+ "bulk_on_reference_subset": {
+  "n": 250,
+  "accuracy": 0.988,
+  "macro_f1": 0.985,
+  "per_mode": [
+   {
+    "mode": "thread_damage",
+    "name": "Thread damage",
+    "support": 19,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "out_of_tolerance",
+    "name": "Out-of-tolerance dimensions",
+    "support": 11,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "thread_mismatch",
+    "name": "Thread mismatch / wrong pitch or class",
+    "support": 9,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "burrs_finish",
+    "name": "Burrs & poor finishing",
+    "support": 10,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "out_of_true",
+    "name": "Out of straight, flat, or round",
+    "support": 14,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "material_nonconformance",
+    "name": "Material or hardness nonconformance",
+    "support": 10,
+    "precision": 0.909,
+    "recall": 1.0,
+    "f1": 0.952
+   },
+   {
+    "mode": "plating_coating",
+    "name": "Plating or coating defects",
+    "support": 3,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "corrosion_on_arrival",
+    "name": "Corrosion on arrival",
+    "support": 20,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "transit_surface_damage",
+    "name": "Surface damage from transit",
+    "support": 15,
+    "precision": 0.938,
+    "recall": 1.0,
+    "f1": 0.968
+   },
+   {
+    "mode": "aged_consumables",
+    "name": "Aged or degraded elastomers & consumables",
+    "support": 21,
+    "precision": 0.955,
+    "recall": 1.0,
+    "f1": 0.977
+   },
+   {
+    "mode": "wrong_part",
+    "name": "Wrong part in the right bag",
+    "support": 17,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "short_count",
+    "name": "Short count or missing components",
+    "support": 31,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   {
+    "mode": "bent_long_stock",
+    "name": "Bent or crushed long stock",
+    "support": 7,
+    "precision": 1.0,
+    "recall": 0.857,
+    "f1": 0.923
+   },
+   {
+    "mode": "functional_failure",
+    "name": "Functional failure (first use or early in service)",
+    "support": 45,
+    "precision": 1.0,
+    "recall": 0.978,
+    "f1": 0.989
+   },
+   {
+    "mode": "performance_shortfall",
+    "name": "Performance shortfall (works, but doesn't do the job)",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "listing_mismatch",
+    "name": "Product differs from the listing",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "customer_selection",
+    "name": "Customer selection or misuse",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "value_complaint",
+    "name": "Works, but not worth the price",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "non_delivery",
+    "name": "Never arrived",
+    "support": 0,
+    "precision": null,
+    "recall": null,
+    "f1": null
+   },
+   {
+    "mode": "other_unclear",
+    "name": "Other / unclear",
+    "support": 18,
+    "precision": 1.0,
+    "recall": 0.944,
+    "f1": 0.971
+   }
+  ],
+  "confusion": [
+   [
+    19,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    11,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    9,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    10,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    14,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    10,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    20,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    15,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    21,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    17,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    31,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    6,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    44,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    17
+   ]
+  ],
+  "labels": [
+   "thread_damage",
+   "out_of_tolerance",
+   "thread_mismatch",
+   "burrs_finish",
+   "out_of_true",
+   "material_nonconformance",
+   "plating_coating",
+   "corrosion_on_arrival",
+   "transit_surface_damage",
+   "aged_consumables",
+   "wrong_part",
+   "short_count",
+   "bent_long_stock",
+   "functional_failure",
+   "performance_shortfall",
+   "listing_mismatch",
+   "customer_selection",
+   "value_complaint",
+   "non_delivery",
+   "other_unclear"
+  ],
+  "top_confusions": [
+   {
+    "truth": "Bent or crushed long stock",
+    "predicted": "Surface damage from transit",
+    "n": 1
+   },
+   {
+    "truth": "Functional failure (first use or early in service)",
+    "predicted": "Aged or degraded elastomers & consumables",
+    "n": 1
+   },
+   {
+    "truth": "Other / unclear",
+    "predicted": "Material or hardness nonconformance",
+    "n": 1
+   }
+  ]
+ },
+ "agreement": 0.968,
  "error_examples": [
   {
-   "text": "Ordered 304 stainless round bar 1\" and the tag on the bundle says 304 but a spot check with the magnet and a spark test says this is mild steel. Can't use plain carbon anywhere near the filler line. Credit it out please, and I'd recommend somebody check that bin.",
-   "truth": "Wrong part in the right bag",
+   "text": "Two of the M6x30 socket head cap screws twisted off well under the spec torque for 12.9, I was at about 60% on a calibrated driver. A third one the internal hex rounded out with a brand new key. Please credit the lot, I can't trust the rest of them in the fixture.",
+   "truth": "Functional failure (first use or early in service)",
    "predicted": "Material or hardness nonconformance",
    "conf": 0.85,
-   "evidence": "the tag on the bundle says 304 but a spot check with the magnet and a spark test says this is mild steel"
+   "evidence": "twisted off well under the spec torque for 12.9"
+  },
+  {
+   "text": "the m10 flange nuts wont thread onto anything, gauged a few and the pitch dia is tight all the way through. ran a good bolt through and it binds at two turns. need a replacement box shipped, i've got a fixture job waiting on them",
+   "truth": "Out-of-tolerance dimensions",
+   "predicted": "Thread mismatch / wrong pitch or class",
+   "conf": 0.85,
+   "evidence": "ran a good bolt through and it binds at two turns"
   },
   {
    "text": "Put maybe 20 of your 1/2-13 grade 8 cap screws into engine mount brackets and had two snap right at the head before I got anywhere near spec torque, calibrated wrench. That's not a grade 8 in my book. I want the lot credited, I'm not risking the rest of them on a customer boat.",
-   "truth": "Premature failure in service",
+   "truth": "Functional failure (first use or early in service)",
    "predicted": "Material or hardness nonconformance",
    "conf": 0.85,
-   "evidence": "snapped at the head before I got anywhere near spec torque"
+   "evidence": "snapped right at the head before I got anywhere near spec torque, calibrated wrench"
   },
   {
    "text": "Grabbed a fresh tube of the anaerobic pipe sealant for a chiller repair and the nozzle wouldn't dispense, plunger wouldn't move at all. Cut the tube open and the whole thing is set up solid inside. Need an RMA, I've got five more tubes from the same buy that I don't trust.",
-   "truth": "Assembly or mechanism failure on first use",
+   "truth": "Functional failure (first use or early in service)",
    "predicted": "Aged or degraded elastomers & consumables",
    "conf": 0.85,
    "evidence": "the whole thing is set up solid inside"
+  },
+  {
+   "text": "Snapped the 5/32 hex bit off inside a cap screw at about half the rated torque on a jig build - clean break right at the shank. That's maybe the fifth fastener it had seen. These are supposed to be S2 and they're behaving like pot metal, I want the set credited.",
+   "truth": "Functional failure (first use or early in service)",
+   "predicted": "Material or hardness nonconformance",
+   "conf": 0.85,
+   "evidence": "snapped the 5/32 hex bit off inside a cap screw at about half the rated torque"
   },
   {
    "text": "Shop says the 1/4-20 threaded rod came in with ragged ends and torn thread crests - they're having to file each piece before a nut will start, and one of the students caught a hand on it. Can somebody phone me, I need to decide whether to keep the rest of the lot.",
@@ -1485,31 +2013,24 @@
    "evidence": "ragged ends and torn thread crests"
   },
   {
-   "text": "Snapped the 5/32 hex bit off inside a cap screw at about half the rated torque on a jig build - clean break right at the shank. That's maybe the fifth fastener it had seen. These are supposed to be S2 and they're behaving like pot metal, I want the set credited.",
-   "truth": "Premature failure in service",
+   "text": "The 1/2-13 hex nuts won't run past a couple threads on our all-thread, and when you force them they gall up. Checked with a plug gauge and they're tight past spec. Please ship replacements, we've got a bilge pump mount waiting on them.",
+   "truth": "Thread mismatch / wrong pitch or class",
+   "predicted": "Out-of-tolerance dimensions",
+   "conf": 0.82,
+   "evidence": "Checked with a plug gauge and they're tight past spec"
+  },
+  {
+   "text": "Floor is not happy. Three of the grade 8 cap screws snapped at the head well under spec torque on the loader arm, and one more twisted off in the hole so now we're drilling it out. That's labor we're eating. Credit the lot, we'll source elsewhere.",
+   "truth": "Functional failure (first use or early in service)",
    "predicted": "Material or hardness nonconformance",
    "conf": 0.82,
-   "evidence": "snapped the 5/32 hex bit off... at about half the rated torque"
-  },
-  {
-   "text": "We ordered the timing belt for our turntable drive and right out of the package it's got a hard set in it \u2014 won't lay flat, and when we ran it the whole drive pulsed and the tensioner chattered. Never got past ten minutes of running. Honestly not sure if I want another one or my money back, tell me what makes sense.",
-   "truth": "Assembly or mechanism failure on first use",
-   "predicted": "Aged or degraded elastomers & consumables",
-   "conf": 0.8,
-   "evidence": "right out of the package it's got a hard set in it \u2014 won't lay flat"
-  },
-  {
-   "text": "Torquing down the 3/8-16 silicon bronze bolts on a strut mount and one popped the head clean off well under spec. Two others the socket rounded out with a brand new allen key. Just noting it, we swapped to what we had on the shelf.",
-   "truth": "Premature failure in service",
-   "predicted": "Material or hardness nonconformance",
-   "conf": 0.75,
-   "evidence": "popped the head clean off well under spec"
+   "evidence": "snapped at the head well under spec torque"
   },
   {
    "text": "Hi, hoping you can help. The 1/4 NPT pressure gauge we got reads about 6 psi with nothing connected to it, and it doesn't settle back. Not sure if it took a knock somewhere along the line. Happy to send it back, we'd just like a replacement when you can - no rush on it.",
    "truth": "Other / unclear",
-   "predicted": "Assembly or mechanism failure on first use",
-   "conf": 0.75,
+   "predicted": "Functional failure (first use or early in service)",
+   "conf": 0.8,
    "evidence": "reads about 6 psi with nothing connected to it, and it doesn't settle back"
   },
   {
@@ -1518,396 +2039,1931 @@
    "predicted": "Surface damage from transit",
    "conf": 0.75,
    "evidence": "has a big dent and a wavy edge on one corner, looks like something set on top of it"
-  },
-  {
-   "text": "Please give me a call on this. We got a box of 3/8-16 threaded rod and the ends are burred and out of round badly enough that a nut won't start without chasing every one of them. That's 40 pieces I'd have to touch by hand and these are going into a flight hardware fixture so I'd rather not be filing on them.",
-   "truth": "Thread damage",
-   "predicted": "Burrs & poor finishing",
-   "conf": 0.75,
-   "evidence": "the ends are burred and out of round badly enough that a nut won't start without chasing every one of them"
   }
  ],
- "gold": {
+ "gold_v1": {
   "n": 200,
   "public_n": 150,
   "synthetic_n": 50,
   "human_vs_synthetic_truth": {
    "n": 50,
    "agree": 49
+  },
+  "majority_baseline": 0.34,
+  "bulk": {
+   "n": 200,
+   "accuracy": 0.72,
+   "public_n": 150,
+   "public_accuracy": 0.64,
+   "synthetic_n": 50,
+   "synthetic_accuracy": 0.96,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.96,
+     "precision": 0.667
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.58,
+     "precision": 0.747
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.373,
+     "precision": 0.821
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.1,
+     "precision": 1.0
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.02,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 92,
+     "accuracy": 0.967
+    },
+    "medium": {
+     "n": 77,
+     "accuracy": 0.545
+    },
+    "low": {
+     "n": 31,
+     "accuracy": 0.419
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Other / unclear",
+     "model": "Material or hardness nonconformance",
+     "n": 9
+    },
+    {
+     "human": "premature_failure",
+     "model": "Material or hardness nonconformance",
+     "n": 8
+    },
+    {
+     "human": "doa_mechanism",
+     "model": "Material or hardness nonconformance",
+     "n": 6
+    },
+    {
+     "human": "Other / unclear",
+     "model": "doa_mechanism",
+     "n": 5
+    },
+    {
+     "human": "Other / unclear",
+     "model": "premature_failure",
+     "n": 4
+    },
+    {
+     "human": "Out-of-tolerance dimensions",
+     "model": "Material or hardness nonconformance",
+     "n": 3
+    }
+   ],
+   "examples": [
+    {
+     "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
+     "human": "doa_mechanism",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.55,
+     "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
+    },
+    {
+     "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
+     "human": "doa_mechanism",
+     "model": null,
+     "conf": 0.6,
+     "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
+    },
+    {
+     "text": "Poor Quality. Horrible Packaging.. This is my second time purchasing these masks. The first time I purchased them, they arrived neatly packaged in a sealed box and I was impressed with the quality. Six months or so later, I did not hesitate ordering another box. What I received was NOTHING like my f",
+     "human": "Material or hardness nonconformance",
+     "model": "Surface damage from transit",
+     "conf": 0.45,
+     "note": "[low] Second order differs from first; 'no way these are 3 layers' is a claim the material does not meet spec. Crumpled packaging is secondary. Could equally be"
+    },
+    {
+     "text": "Flimsy. Most of them bent when installing and were not usable. Flimsy nail shaft so pressure bends them easily. Very disappointed I bought two boxes of these",
+     "human": "premature_failure",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.6,
+     "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
+    },
+    {
+     "text": "Total garbage-very thin. Total garbage. Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if I could hav",
+     "human": "Other / unclear",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.55,
+     "note": "[medium] NOT LISTED: product grade too light (foil tape 'thin as foil') plus liner will not release. No stated spec violated so not out_of_tolerance/material; n"
+    },
+    {
+     "text": "Inconsistent Quality. Ordered two. One was perfect, finished well, accurate jaw alignment. The other was junk, clearly a different manufacturer, despite identical bagging. Poor finish, weak clamp, misaligned jaws. It's why I ordered two, I figured one would be good.",
+     "human": "doa_mechanism",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.55,
+     "note": "[low] Three defects listed equally (poor finish, weak clamp, misaligned jaws). Two of three are functional, so DOA assembly. Alt: burrs_finish or out_of_true. A"
+    }
+   ]
+  },
+  "reference": {
+   "n": 200,
+   "accuracy": 0.79,
+   "public_n": 150,
+   "public_accuracy": 0.72,
+   "synthetic_n": 50,
+   "synthetic_accuracy": 1.0,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.94,
+     "precision": 0.745
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.587,
+     "precision": 0.83
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.393,
+     "precision": 0.898
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.193,
+     "precision": 1.0
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.027,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 92,
+     "accuracy": 1.0
+    },
+    "medium": {
+     "n": 77,
+     "accuracy": 0.675
+    },
+    "low": {
+     "n": 31,
+     "accuracy": 0.452
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "premature_failure",
+     "model": "Other / unclear",
+     "n": 6
+    },
+    {
+     "human": "Other / unclear",
+     "model": "doa_mechanism",
+     "n": 6
+    },
+    {
+     "human": "premature_failure",
+     "model": "Material or hardness nonconformance",
+     "n": 5
+    },
+    {
+     "human": "doa_mechanism",
+     "model": "Other / unclear",
+     "n": 4
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Material or hardness nonconformance",
+     "n": 3
+    },
+    {
+     "human": "Out-of-tolerance dimensions",
+     "model": "Other / unclear",
+     "n": 3
+    }
+   ],
+   "examples": [
+    {
+     "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
+     "human": "doa_mechanism",
+     "model": null,
+     "conf": 0.72,
+     "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
+    },
+    {
+     "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
+     "human": "doa_mechanism",
+     "model": "Other / unclear",
+     "conf": 0.5,
+     "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
+    },
+    {
+     "text": "Poor Quality. Horrible Packaging.. This is my second time purchasing these masks. The first time I purchased them, they arrived neatly packaged in a sealed box and I was impressed with the quality. Six months or so later, I did not hesitate ordering another box. What I received was NOTHING like my f",
+     "human": "Material or hardness nonconformance",
+     "model": "Surface damage from transit",
+     "conf": 0.45,
+     "note": "[low] Second order differs from first; 'no way these are 3 layers' is a claim the material does not meet spec. Crumpled packaging is secondary. Could equally be"
+    },
+    {
+     "text": "Flimsy. Most of them bent when installing and were not usable. Flimsy nail shaft so pressure bends them easily. Very disappointed I bought two boxes of these",
+     "human": "premature_failure",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.62,
+     "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
+    },
+    {
+     "text": "Total garbage-very thin. Total garbage. Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if I could hav",
+     "human": "Other / unclear",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.55,
+     "note": "[medium] NOT LISTED: product grade too light (foil tape 'thin as foil') plus liner will not release. No stated spec violated so not out_of_tolerance/material; n"
+    },
+    {
+     "text": "Inconsistent Quality. Ordered two. One was perfect, finished well, accurate jaw alignment. The other was junk, clearly a different manufacturer, despite identical bagging. Poor finish, weak clamp, misaligned jaws. It's why I ordered two, I figured one would be good.",
+     "human": "doa_mechanism",
+     "model": "Other / unclear",
+     "conf": 0.45,
+     "note": "[low] Three defects listed equally (poor finish, weak clamp, misaligned jaws). Two of three are functional, so DOA assembly. Alt: burrs_finish or out_of_true. A"
+    }
+   ]
+  },
+  "cheap": {
+   "n": 200,
+   "accuracy": 0.675,
+   "public_n": 150,
+   "public_accuracy": 0.573,
+   "synthetic_n": 50,
+   "synthetic_accuracy": 0.98,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.893,
+     "precision": 0.604
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.827,
+     "precision": 0.613
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.707,
+     "precision": 0.66
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.34,
+     "precision": 0.745
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.04,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 92,
+     "accuracy": 0.913
+    },
+    "medium": {
+     "n": 77,
+     "accuracy": 0.545
+    },
+    "low": {
+     "n": 31,
+     "accuracy": 0.29
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "premature_failure",
+     "model": "Other / unclear",
+     "n": 14
+    },
+    {
+     "human": "doa_mechanism",
+     "model": "Other / unclear",
+     "n": 9
+    },
+    {
+     "human": "Out-of-tolerance dimensions",
+     "model": "Other / unclear",
+     "n": 8
+    },
+    {
+     "human": "premature_failure",
+     "model": "Material or hardness nonconformance",
+     "n": 6
+    },
+    {
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Other / unclear",
+     "n": 5
+    },
+    {
+     "human": "premature_failure",
+     "model": "doa_mechanism",
+     "n": 3
+    }
+   ],
+   "examples": [
+    {
+     "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
+     "human": "doa_mechanism",
+     "model": null,
+     "conf": 0.72,
+     "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
+    },
+    {
+     "text": "Utter frustration.. The plastic hose is hard as a rock and twists where it pleases. The whole thing tips over unless you hold it. The dust bin doesnt collect much, it all ends up on the filter. Lucky if you can use for a few minutes before having to wash filter. The cord is way to short, no extender",
+     "human": "Other / unclear",
+     "model": "Aged or degraded elastomers & consumables",
+     "conf": 0.62,
+     "note": "[high] NOT LISTED: design/ergonomics dissatisfaction (stiff hose, tips over, short cord, filter clogs). Nothing is broken or nonconforming, so no defect mode ap"
+    },
+    {
+     "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
+     "human": "doa_mechanism",
+     "model": "Other / unclear",
+     "conf": 0.75,
+     "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
+    },
+    {
+     "text": "To hard to get out of tube. Almost broke my caulk gun trying to get it out of the tube. I gave up and threw it away.",
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Other / unclear",
+     "conf": 0.5,
+     "note": "[medium] Caulk too stiff to gun out is the classic partially-cured/old tube symptom, but customer gives no date evidence. Alt: high-viscosity formulation."
+    },
+    {
+     "text": "Not accurately depicted in photo. The 4 inch bolt is not full thread.. This is a 4 inch long stainless 1/4-20 socket cap bolt. It has one inch of thread, not full thread as depicted of the picture (which is clearly not of a 4 inch bolt). I returned this as I was looking for full thread.",
+     "human": "Other / unclear",
+     "model": "Out-of-tolerance dimensions",
+     "conf": 0.72,
+     "note": "[high] NOT LISTED: listing image error (photo shows full thread, 4in SKU is partial thread). Not wrong_part: he received the titled item, no mispick. Not out_of"
+    },
+    {
+     "text": "Not true gaffer's tape. Leaves moderate adhesive reside and won't tear cleanly.. This tape isn't true gaffers tape. It's a textured plastic sheet that won't tear cleanly and the adhesive leaves quite a bit of residue. It'll work for what I'm using it for, but if you need quality gaffer's tape that w",
+     "human": "Material or hardness nonconformance",
+     "model": "Other / unclear",
+     "conf": 0.85,
+     "note": "[medium] 'Not true gaffer's tape... textured plastic sheet' = product is not the material it claims to be. Closest analogue to 'magnet sticks to my stainless'. "
+    }
+   ]
   }
  },
+ "gold_v2_relabeled": {
+  "n": 200,
+  "public_n": 150,
+  "synthetic_n": 50,
+  "human_vs_synthetic_truth": {
+   "n": 50,
+   "agree": 49
+  },
+  "majority_baseline": 0.353,
+  "bulk": {
+   "n": 200,
+   "accuracy": 0.755,
+   "public_n": 150,
+   "public_accuracy": 0.68,
+   "synthetic_n": 50,
+   "synthetic_accuracy": 0.98,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.993,
+     "precision": 0.685
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.847,
+     "precision": 0.732
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.58,
+     "precision": 0.805
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.2,
+     "precision": 1.0
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.033,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 86,
+     "accuracy": 0.977
+    },
+    "medium": {
+     "n": 71,
+     "accuracy": 0.577
+    },
+    "low": {
+     "n": 33,
+     "accuracy": 0.576
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "n": 6
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 5
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 4
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Functional failure (first use or early in service)",
+     "n": 4
+    },
+    {
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Functional failure (first use or early in service)",
+     "n": 3
+    },
+    {
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 3
+    }
+   ],
+   "examples": [
+    {
+     "text": "To hard to get out of tube. Almost broke my caulk gun trying to get it out of the tube. I gave up and threw it away.",
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Functional failure (first use or early in service)",
+     "conf": 0.55,
+     "note": "[medium] Caulk too stiff to gun out is the classic partially-cured/old tube symptom, but customer gives no date evidence. Alt: high-viscosity formulation."
+    },
+    {
+     "text": "Not true gaffer's tape. Leaves moderate adhesive reside and won't tear cleanly.. This tape isn't true gaffers tape. It's a textured plastic sheet that won't tear cleanly and the adhesive leaves quite a bit of residue. It'll work for what I'm using it for, but if you need quality gaffer's tape that w",
+     "human": "Material or hardness nonconformance",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.75,
+     "note": "[medium] 'Not true gaffer's tape... textured plastic sheet' = product is not the material it claims to be. Closest analogue to 'magnet sticks to my stainless'. "
+    },
+    {
+     "text": "Not all M10s are created equal. I assume these are Chinese made, so it would seem that if another Chinese product wants M10 t-nuts, these would be them. But they aren\u2019t. They\u2019re stupidly expensive for what they are and if you count the time I spent grinding on them so they\u2019d fit my mill, they\u2019re sol",
+     "human": "Out-of-tolerance dimensions",
+     "model": "Thread mismatch / wrong pitch or class",
+     "conf": 0.55,
+     "note": "[medium] M10 T-nuts would not fit the mill slot until ground. Alt: T-slot standard mismatch rather than a tolerance miss, but reported symptom is dimensional."
+    },
+    {
+     "text": "filament keeps breaking. it's really spooled messy and the filament is broken in a bunch of places, it got worse after the middle of the spool. It's not really usable - the filament comes off the spool broken",
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Functional failure (first use or early in service)",
+     "conf": 0.6,
+     "note": "[medium] Filament snapping on the spool is the moisture/age embrittlement signature. Messy winding is secondary. Customer does not state age."
+    },
+    {
+     "text": "Inconsistent Quality. Ordered two. One was perfect, finished well, accurate jaw alignment. The other was junk, clearly a different manufacturer, despite identical bagging. Poor finish, weak clamp, misaligned jaws. It's why I ordered two, I figured one would be good.",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.5,
+     "note": "[low] Three defects listed equally (poor finish, weak clamp, misaligned jaws). Two of three are functional, so DOA assembly. Alt: burrs_finish or out_of_true. A"
+    },
+    {
+     "text": "Very disappointed. Besides the product leaking in the box before it got here...we tried a few application with it and none of them would set, its super thin and just does not work as resin.",
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.75,
+     "note": "[low] Resin will not set. 'Degraded consumable' is the nearest bucket, but 'super thin' is the opposite of what aging does to resin, so a bad batch/formulation "
+    }
+   ]
+  },
+  "reference": {
+   "n": 200,
+   "accuracy": 0.815,
+   "public_n": 150,
+   "public_accuracy": 0.76,
+   "synthetic_n": 50,
+   "synthetic_accuracy": 0.98,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.96,
+     "precision": 0.778
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.873,
+     "precision": 0.817
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.62,
+     "precision": 0.882
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.327,
+     "precision": 0.98
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.08,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 86,
+     "accuracy": 0.988
+    },
+    "medium": {
+     "n": 71,
+     "accuracy": 0.69
+    },
+    "low": {
+     "n": 33,
+     "accuracy": 0.606
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 6
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 5
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "n": 4
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Functional failure (first use or early in service)",
+     "n": 3
+    },
+    {
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 2
+    },
+    {
+     "human": "Out-of-tolerance dimensions",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 2
+    }
+   ],
+   "examples": [
+    {
+     "text": "Not true gaffer's tape. Leaves moderate adhesive reside and won't tear cleanly.. This tape isn't true gaffers tape. It's a textured plastic sheet that won't tear cleanly and the adhesive leaves quite a bit of residue. It'll work for what I'm using it for, but if you need quality gaffer's tape that w",
+     "human": "Material or hardness nonconformance",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.78,
+     "note": "[medium] 'Not true gaffer's tape... textured plastic sheet' = product is not the material it claims to be. Closest analogue to 'magnet sticks to my stainless'. "
+    },
+    {
+     "text": "Poor Quality. Horrible Packaging.. This is my second time purchasing these masks. The first time I purchased them, they arrived neatly packaged in a sealed box and I was impressed with the quality. Six months or so later, I did not hesitate ordering another box. What I received was NOTHING like my f",
+     "human": "Material or hardness nonconformance",
+     "model": "Product differs from the listing",
+     "conf": 0.45,
+     "note": "[low] Second order differs from first; 'no way these are 3 layers' is a claim the material does not meet spec. Crumpled packaging is secondary. Could equally be"
+    },
+    {
+     "text": "Flimsy. Most of them bent when installing and were not usable. Flimsy nail shaft so pressure bends them easily. Very disappointed I bought two boxes of these",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.6,
+     "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
+    },
+    {
+     "text": "Inconsistent Quality. Ordered two. One was perfect, finished well, accurate jaw alignment. The other was junk, clearly a different manufacturer, despite identical bagging. Poor finish, weak clamp, misaligned jaws. It's why I ordered two, I figured one would be good.",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Burrs & poor finishing",
+     "conf": 0.5,
+     "note": "[low] Three defects listed equally (poor finish, weak clamp, misaligned jaws). Two of three are functional, so DOA assembly. Alt: burrs_finish or out_of_true. A"
+    },
+    {
+     "text": "Very disappointed. Besides the product leaking in the box before it got here...we tried a few application with it and none of them would set, its super thin and just does not work as resin.",
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.72,
+     "note": "[low] Resin will not set. 'Degraded consumable' is the nearest bucket, but 'super thin' is the opposite of what aging does to resin, so a bad batch/formulation "
+    },
+    {
+     "text": "Unfortunately, not very good quality vinyl disposable gloves.. Packaging, thin cardboard, tore up trying to open it. I presume machine packed 100, very cheap quality, disposable vinyl gloves into packaging? Very Thin cardboard packaging tore completely apart.. I suggest do not waste your money. Thrs",
+     "human": "Other / unclear",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.6,
+     "note": "[medium] Still can't place. Retail carton tore; gloves are 'very cheap quality' and 'useless for my personal needs' with nothing said about what they failed to "
+    }
+   ]
+  },
+  "cheap": {
+   "n": 200,
+   "accuracy": 0.705,
+   "public_n": 150,
+   "public_accuracy": 0.62,
+   "synthetic_n": 50,
+   "synthetic_accuracy": 0.96,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.98,
+     "precision": 0.633
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.947,
+     "precision": 0.648
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.887,
+     "precision": 0.677
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.427,
+     "precision": 0.891
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.06,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 86,
+     "accuracy": 0.953
+    },
+    "medium": {
+     "n": 71,
+     "accuracy": 0.479
+    },
+    "low": {
+     "n": 33,
+     "accuracy": 0.485
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 10
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Other / unclear",
+     "n": 4
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 4
+    },
+    {
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 3
+    },
+    {
+     "human": "Out-of-tolerance dimensions",
+     "model": "Other / unclear",
+     "n": 3
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Other / unclear",
+     "n": 3
+    }
+   ],
+   "examples": [
+    {
+     "text": "Utter frustration.. The plastic hose is hard as a rock and twists where it pleases. The whole thing tips over unless you hold it. The dust bin doesnt collect much, it all ends up on the filter. Lucky if you can use for a few minutes before having to wash filter. The cord is way to short, no extender",
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Other / unclear",
+     "conf": 0.5,
+     "note": "[medium] Unit runs and 'has good suction' but bin doesn't collect, filter blinds in minutes, tips over. Works, doesn't do the job. Not functional_failure: nothi"
+    },
+    {
+     "text": "To hard to get out of tube. Almost broke my caulk gun trying to get it out of the tube. I gave up and threw it away.",
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.72,
+     "note": "[medium] Caulk too stiff to gun out is the classic partially-cured/old tube symptom, but customer gives no date evidence. Alt: high-viscosity formulation."
+    },
+    {
+     "text": "Not true gaffer's tape. Leaves moderate adhesive reside and won't tear cleanly.. This tape isn't true gaffers tape. It's a textured plastic sheet that won't tear cleanly and the adhesive leaves quite a bit of residue. It'll work for what I'm using it for, but if you need quality gaffer's tape that w",
+     "human": "Material or hardness nonconformance",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.82,
+     "note": "[medium] 'Not true gaffer's tape... textured plastic sheet' = product is not the material it claims to be. Closest analogue to 'magnet sticks to my stainless'. "
+    },
+    {
+     "text": "Poor Quality. Horrible Packaging.. This is my second time purchasing these masks. The first time I purchased them, they arrived neatly packaged in a sealed box and I was impressed with the quality. Six months or so later, I did not hesitate ordering another box. What I received was NOTHING like my f",
+     "human": "Material or hardness nonconformance",
+     "model": "Aged or degraded elastomers & consumables",
+     "conf": 0.72,
+     "note": "[low] Second order differs from first; 'no way these are 3 layers' is a claim the material does not meet spec. Crumpled packaging is secondary. Could equally be"
+    },
+    {
+     "text": "Arrived broke. Items were in a small tight box. They are holder containers for a peg board\u2026. The ends were broken off!!! No way to be able to use them all, probably can use 2 if I\u2019m lucky out of the 8 pieces. If they were wrapped in bubble wraps maybe they would have arrived better",
+     "human": "Surface damage from transit",
+     "model": "Bent or crushed long stock",
+     "conf": 0.85,
+     "note": "[medium] Closest fit only. This is structural BREAKAGE in transit, not surface damage; the taxonomy has no 'broken in transit' bucket. Not bent_long_stock (smal"
+    },
+    {
+     "text": "Not all M10s are created equal. I assume these are Chinese made, so it would seem that if another Chinese product wants M10 t-nuts, these would be them. But they aren\u2019t. They\u2019re stupidly expensive for what they are and if you count the time I spent grinding on them so they\u2019d fit my mill, they\u2019re sol",
+     "human": "Out-of-tolerance dimensions",
+     "model": "Other / unclear",
+     "conf": 0.6,
+     "note": "[medium] M10 T-nuts would not fit the mill slot until ground. Alt: T-slot standard mismatch rather than a tolerance miss, but reported symptom is dimensional."
+    }
+   ]
+  },
+  "other_resorted": 54
+ },
+ "gold_v2_clean": {
+  "n": 100,
+  "public_n": 100,
+  "synthetic_n": 0,
+  "human_vs_synthetic_truth": {
+   "n": 0,
+   "agree": 0
+  },
+  "majority_baseline": 0.4,
+  "bulk": {
+   "n": 100,
+   "accuracy": 0.76,
+   "public_n": 100,
+   "public_accuracy": 0.76,
+   "synthetic_n": 0,
+   "synthetic_accuracy": null,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.98,
+     "precision": 0.776
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.87,
+     "precision": 0.828
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.69,
+     "precision": 0.884
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.34,
+     "precision": 0.941
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.03,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 34,
+     "accuracy": 0.882
+    },
+    "medium": {
+     "n": 50,
+     "accuracy": 0.8
+    },
+    "low": {
+     "n": 16,
+     "accuracy": 0.375
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Customer selection or misuse",
+     "n": 4
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "n": 3
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 3
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "n": 1
+    },
+    {
+     "human": "Short count or missing components",
+     "model": "Product differs from the listing",
+     "n": 1
+    },
+    {
+     "human": "Product differs from the listing",
+     "model": "Short count or missing components",
+     "n": 1
+    }
+   ],
+   "examples": [
+    {
+     "text": "Just get super glue. Most of my fridge drawers are broken so decided to fix them all at once, so used almost the entire tube. What\u2019s great: Dries instantly on contact with skin (glued my finger to the package twice so use gloves) What\u2019s bad: Not much stronger than a standard super glue The cover doe",
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Customer selection or misuse",
+     "conf": 0.65,
+     "note": "[medium] 'Not much stronger than standard super glue' and the cap won't reseal, so it is single-use. Works, underdelivers. Nothing failed."
+    },
+    {
+     "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.85,
+     "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
+    },
+    {
+     "text": "Screws snaps easily. These screws have no tensile strength to speak of. I was putting them into a pine door, with the holes pre-drilled. I had them even soaped up so they would go in easy , but so far on 3 of them the head just snapped off. Now I am left with a problem of how the heck to get the stu",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.82,
+     "note": "[high] Heads snap off in pre-drilled, soaped pine, 3 of 15."
+    },
+    {
+     "text": "Came in old broken box looked used. Wasn\u2019t seal correctly. Came in it came in an old broken box the hose was sticking out it wasn\u2019t sealed properly inside will try to return it and get a new one",
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "conf": 0.55,
+     "note": "[medium] NOT LISTED: appears to be a previously opened/returned unit (old broken box, not sealed, hose sticking out). No damage to or failure of the product is "
+    },
+    {
+     "text": "Poor, POOR and inaccurate Transaction. No case was provided for the lenses - all shipped individually.",
+     "human": "Short count or missing components",
+     "model": "Product differs from the listing",
+     "conf": 0.55,
+     "note": "[medium] Lens case not included; 'inaccurate transaction' implies it was promised. Alt: listing_mismatch if the case was only pictured."
+    },
+    {
+     "text": "NOT a pack of 8.. Ad clearly states this is a pack of 8. Package received contained only one. Returned. (Heading/description edited since my review, but two tubes are still shown in the illustration.)",
+     "human": "Product differs from the listing",
+     "model": "Short count or missing components",
+     "conf": 0.75,
+     "note": "[medium] Ad said pack of 8, one arrived, and the seller then edited the listing. The edit is evidence the SKU was always a single and the listing was wrong. Wit"
+    }
+   ]
+  },
+  "reference": {
+   "n": 100,
+   "accuracy": 0.85,
+   "public_n": 100,
+   "public_accuracy": 0.85,
+   "synthetic_n": 0,
+   "synthetic_accuracy": null,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.96,
+     "precision": 0.875
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.86,
+     "precision": 0.942
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.71,
+     "precision": 0.972
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.5,
+     "precision": 0.98
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.13,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 34,
+     "accuracy": 0.971
+    },
+    "medium": {
+     "n": 50,
+     "accuracy": 0.86
+    },
+    "low": {
+     "n": 16,
+     "accuracy": 0.562
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "n": 2
+    },
+    {
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 2
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Customer selection or misuse",
+     "n": 2
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "n": 1
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Product differs from the listing",
+     "n": 1
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 1
+    }
+   ],
+   "examples": [
+    {
+     "text": "Mine was defective.. This filament is defective. Prints came out overall ok, but with burned spots/blobs. It turned out to be caused by the filament clogging the nozzle and making a totally mess on the hot end, underneath the fan and silicone sleeve. The fact that it still managed to print is a test",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.55,
+     "note": "[medium] This spool clogs and curls back at the nozzle while two sibling spools extrude normally, so reviewer calls it a defective unit. Alt: material_nonconfor"
+    },
+    {
+     "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.8,
+     "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
+    },
+    {
+     "text": "Came in old broken box looked used. Wasn\u2019t seal correctly. Came in it came in an old broken box the hose was sticking out it wasn\u2019t sealed properly inside will try to return it and get a new one",
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "conf": 0.5,
+     "note": "[medium] NOT LISTED: appears to be a previously opened/returned unit (old broken box, not sealed, hose sticking out). No damage to or failure of the product is "
+    },
+    {
+     "text": "What tube diameter, what threads????. I cannot endorse any product that doesn't provide sufficient dimensional or electrical data to motivate purchase.",
+     "human": "Other / unclear",
+     "model": "Product differs from the listing",
+     "conf": 0.4,
+     "note": "[high] NOT LISTED: listing omits dimensions and thread spec. No product experience at all (reads as a non-purchase). Not listing_mismatch: nothing was received "
+    },
+    {
+     "text": "Good wipe, bad packaging. I've been buying these for 4 years. The last couple boxes I've gotten have been awful though. The wipes are a strange new shape, don't peel apart properly (sometimes I pull 3 wipes out at a time), and the package tears so easily. Unfortunately they're still the best quality",
+     "human": "Other / unclear",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.62,
+     "note": "[medium] NOT LISTED: packaging/dispensing usability after a product revision (wipes come out three at a time, pack tears). He says the wipe itself is still the "
+    },
+    {
+     "text": "Tom. For 5 pieces far too expensive! The FEB release film is too thin. I had replaced the old one with a new one just like in the elegoo you tube video. After the print I had noticed that the print stick While printing on the release film and left a single hole and the resin ran through the tiny hol",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.7,
+     "note": "[medium] FEP film punctured on its first print and leaked resin onto the screen. Secondary: 'too thin' (grade) and 'far too expensive' (value)."
+    }
+   ]
+  },
+  "cheap": {
+   "n": 100,
+   "accuracy": 0.67,
+   "public_n": 100,
+   "public_accuracy": 0.67,
+   "synthetic_n": 0,
+   "synthetic_accuracy": null,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 1.0,
+     "precision": 0.67
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 1.0,
+     "precision": 0.67
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.96,
+     "precision": 0.677
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.5,
+     "precision": 0.82
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.1,
+     "precision": 0.7
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 34,
+     "accuracy": 0.882
+    },
+    "medium": {
+     "n": 50,
+     "accuracy": 0.66
+    },
+    "low": {
+     "n": 16,
+     "accuracy": 0.25
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 6
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Other / unclear",
+     "n": 4
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "n": 4
+    },
+    {
+     "human": "Customer selection or misuse",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 2
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Product differs from the listing",
+     "n": 2
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "n": 1
+    }
+   ],
+   "examples": [
+    {
+     "text": "DON'T BUY GORILLA GLUE!!!. This stuff is crap!!!.. I used a very small amount to reattach a automotive emblem and this S*** EXPANDS, SWELLS LIKE THIS BUBBLY STUFF, and it DRIES WHITE!! I didn't see any warning of this. Thank God for GOO GONE! It bubbled and came up around the sides of the emblem. I'",
+     "human": "Customer selection or misuse",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.82,
+     "note": "[medium] Original Gorilla Glue is a foaming polyurethane; expanding and drying pale is its designed, labelled behavior. Product did exactly what it does, on a j"
+    },
+    {
+     "text": "Just get super glue. Most of my fridge drawers are broken so decided to fix them all at once, so used almost the entire tube. What\u2019s great: Dries instantly on contact with skin (glued my finger to the package twice so use gloves) What\u2019s bad: Not much stronger than a standard super glue The cover doe",
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Other / unclear",
+     "conf": 0.75,
+     "note": "[medium] 'Not much stronger than standard super glue' and the cap won't reseal, so it is single-use. Works, underdelivers. Nothing failed."
+    },
+    {
+     "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.82,
+     "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
+    },
+    {
+     "text": "Screws snaps easily. These screws have no tensile strength to speak of. I was putting them into a pine door, with the holes pre-drilled. I had them even soaped up so they would go in easy , but so far on 3 of them the head just snapped off. Now I am left with a problem of how the heck to get the stu",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.88,
+     "note": "[high] Heads snap off in pre-drilled, soaped pine, 3 of 15."
+    },
+    {
+     "text": "Do not purchase. These mask are cute, but don\u2019t be fooled. They break extremely fast. Each one worn by multiple family members broke in the same top right corner. The strings are not attached to the mask firmly. For instance, if you pull it down for a second to drink, take a photo, blow your nose\u2026it",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.75,
+     "note": "[high] Ear strings detach at the same corner on every mask."
+    },
+    {
+     "text": "Came in old broken box looked used. Wasn\u2019t seal correctly. Came in it came in an old broken box the hose was sticking out it wasn\u2019t sealed properly inside will try to return it and get a new one",
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "conf": 0.72,
+     "note": "[medium] NOT LISTED: appears to be a previously opened/returned unit (old broken box, not sealed, hose sticking out). No damage to or failure of the product is "
+    }
+   ]
+  }
+ },
+ "gold_v2_clean_frozen": {
+  "n": 100,
+  "public_n": 100,
+  "synthetic_n": 0,
+  "human_vs_synthetic_truth": {
+   "n": 0,
+   "agree": 0
+  },
+  "majority_baseline": 0.4,
+  "bulk": {
+   "n": 100,
+   "accuracy": 0.77,
+   "public_n": 100,
+   "public_accuracy": 0.77,
+   "synthetic_n": 0,
+   "synthetic_accuracy": null,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.99,
+     "precision": 0.768
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.87,
+     "precision": 0.828
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.72,
+     "precision": 0.889
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.32,
+     "precision": 0.938
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.04,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 34,
+     "accuracy": 0.882
+    },
+    "medium": {
+     "n": 50,
+     "accuracy": 0.8
+    },
+    "low": {
+     "n": 16,
+     "accuracy": 0.438
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "n": 4
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Customer selection or misuse",
+     "n": 3
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 3
+    },
+    {
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 2
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "n": 1
+    },
+    {
+     "human": "Short count or missing components",
+     "model": "Product differs from the listing",
+     "n": 1
+    }
+   ],
+   "examples": [
+    {
+     "text": "Just get super glue. Most of my fridge drawers are broken so decided to fix them all at once, so used almost the entire tube. What\u2019s great: Dries instantly on contact with skin (glued my finger to the package twice so use gloves) What\u2019s bad: Not much stronger than a standard super glue The cover doe",
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Customer selection or misuse",
+     "conf": 0.75,
+     "note": "[medium] 'Not much stronger than standard super glue' and the cap won't reseal, so it is single-use. Works, underdelivers. Nothing failed."
+    },
+    {
+     "text": "Mine was defective.. This filament is defective. Prints came out overall ok, but with burned spots/blobs. It turned out to be caused by the filament clogging the nozzle and making a totally mess on the hot end, underneath the fan and silicone sleeve. The fact that it still managed to print is a test",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.6,
+     "note": "[medium] This spool clogs and curls back at the nozzle while two sibling spools extrude normally, so reviewer calls it a defective unit. Alt: material_nonconfor"
+    },
+    {
+     "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.85,
+     "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
+    },
+    {
+     "text": "Screws snaps easily. These screws have no tensile strength to speak of. I was putting them into a pine door, with the holes pre-drilled. I had them even soaped up so they would go in easy , but so far on 3 of them the head just snapped off. Now I am left with a problem of how the heck to get the stu",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.82,
+     "note": "[high] Heads snap off in pre-drilled, soaped pine, 3 of 15."
+    },
+    {
+     "text": "Came in old broken box looked used. Wasn\u2019t seal correctly. Came in it came in an old broken box the hose was sticking out it wasn\u2019t sealed properly inside will try to return it and get a new one",
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "conf": 0.55,
+     "note": "[medium] NOT LISTED: appears to be a previously opened/returned unit (old broken box, not sealed, hose sticking out). No damage to or failure of the product is "
+    },
+    {
+     "text": "Poor, POOR and inaccurate Transaction. No case was provided for the lenses - all shipped individually.",
+     "human": "Short count or missing components",
+     "model": "Product differs from the listing",
+     "conf": 0.55,
+     "note": "[medium] Lens case not included; 'inaccurate transaction' implies it was promised. Alt: listing_mismatch if the case was only pictured."
+    }
+   ]
+  },
+  "reference": {
+   "n": 100,
+   "accuracy": 0.78,
+   "public_n": 100,
+   "public_accuracy": 0.78,
+   "synthetic_n": 0,
+   "synthetic_accuracy": null,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 0.95,
+     "precision": 0.811
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.87,
+     "precision": 0.851
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.67,
+     "precision": 0.896
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.42,
+     "precision": 1.0
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.13,
+     "precision": 1.0
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 34,
+     "accuracy": 1.0
+    },
+    "medium": {
+     "n": 50,
+     "accuracy": 0.74
+    },
+    "low": {
+     "n": 16,
+     "accuracy": 0.438
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Customer selection or misuse",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 4
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 3
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "n": 2
+    },
+    {
+     "human": "Aged or degraded elastomers & consumables",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 2
+    },
+    {
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "n": 1
+    },
+    {
+     "human": "Material or hardness nonconformance",
+     "model": "Product differs from the listing",
+     "n": 1
+    }
+   ],
+   "examples": [
+    {
+     "text": "DON'T BUY GORILLA GLUE!!!. This stuff is crap!!!.. I used a very small amount to reattach a automotive emblem and this S*** EXPANDS, SWELLS LIKE THIS BUBBLY STUFF, and it DRIES WHITE!! I didn't see any warning of this. Thank God for GOO GONE! It bubbled and came up around the sides of the emblem. I'",
+     "human": "Customer selection or misuse",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.75,
+     "note": "[medium] Original Gorilla Glue is a foaming polyurethane; expanding and drying pale is its designed, labelled behavior. Product did exactly what it does, on a j"
+    },
+    {
+     "text": "Mine was defective.. This filament is defective. Prints came out overall ok, but with burned spots/blobs. It turned out to be caused by the filament clogging the nozzle and making a totally mess on the hot end, underneath the fan and silicone sleeve. The fact that it still managed to print is a test",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.5,
+     "note": "[medium] This spool clogs and curls back at the nozzle while two sibling spools extrude normally, so reviewer calls it a defective unit. Alt: material_nonconfor"
+    },
+    {
+     "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.78,
+     "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
+    },
+    {
+     "text": "Came in old broken box looked used. Wasn\u2019t seal correctly. Came in it came in an old broken box the hose was sticking out it wasn\u2019t sealed properly inside will try to return it and get a new one",
+     "human": "Other / unclear",
+     "model": "Surface damage from transit",
+     "conf": 0.5,
+     "note": "[medium] NOT LISTED: appears to be a previously opened/returned unit (old broken box, not sealed, hose sticking out). No damage to or failure of the product is "
+    },
+    {
+     "text": "Not As Either Described or Pictured. Delivered product was neither as described nor pictured. Comes with zinc screws which will corrode, when exposed to moisture. Absolutely unsuitable for direct burial. Bought local hardware equivalent; and, substituted stainless steel screws. Avoid this one, if it",
+     "human": "Material or hardness nonconformance",
+     "model": "Product differs from the listing",
+     "conf": 0.78,
+     "note": "[medium] Supplied screws are zinc-plated, not the corrosion-resistant hardware described. Material has its own bucket, so it beats the general listing_mismatch "
+    },
+    {
+     "text": "Good wipe, bad packaging. I've been buying these for 4 years. The last couple boxes I've gotten have been awful though. The wipes are a strange new shape, don't peel apart properly (sometimes I pull 3 wipes out at a time), and the package tears so easily. Unfortunately they're still the best quality",
+     "human": "Other / unclear",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.6,
+     "note": "[medium] NOT LISTED: packaging/dispensing usability after a product revision (wipes come out three at a time, pack tears). He says the wipe itself is still the "
+    }
+   ]
+  },
+  "cheap": {
+   "n": 100,
+   "accuracy": 0.63,
+   "public_n": 100,
+   "public_accuracy": 0.63,
+   "synthetic_n": 0,
+   "synthetic_accuracy": null,
+   "public_curve": [
+    {
+     "threshold": 0.5,
+     "coverage": 1.0,
+     "precision": 0.63
+    },
+    {
+     "threshold": 0.6,
+     "coverage": 0.99,
+     "precision": 0.636
+    },
+    {
+     "threshold": 0.7,
+     "coverage": 0.95,
+     "precision": 0.653
+    },
+    {
+     "threshold": 0.8,
+     "coverage": 0.48,
+     "precision": 0.75
+    },
+    {
+     "threshold": 0.9,
+     "coverage": 0.06,
+     "precision": 0.833
+    }
+   ],
+   "by_human_confidence": {
+    "high": {
+     "n": 34,
+     "accuracy": 0.853
+    },
+    "medium": {
+     "n": 50,
+     "accuracy": 0.58
+    },
+    "low": {
+     "n": 16,
+     "accuracy": 0.312
+    }
+   },
+   "top_disagreements": [
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 8
+    },
+    {
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "n": 4
+    },
+    {
+     "human": "Customer selection or misuse",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "n": 3
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Other / unclear",
+     "n": 3
+    },
+    {
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Works, but not worth the price",
+     "n": 2
+    },
+    {
+     "human": "Customer selection or misuse",
+     "model": "Product differs from the listing",
+     "n": 2
+    }
+   ],
+   "examples": [
+    {
+     "text": "DON'T BUY GORILLA GLUE!!!. This stuff is crap!!!.. I used a very small amount to reattach a automotive emblem and this S*** EXPANDS, SWELLS LIKE THIS BUBBLY STUFF, and it DRIES WHITE!! I didn't see any warning of this. Thank God for GOO GONE! It bubbled and came up around the sides of the emblem. I'",
+     "human": "Customer selection or misuse",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.88,
+     "note": "[medium] Original Gorilla Glue is a foaming polyurethane; expanding and drying pale is its designed, labelled behavior. Product did exactly what it does, on a j"
+    },
+    {
+     "text": "Just get super glue. Most of my fridge drawers are broken so decided to fix them all at once, so used almost the entire tube. What\u2019s great: Dries instantly on contact with skin (glued my finger to the package twice so use gloves) What\u2019s bad: Not much stronger than a standard super glue The cover doe",
+     "human": "Performance shortfall (works, but doesn't do the job)",
+     "model": "Works, but not worth the price",
+     "conf": 0.75,
+     "note": "[medium] 'Not much stronger than standard super glue' and the cap won't reseal, so it is single-use. Works, underdelivers. Nothing failed."
+    },
+    {
+     "text": "Mine was defective.. This filament is defective. Prints came out overall ok, but with burned spots/blobs. It turned out to be caused by the filament clogging the nozzle and making a totally mess on the hot end, underneath the fan and silicone sleeve. The fact that it still managed to print is a test",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.72,
+     "note": "[medium] This spool clogs and curls back at the nozzle while two sibling spools extrude normally, so reviewer calls it a defective unit. Alt: material_nonconfor"
+    },
+    {
+     "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.82,
+     "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
+    },
+    {
+     "text": "Screws snaps easily. These screws have no tensile strength to speak of. I was putting them into a pine door, with the holes pre-drilled. I had them even soaped up so they would go in easy , but so far on 3 of them the head just snapped off. Now I am left with a problem of how the heck to get the stu",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Material or hardness nonconformance",
+     "conf": 0.88,
+     "note": "[high] Heads snap off in pre-drilled, soaped pine, 3 of 15."
+    },
+    {
+     "text": "Do not purchase. These mask are cute, but don\u2019t be fooled. They break extremely fast. Each one worn by multiple family members broke in the same top right corner. The strings are not attached to the mask firmly. For instance, if you pull it down for a second to drink, take a photo, blow your nose\u2026it",
+     "human": "Functional failure (first use or early in service)",
+     "model": "Performance shortfall (works, but doesn't do the job)",
+     "conf": 0.78,
+     "note": "[high] Ear strings detach at the same corner on every mask."
+    }
+   ]
+  }
+ },
+ "gold": {
+  "n": 100,
+  "public_n": 100,
+  "synthetic_n": 0,
+  "human_vs_synthetic_truth": {
+   "n": 0,
+   "agree": 0
+  },
+  "majority_baseline": 0.4
+ },
  "gold_bulk": {
-  "n": 200,
-  "accuracy": 0.72,
-  "public_n": 150,
-  "public_accuracy": 0.64,
-  "synthetic_n": 50,
-  "synthetic_accuracy": 0.96,
+  "n": 100,
+  "accuracy": 0.76,
+  "public_n": 100,
+  "public_accuracy": 0.76,
+  "synthetic_n": 0,
+  "synthetic_accuracy": null,
   "public_curve": [
    {
     "threshold": 0.5,
-    "coverage": 0.96,
-    "precision": 0.667
+    "coverage": 0.98,
+    "precision": 0.776
    },
    {
     "threshold": 0.6,
-    "coverage": 0.58,
-    "precision": 0.747
+    "coverage": 0.87,
+    "precision": 0.828
    },
    {
     "threshold": 0.7,
-    "coverage": 0.373,
-    "precision": 0.821
-   },
-   {
-    "threshold": 0.8,
-    "coverage": 0.1,
-    "precision": 1.0
-   },
-   {
-    "threshold": 0.9,
-    "coverage": 0.02,
-    "precision": 1.0
-   }
-  ],
-  "by_human_confidence": {
-   "high": {
-    "n": 92,
-    "accuracy": 0.967
-   },
-   "medium": {
-    "n": 77,
-    "accuracy": 0.545
-   },
-   "low": {
-    "n": 31,
-    "accuracy": 0.419
-   }
-  },
-  "top_disagreements": [
-   {
-    "human": "Other / unclear",
-    "model": "Material or hardness nonconformance",
-    "n": 9
-   },
-   {
-    "human": "Premature failure in service",
-    "model": "Material or hardness nonconformance",
-    "n": 8
-   },
-   {
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Material or hardness nonconformance",
-    "n": 6
-   },
-   {
-    "human": "Other / unclear",
-    "model": "Assembly or mechanism failure on first use",
-    "n": 5
-   },
-   {
-    "human": "Other / unclear",
-    "model": "Premature failure in service",
-    "n": 4
-   },
-   {
-    "human": "Out-of-tolerance dimensions",
-    "model": "Material or hardness nonconformance",
-    "n": 3
-   }
-  ],
-  "examples": [
-   {
-    "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Material or hardness nonconformance",
-    "conf": 0.55,
-    "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
-   },
-   {
-    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Premature failure in service",
-    "conf": 0.6,
-    "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
-   },
-   {
-    "text": "Poor Quality. Horrible Packaging.. This is my second time purchasing these masks. The first time I purchased them, they arrived neatly packaged in a sealed box and I was impressed with the quality. Six months or so later, I did not hesitate ordering another box. What I received was NOTHING like my f",
-    "human": "Material or hardness nonconformance",
-    "model": "Surface damage from transit",
-    "conf": 0.45,
-    "note": "[low] Second order differs from first; 'no way these are 3 layers' is a claim the material does not meet spec. Crumpled packaging is secondary. Could equally be"
-   },
-   {
-    "text": "Flimsy. Most of them bent when installing and were not usable. Flimsy nail shaft so pressure bends them easily. Very disappointed I bought two boxes of these",
-    "human": "Premature failure in service",
-    "model": "Material or hardness nonconformance",
-    "conf": 0.6,
-    "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
-   },
-   {
-    "text": "Total garbage-very thin. Total garbage. Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if I could hav",
-    "human": "Other / unclear",
-    "model": "Material or hardness nonconformance",
-    "conf": 0.55,
-    "note": "[medium] NOT LISTED: product grade too light (foil tape 'thin as foil') plus liner will not release. No stated spec violated so not out_of_tolerance/material; n"
-   },
-   {
-    "text": "Inconsistent Quality. Ordered two. One was perfect, finished well, accurate jaw alignment. The other was junk, clearly a different manufacturer, despite identical bagging. Poor finish, weak clamp, misaligned jaws. It's why I ordered two, I figured one would be good.",
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Material or hardness nonconformance",
-    "conf": 0.55,
-    "note": "[low] Three defects listed equally (poor finish, weak clamp, misaligned jaws). Two of three are functional, so DOA assembly. Alt: burrs_finish or out_of_true. A"
-   }
-  ]
- },
- "gold_reference": {
-  "n": 200,
-  "accuracy": 0.79,
-  "public_n": 150,
-  "public_accuracy": 0.72,
-  "synthetic_n": 50,
-  "synthetic_accuracy": 1.0,
-  "public_curve": [
-   {
-    "threshold": 0.5,
-    "coverage": 0.94,
-    "precision": 0.745
-   },
-   {
-    "threshold": 0.6,
-    "coverage": 0.587,
-    "precision": 0.83
-   },
-   {
-    "threshold": 0.7,
-    "coverage": 0.393,
-    "precision": 0.898
-   },
-   {
-    "threshold": 0.8,
-    "coverage": 0.193,
-    "precision": 1.0
-   },
-   {
-    "threshold": 0.9,
-    "coverage": 0.027,
-    "precision": 1.0
-   }
-  ],
-  "by_human_confidence": {
-   "high": {
-    "n": 92,
-    "accuracy": 1.0
-   },
-   "medium": {
-    "n": 77,
-    "accuracy": 0.675
-   },
-   "low": {
-    "n": 31,
-    "accuracy": 0.452
-   }
-  },
-  "top_disagreements": [
-   {
-    "human": "Premature failure in service",
-    "model": "Other / unclear",
-    "n": 6
-   },
-   {
-    "human": "Other / unclear",
-    "model": "Assembly or mechanism failure on first use",
-    "n": 6
-   },
-   {
-    "human": "Premature failure in service",
-    "model": "Material or hardness nonconformance",
-    "n": 5
-   },
-   {
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Other / unclear",
-    "n": 4
-   },
-   {
-    "human": "Other / unclear",
-    "model": "Material or hardness nonconformance",
-    "n": 3
-   },
-   {
-    "human": "Out-of-tolerance dimensions",
-    "model": "Other / unclear",
-    "n": 3
-   }
-  ],
-  "examples": [
-   {
-    "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Premature failure in service",
-    "conf": 0.72,
-    "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
-   },
-   {
-    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Other / unclear",
-    "conf": 0.5,
-    "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
-   },
-   {
-    "text": "Poor Quality. Horrible Packaging.. This is my second time purchasing these masks. The first time I purchased them, they arrived neatly packaged in a sealed box and I was impressed with the quality. Six months or so later, I did not hesitate ordering another box. What I received was NOTHING like my f",
-    "human": "Material or hardness nonconformance",
-    "model": "Surface damage from transit",
-    "conf": 0.45,
-    "note": "[low] Second order differs from first; 'no way these are 3 layers' is a claim the material does not meet spec. Crumpled packaging is secondary. Could equally be"
-   },
-   {
-    "text": "Flimsy. Most of them bent when installing and were not usable. Flimsy nail shaft so pressure bends them easily. Very disappointed I bought two boxes of these",
-    "human": "Premature failure in service",
-    "model": "Material or hardness nonconformance",
-    "conf": 0.62,
-    "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
-   },
-   {
-    "text": "Total garbage-very thin. Total garbage. Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if I could hav",
-    "human": "Other / unclear",
-    "model": "Material or hardness nonconformance",
-    "conf": 0.55,
-    "note": "[medium] NOT LISTED: product grade too light (foil tape 'thin as foil') plus liner will not release. No stated spec violated so not out_of_tolerance/material; n"
-   },
-   {
-    "text": "Inconsistent Quality. Ordered two. One was perfect, finished well, accurate jaw alignment. The other was junk, clearly a different manufacturer, despite identical bagging. Poor finish, weak clamp, misaligned jaws. It's why I ordered two, I figured one would be good.",
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Other / unclear",
-    "conf": 0.45,
-    "note": "[low] Three defects listed equally (poor finish, weak clamp, misaligned jaws). Two of three are functional, so DOA assembly. Alt: burrs_finish or out_of_true. A"
-   }
-  ]
- },
- "gold_cheap": {
-  "n": 200,
-  "accuracy": 0.675,
-  "public_n": 150,
-  "public_accuracy": 0.573,
-  "synthetic_n": 50,
-  "synthetic_accuracy": 0.98,
-  "public_curve": [
-   {
-    "threshold": 0.5,
-    "coverage": 0.893,
-    "precision": 0.604
-   },
-   {
-    "threshold": 0.6,
-    "coverage": 0.827,
-    "precision": 0.613
-   },
-   {
-    "threshold": 0.7,
-    "coverage": 0.707,
-    "precision": 0.66
+    "coverage": 0.69,
+    "precision": 0.884
    },
    {
     "threshold": 0.8,
     "coverage": 0.34,
-    "precision": 0.745
+    "precision": 0.941
    },
    {
     "threshold": 0.9,
-    "coverage": 0.04,
+    "coverage": 0.03,
     "precision": 1.0
    }
   ],
   "by_human_confidence": {
    "high": {
-    "n": 92,
-    "accuracy": 0.913
+    "n": 34,
+    "accuracy": 0.882
    },
    "medium": {
-    "n": 77,
-    "accuracy": 0.545
+    "n": 50,
+    "accuracy": 0.8
    },
    "low": {
-    "n": 31,
-    "accuracy": 0.29
+    "n": 16,
+    "accuracy": 0.375
    }
   },
   "top_disagreements": [
    {
-    "human": "Premature failure in service",
-    "model": "Other / unclear",
-    "n": 14
+    "human": "Performance shortfall (works, but doesn't do the job)",
+    "model": "Customer selection or misuse",
+    "n": 4
    },
    {
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Other / unclear",
-    "n": 9
-   },
-   {
-    "human": "Out-of-tolerance dimensions",
-    "model": "Other / unclear",
-    "n": 8
-   },
-   {
-    "human": "Premature failure in service",
+    "human": "Functional failure (first use or early in service)",
     "model": "Material or hardness nonconformance",
-    "n": 6
-   },
-   {
-    "human": "Aged or degraded elastomers & consumables",
-    "model": "Other / unclear",
-    "n": 5
-   },
-   {
-    "human": "Premature failure in service",
-    "model": "Assembly or mechanism failure on first use",
     "n": 3
+   },
+   {
+    "human": "Functional failure (first use or early in service)",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "n": 3
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Surface damage from transit",
+    "n": 1
+   },
+   {
+    "human": "Short count or missing components",
+    "model": "Product differs from the listing",
+    "n": 1
+   },
+   {
+    "human": "Product differs from the listing",
+    "model": "Short count or missing components",
+    "n": 1
    }
   ],
   "examples": [
    {
-    "text": "Complete and utter junk.. Don't waste your money. These are junk. The first one broke while I was putting the bolt in. I hadn't even got to the point of tightening it. I heard a snap and the bolt pulled right out. The biggest problem is that I now have the toggle stuck in the wall with no way to get",
-    "human": "Assembly or mechanism failure on first use",
-    "model": "Premature failure in service",
-    "conf": 0.72,
-    "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
+    "text": "Just get super glue. Most of my fridge drawers are broken so decided to fix them all at once, so used almost the entire tube. What\u2019s great: Dries instantly on contact with skin (glued my finger to the package twice so use gloves) What\u2019s bad: Not much stronger than a standard super glue The cover doe",
+    "human": "Performance shortfall (works, but doesn't do the job)",
+    "model": "Customer selection or misuse",
+    "conf": 0.65,
+    "note": "[medium] 'Not much stronger than standard super glue' and the cap won't reseal, so it is single-use. Works, underdelivers. Nothing failed."
    },
    {
-    "text": "Utter frustration.. The plastic hose is hard as a rock and twists where it pleases. The whole thing tips over unless you hold it. The dust bin doesnt collect much, it all ends up on the filter. Lucky if you can use for a few minutes before having to wash filter. The cord is way to short, no extender",
+    "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+    "human": "Functional failure (first use or early in service)",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.85,
+    "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
+   },
+   {
+    "text": "Screws snaps easily. These screws have no tensile strength to speak of. I was putting them into a pine door, with the holes pre-drilled. I had them even soaped up so they would go in easy , but so far on 3 of them the head just snapped off. Now I am left with a problem of how the heck to get the stu",
+    "human": "Functional failure (first use or early in service)",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.82,
+    "note": "[high] Heads snap off in pre-drilled, soaped pine, 3 of 15."
+   },
+   {
+    "text": "Came in old broken box looked used. Wasn\u2019t seal correctly. Came in it came in an old broken box the hose was sticking out it wasn\u2019t sealed properly inside will try to return it and get a new one",
     "human": "Other / unclear",
-    "model": "Aged or degraded elastomers & consumables",
-    "conf": 0.62,
-    "note": "[high] NOT LISTED: design/ergonomics dissatisfaction (stiff hose, tips over, short cord, filter clogs). Nothing is broken or nonconforming, so no defect mode ap"
+    "model": "Surface damage from transit",
+    "conf": 0.55,
+    "note": "[medium] NOT LISTED: appears to be a previously opened/returned unit (old broken box, not sealed, hose sticking out). No damage to or failure of the product is "
    },
    {
-    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
-    "human": "Assembly or mechanism failure on first use",
+    "text": "Poor, POOR and inaccurate Transaction. No case was provided for the lenses - all shipped individually.",
+    "human": "Short count or missing components",
+    "model": "Product differs from the listing",
+    "conf": 0.55,
+    "note": "[medium] Lens case not included; 'inaccurate transaction' implies it was promised. Alt: listing_mismatch if the case was only pictured."
+   },
+   {
+    "text": "NOT a pack of 8.. Ad clearly states this is a pack of 8. Package received contained only one. Returned. (Heading/description edited since my review, but two tubes are still shown in the illustration.)",
+    "human": "Product differs from the listing",
+    "model": "Short count or missing components",
+    "conf": 0.75,
+    "note": "[medium] Ad said pack of 8, one arrived, and the seller then edited the listing. The edit is evidence the SKU was always a single and the listing was wrong. Wit"
+   }
+  ]
+ },
+ "gold_reference": {
+  "n": 100,
+  "accuracy": 0.85,
+  "public_n": 100,
+  "public_accuracy": 0.85,
+  "synthetic_n": 0,
+  "synthetic_accuracy": null,
+  "public_curve": [
+   {
+    "threshold": 0.5,
+    "coverage": 0.96,
+    "precision": 0.875
+   },
+   {
+    "threshold": 0.6,
+    "coverage": 0.86,
+    "precision": 0.942
+   },
+   {
+    "threshold": 0.7,
+    "coverage": 0.71,
+    "precision": 0.972
+   },
+   {
+    "threshold": 0.8,
+    "coverage": 0.5,
+    "precision": 0.98
+   },
+   {
+    "threshold": 0.9,
+    "coverage": 0.13,
+    "precision": 1.0
+   }
+  ],
+  "by_human_confidence": {
+   "high": {
+    "n": 34,
+    "accuracy": 0.971
+   },
+   "medium": {
+    "n": 50,
+    "accuracy": 0.86
+   },
+   "low": {
+    "n": 16,
+    "accuracy": 0.562
+   }
+  },
+  "top_disagreements": [
+   {
+    "human": "Functional failure (first use or early in service)",
+    "model": "Material or hardness nonconformance",
+    "n": 2
+   },
+   {
+    "human": "Aged or degraded elastomers & consumables",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "n": 2
+   },
+   {
+    "human": "Performance shortfall (works, but doesn't do the job)",
+    "model": "Customer selection or misuse",
+    "n": 2
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Surface damage from transit",
+    "n": 1
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Product differs from the listing",
+    "n": 1
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "n": 1
+   }
+  ],
+  "examples": [
+   {
+    "text": "Mine was defective.. This filament is defective. Prints came out overall ok, but with burned spots/blobs. It turned out to be caused by the filament clogging the nozzle and making a totally mess on the hot end, underneath the fan and silicone sleeve. The fact that it still managed to print is a test",
+    "human": "Functional failure (first use or early in service)",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.55,
+    "note": "[medium] This spool clogs and curls back at the nozzle while two sibling spools extrude normally, so reviewer calls it a defective unit. Alt: material_nonconfor"
+   },
+   {
+    "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+    "human": "Functional failure (first use or early in service)",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.8,
+    "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
+   },
+   {
+    "text": "Came in old broken box looked used. Wasn\u2019t seal correctly. Came in it came in an old broken box the hose was sticking out it wasn\u2019t sealed properly inside will try to return it and get a new one",
+    "human": "Other / unclear",
+    "model": "Surface damage from transit",
+    "conf": 0.5,
+    "note": "[medium] NOT LISTED: appears to be a previously opened/returned unit (old broken box, not sealed, hose sticking out). No damage to or failure of the product is "
+   },
+   {
+    "text": "What tube diameter, what threads????. I cannot endorse any product that doesn't provide sufficient dimensional or electrical data to motivate purchase.",
+    "human": "Other / unclear",
+    "model": "Product differs from the listing",
+    "conf": 0.4,
+    "note": "[high] NOT LISTED: listing omits dimensions and thread spec. No product experience at all (reads as a non-purchase). Not listing_mismatch: nothing was received "
+   },
+   {
+    "text": "Good wipe, bad packaging. I've been buying these for 4 years. The last couple boxes I've gotten have been awful though. The wipes are a strange new shape, don't peel apart properly (sometimes I pull 3 wipes out at a time), and the package tears so easily. Unfortunately they're still the best quality",
+    "human": "Other / unclear",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "conf": 0.62,
+    "note": "[medium] NOT LISTED: packaging/dispensing usability after a product revision (wipes come out three at a time, pack tears). He says the wipe itself is still the "
+   },
+   {
+    "text": "Tom. For 5 pieces far too expensive! The FEB release film is too thin. I had replaced the old one with a new one just like in the elegoo you tube video. After the print I had noticed that the print stick While printing on the release film and left a single hole and the resin ran through the tiny hol",
+    "human": "Functional failure (first use or early in service)",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "conf": 0.7,
+    "note": "[medium] FEP film punctured on its first print and leaked resin onto the screen. Secondary: 'too thin' (grade) and 'far too expensive' (value)."
+   }
+  ]
+ },
+ "gold_cheap": {
+  "n": 100,
+  "accuracy": 0.67,
+  "public_n": 100,
+  "public_accuracy": 0.67,
+  "synthetic_n": 0,
+  "synthetic_accuracy": null,
+  "public_curve": [
+   {
+    "threshold": 0.5,
+    "coverage": 1.0,
+    "precision": 0.67
+   },
+   {
+    "threshold": 0.6,
+    "coverage": 1.0,
+    "precision": 0.67
+   },
+   {
+    "threshold": 0.7,
+    "coverage": 0.96,
+    "precision": 0.677
+   },
+   {
+    "threshold": 0.8,
+    "coverage": 0.5,
+    "precision": 0.82
+   },
+   {
+    "threshold": 0.9,
+    "coverage": 0.1,
+    "precision": 0.7
+   }
+  ],
+  "by_human_confidence": {
+   "high": {
+    "n": 34,
+    "accuracy": 0.882
+   },
+   "medium": {
+    "n": 50,
+    "accuracy": 0.66
+   },
+   "low": {
+    "n": 16,
+    "accuracy": 0.25
+   }
+  },
+  "top_disagreements": [
+   {
+    "human": "Functional failure (first use or early in service)",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "n": 6
+   },
+   {
+    "human": "Performance shortfall (works, but doesn't do the job)",
+    "model": "Other / unclear",
+    "n": 4
+   },
+   {
+    "human": "Functional failure (first use or early in service)",
+    "model": "Material or hardness nonconformance",
+    "n": 4
+   },
+   {
+    "human": "Customer selection or misuse",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "n": 2
+   },
+   {
+    "human": "Performance shortfall (works, but doesn't do the job)",
+    "model": "Product differs from the listing",
+    "n": 2
+   },
+   {
+    "human": "Other / unclear",
+    "model": "Surface damage from transit",
+    "n": 1
+   }
+  ],
+  "examples": [
+   {
+    "text": "DON'T BUY GORILLA GLUE!!!. This stuff is crap!!!.. I used a very small amount to reattach a automotive emblem and this S*** EXPANDS, SWELLS LIKE THIS BUBBLY STUFF, and it DRIES WHITE!! I didn't see any warning of this. Thank God for GOO GONE! It bubbled and came up around the sides of the emblem. I'",
+    "human": "Customer selection or misuse",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "conf": 0.82,
+    "note": "[medium] Original Gorilla Glue is a foaming polyurethane; expanding and drying pale is its designed, labelled behavior. Product did exactly what it does, on a j"
+   },
+   {
+    "text": "Just get super glue. Most of my fridge drawers are broken so decided to fix them all at once, so used almost the entire tube. What\u2019s great: Dries instantly on contact with skin (glued my finger to the package twice so use gloves) What\u2019s bad: Not much stronger than a standard super glue The cover doe",
+    "human": "Performance shortfall (works, but doesn't do the job)",
     "model": "Other / unclear",
     "conf": 0.75,
-    "note": "[low] Regulator chokes flow to near nothing from first use = does not perform its function out of box. Alt: design-limited flow on a cheap regulator (would be O"
+    "note": "[medium] 'Not much stronger than standard super glue' and the cap won't reseal, so it is single-use. Works, underdelivers. Nothing failed."
    },
    {
-    "text": "To hard to get out of tube. Almost broke my caulk gun trying to get it out of the tube. I gave up and threw it away.",
-    "human": "Aged or degraded elastomers & consumables",
-    "model": "Other / unclear",
-    "conf": 0.5,
-    "note": "[medium] Caulk too stiff to gun out is the classic partially-cured/old tube symptom, but customer gives no date evidence. Alt: high-viscosity formulation."
+    "text": "Broken Screws and Extra Work. Sorry, not much good to say. Bought these for a brake line install and ended up snapping off several screws because they are so soft and garbage. Not what you expect for a stainless steel screw! In the end, has to pre-drill the holes and still broke some off. Look elsew",
+    "human": "Functional failure (first use or early in service)",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.82,
+    "note": "[medium] Heads and shanks snap while driving. 'So soft' is an impression, not a test, so not material_nonconformance (same rule as v1)."
    },
    {
-    "text": "Not accurately depicted in photo. The 4 inch bolt is not full thread.. This is a 4 inch long stainless 1/4-20 socket cap bolt. It has one inch of thread, not full thread as depicted of the picture (which is clearly not of a 4 inch bolt). I returned this as I was looking for full thread.",
+    "text": "Screws snaps easily. These screws have no tensile strength to speak of. I was putting them into a pine door, with the holes pre-drilled. I had them even soaped up so they would go in easy , but so far on 3 of them the head just snapped off. Now I am left with a problem of how the heck to get the stu",
+    "human": "Functional failure (first use or early in service)",
+    "model": "Material or hardness nonconformance",
+    "conf": 0.88,
+    "note": "[high] Heads snap off in pre-drilled, soaped pine, 3 of 15."
+   },
+   {
+    "text": "Do not purchase. These mask are cute, but don\u2019t be fooled. They break extremely fast. Each one worn by multiple family members broke in the same top right corner. The strings are not attached to the mask firmly. For instance, if you pull it down for a second to drink, take a photo, blow your nose\u2026it",
+    "human": "Functional failure (first use or early in service)",
+    "model": "Performance shortfall (works, but doesn't do the job)",
+    "conf": 0.75,
+    "note": "[high] Ear strings detach at the same corner on every mask."
+   },
+   {
+    "text": "Came in old broken box looked used. Wasn\u2019t seal correctly. Came in it came in an old broken box the hose was sticking out it wasn\u2019t sealed properly inside will try to return it and get a new one",
     "human": "Other / unclear",
-    "model": "Out-of-tolerance dimensions",
+    "model": "Surface damage from transit",
     "conf": 0.72,
-    "note": "[high] NOT LISTED: listing image error (photo shows full thread, 4in SKU is partial thread). Not wrong_part: he received the titled item, no mispick. Not out_of"
-   },
-   {
-    "text": "Not true gaffer's tape. Leaves moderate adhesive reside and won't tear cleanly.. This tape isn't true gaffers tape. It's a textured plastic sheet that won't tear cleanly and the adhesive leaves quite a bit of residue. It'll work for what I'm using it for, but if you need quality gaffer's tape that w",
-    "human": "Material or hardness nonconformance",
-    "model": "Other / unclear",
-    "conf": 0.85,
-    "note": "[medium] 'Not true gaffer's tape... textured plastic sheet' = product is not the material it claims to be. Closest analogue to 'magnet sticks to my stainless'. "
+    "note": "[medium] NOT LISTED: appears to be a previously opened/returned unit (old broken box, not sealed, hose sticking out). No damage to or failure of the product is "
    }
   ]
  }

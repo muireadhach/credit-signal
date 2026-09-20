@@ -1,131 +1,131 @@
 {
  "threshold": 0.6,
- "n_total": 3498,
- "n_queue": 724,
- "share": 0.207,
+ "n_total": 3598,
+ "n_queue": 362,
+ "share": 0.101,
  "curve": [
   {
    "threshold": 0.5,
-   "coverage": 0.983,
-   "precision": 0.946
+   "coverage": 0.977,
+   "precision": 0.967
   },
   {
    "threshold": 0.6,
-   "coverage": 0.938,
-   "precision": 0.964
+   "coverage": 0.939,
+   "precision": 0.974
   },
   {
    "threshold": 0.7,
-   "coverage": 0.906,
-   "precision": 0.975
+   "coverage": 0.908,
+   "precision": 0.98
   },
   {
    "threshold": 0.8,
-   "coverage": 0.802,
-   "precision": 0.995
+   "coverage": 0.808,
+   "precision": 0.993
   },
   {
    "threshold": 0.9,
-   "coverage": 0.441,
+   "coverage": 0.444,
    "precision": 1.0
   }
  ],
  "examples": [
   {
-   "id": "is_AEGX3MVE_B001TMEX7E_1301127824000",
-   "source": "public_review",
-   "mode": "Material or hardness nonconformance",
+   "id": "CR-100976",
+   "source": "synthetic_credit",
+   "mode": "Other / unclear",
    "conf": 0.3,
-   "secondary": "Other / unclear",
-   "text": "Solid Top, Flimsy System. Like many of the buyers, I wanted an inexpensive but solid workspace until I can renovate my kitchen. The pieces of this cart are very sturdy, but the plastic pieces they supply to hold the whole thing up leave much to be desired. There are two semicircular pieces for each corner of the top and shelf that fit together, around the leg, but do not snap together, and are hel"
+   "secondary": null,
+   "text": "We've got an issue with the anchor hardware from the last order for the vivarium racks and I'd rather talk it through than type it out. There's a couple of things going on and I don't think they're all the same problem. Can someone give me a call?"
   },
   {
-   "id": "is_AHT4KKBW_B084T5VZKY_1654624328436",
-   "source": "public_review",
+   "id": "CR-100851",
+   "source": "synthetic_credit",
    "mode": "Other / unclear",
    "conf": 0.35,
-   "secondary": null,
-   "text": "Piece of crap. An uneven cracked piece of cardboard covered with ripped paper. Better off cutting a box & covering with aluminum foil."
+   "secondary": "Material or hardness nonconformance",
+   "text": "Can someone give me a call about the titanium bar we ordered. I'm not sure the condition/temper on it matches what we thought we were buying and I'd rather talk it through with somebody than write it all out. Phone is best, mornings."
   },
   {
-   "id": "CR-100369",
+   "id": "CR-101236",
    "source": "synthetic_credit",
    "mode": "Other / unclear",
    "conf": 0.35,
    "secondary": null,
-   "text": "Guys in the shop flagged something with the air regulators from the last batch but I'm getting a fuzzy story \u2014 something about it not behaving like the last ones we had. Can someone give me a call so I can put you on with the carpenter who actually used them? I don't want to file the wrong thing."
-  },
-  {
-   "id": "is_AEN7UKKZ_B07S8QJYCZ_1601233593779",
-   "source": "public_review",
-   "mode": "Material or hardness nonconformance",
-   "conf": 0.4,
-   "secondary": "Other / unclear",
-   "text": "Easy to bend maybe good for dentist nothing else.. Easily bends but very sharp and pointy this would 9nly be useful for delicate things anything else will cause it to bend."
+   "text": "Need an RMA on the two pillow block units from last week. Sanitation is saying they don't want them on the line and QA has questions I can't really answer. I'd rather just send them back than argue about it."
   },
   {
    "id": "is_AEAQZ5JY_B0056LUPJY_1588875547100",
    "source": "public_review",
    "mode": "Surface damage from transit",
    "conf": 0.4,
-   "secondary": "Other / unclear",
+   "secondary": "Works, but not worth the price",
    "text": "Not worth price. Ordered and it's just like any bleach solution nothing special was half leaked out returned just buy bleach"
-  },
-  {
-   "id": "is_AFA6U6GO_B08G1833GN_1646709863521",
-   "source": "public_review",
-   "mode": "Premature failure in service",
-   "conf": 0.4,
-   "secondary": "Other / unclear",
-   "text": "Not a good review. I broke one while l was putting the hose on. I may have broken a second. I do not remember for sure. I do remember I went to Ace Hardware and built a completely different approach to solve what this should have."
-  },
-  {
-   "id": "is_AG7XDHYC_B07BSCXQJD_1542065592891",
-   "source": "public_review",
-   "mode": "Material or hardness nonconformance",
-   "conf": 0.4,
-   "secondary": "Assembly or mechanism failure on first use",
-   "text": "Worst skull ever!. This fox skull was very poor quality. Some of the bones are broken & it wasn't properly cleaned, as there are bits of flesh on it, & the bone is still greasy, & is also a dark yellow-brown color, as opposed to creamy white. It's also missing some teeth. I also don't like that the bottum jaw was glued to the top jaw very poorly. It fell apart on its own. The k-9 teeth weren't pro"
   },
   {
    "id": "is_AGQN6JEC_B072F645SJ_1635248190423",
    "source": "public_review",
-   "mode": "Surface damage from transit",
+   "mode": "Other / unclear",
    "conf": 0.4,
-   "secondary": "Other / unclear",
+   "secondary": "Surface damage from transit",
    "text": "Dirty. I was afraid of putting into these bottles anything that will go into my eyes\u2026. They arrived in a dirty package. The bottles where not looking clean\u2026."
-  },
-  {
-   "id": "is_AGUIE6ZR_B003E48ESO_1592160051396",
-   "source": "public_review",
-   "mode": "Surface damage from transit",
-   "conf": 0.4,
-   "secondary": "Assembly or mechanism failure on first use",
-   "text": "Major letdown. Was pretty pumped to get these in, but opened the envelope to find they were broken. Going to return and buy a name brand not made in Pakistan"
   },
   {
    "id": "is_AGIYXBA7_B073HFCB9S_1504531702509",
    "source": "public_review",
-   "mode": "Other / unclear",
+   "mode": "Material or hardness nonconformance",
    "conf": 0.4,
-   "secondary": "Material or hardness nonconformance",
+   "secondary": "Other / unclear",
    "text": "They are pretty crappy. There is a space between the letters .... They are pretty crappy.There is a space between the letters R &V and it makes it look like a missing letter goes there. There is no way I could use these at a customers site. I guess they would be ok to use at home. The plastic is very thin."
   },
   {
    "id": "is_AEEMDT6U_B0163FJOOI_1528234908685",
    "source": "public_review",
-   "mode": "Other / unclear",
+   "mode": "Surface damage from transit",
    "conf": 0.4,
-   "secondary": null,
+   "secondary": "Other / unclear",
    "text": "Horribly disappointed. Returned immediately. Only one arrived in tact. Horribly disappointed. Returned immediately."
   },
   {
-   "id": "is_AGNEZSR5_B01ENFON5A_1586195493648",
+   "id": "is_AEFIWG4C_B07SD3L9HR_1614702894738",
    "source": "public_review",
-   "mode": "Other / unclear",
+   "mode": "Material or hardness nonconformance",
    "conf": 0.4,
-   "secondary": "Aged or degraded elastomers & consumables",
-   "text": "Don\u2019t buy this. Total crap. The adhesive fell off, the plastic part kept coming off, it scratched the crap out of my neck."
+   "secondary": "Other / unclear",
+   "text": "Very Poor Quality \u2013 Move along, nothing to see here.. I assumed that these KAIWEETS leads would be around the same quality as the leads supplied with the KAIWEETS clamp meter I recently purchased. I was wrong. These leads are not so great and the attachable clips are pretty flakey. RETURN!"
+  },
+  {
+   "id": "is_AFDCQWKO_B08QM81BJV_1664670815447",
+   "source": "public_review",
+   "mode": "Functional failure (first use or early in service)",
+   "conf": 0.4,
+   "secondary": null,
+   "text": "Not sure it was worth it. It fell off the counter the first time i used it -top broke off."
+  },
+  {
+   "id": "is_AHCDDPIM_B07MWR845K_1626120038630",
+   "source": "public_review",
+   "mode": "Wrong part in the right bag",
+   "conf": 0.4,
+   "secondary": "Short count or missing components",
+   "text": "I got used glue bottles!. The 2 came in without original packaging and half empty!"
+  },
+  {
+   "id": "is_AH66EJDH_B086221L5Q_1616900286510",
+   "source": "public_review",
+   "mode": "Short count or missing components",
+   "conf": 0.4,
+   "secondary": "Functional failure (first use or early in service)",
+   "text": "4 out of 12 bottles had broken droppers. 4 out of 12 bottles had broken droppers"
+  },
+  {
+   "id": "is_AFGIQPGC_B00UIJHI80_1629541999919",
+   "source": "public_review",
+   "mode": "Material or hardness nonconformance",
+   "conf": 0.4,
+   "secondary": "Other / unclear",
+   "text": "One of them had holes in them and like black dust was in the package and it was all over the bags. But this is the only place I can find to buy am I have no choice how else am I going to store my beads for arts and crafts this is the easiest and cheapest way"
   }
  ]
 }

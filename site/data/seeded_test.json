@@ -32,10 +32,10 @@
    "n_in": 48,
    "n_out": 234,
    "llm": {
-    "rate_in": 0.542,
-    "rate_out": 0.427,
-    "lift": 1.27,
-    "p": 0.07337
+    "rate_in": 0.521,
+    "rate_out": 0.372,
+    "lift": 1.4,
+    "p": 0.02728
    },
    "keyword": {
     "rate_in": 0.5,
@@ -209,6 +209,20 @@
    "survives_correction": false
   },
   {
+   "product_class": "fasteners",
+   "mode": "Out-of-tolerance dimensions",
+   "field": "carrier",
+   "value": "Carrier-B",
+   "n_in": 118,
+   "k_in": 13,
+   "rate_in": 0.11,
+   "rate_out": 0.041,
+   "lift": 2.66,
+   "p": 0.00431,
+   "seeded": false,
+   "survives_correction": false
+  },
+  {
    "product_class": "seals_elastomers",
    "mode": "Aged or degraded elastomers & consumables",
    "field": "origin_dc",
@@ -219,34 +233,6 @@
    "rate_out": 0.314,
    "lift": 1.82,
    "p": 0.00534,
-   "seeded": false,
-   "survives_correction": false
-  },
-  {
-   "product_class": "raw_stock",
-   "mode": "Wrong part in the right bag",
-   "field": "carrier",
-   "value": "Carrier-A",
-   "n_in": 73,
-   "k_in": 8,
-   "rate_in": 0.11,
-   "rate_out": 0.025,
-   "lift": 4.42,
-   "p": 0.00668,
-   "seeded": false,
-   "survives_correction": false
-  },
-  {
-   "product_class": "fasteners",
-   "mode": "Wrong part in the right bag",
-   "field": "origin_dc",
-   "value": "DC-3",
-   "n_in": 86,
-   "k_in": 15,
-   "rate_in": 0.174,
-   "rate_out": 0.084,
-   "lift": 2.08,
-   "p": 0.00704,
    "seeded": false,
    "survives_correction": false
   },
@@ -266,15 +252,43 @@
   },
   {
    "product_class": "fasteners",
-   "mode": "Out-of-tolerance dimensions",
+   "mode": "Wrong part in the right bag",
+   "field": "origin_dc",
+   "value": "DC-3",
+   "n_in": 86,
+   "k_in": 15,
+   "rate_in": 0.174,
+   "rate_out": 0.087,
+   "lift": 2.01,
+   "p": 0.00947,
+   "seeded": false,
+   "survives_correction": false
+  },
+  {
+   "product_class": "fasteners",
+   "mode": "Thread mismatch / wrong pitch or class",
+   "field": "packaging_spec",
+   "value": "PB-1",
+   "n_in": 191,
+   "k_in": 29,
+   "rate_in": 0.152,
+   "rate_out": 0.078,
+   "lift": 1.94,
+   "p": 0.00959,
+   "seeded": false,
+   "survives_correction": false
+  },
+  {
+   "product_class": "hardware_casters",
+   "mode": "Functional failure (first use or early in service)",
    "field": "carrier",
-   "value": "Carrier-B",
-   "n_in": 118,
-   "k_in": 12,
-   "rate_in": 0.102,
-   "rate_out": 0.041,
-   "lift": 2.46,
-   "p": 0.00945,
+   "value": "Carrier-C",
+   "n_in": 27,
+   "k_in": 14,
+   "rate_in": 0.519,
+   "rate_out": 0.28,
+   "lift": 1.85,
+   "p": 0.01021,
    "seeded": false,
    "survives_correction": false
   },
@@ -293,39 +307,25 @@
    "survives_correction": false
   },
   {
-   "product_class": "fasteners",
-   "mode": "Thread mismatch / wrong pitch or class",
-   "field": "packaging_spec",
-   "value": "PB-1",
-   "n_in": 191,
-   "k_in": 29,
-   "rate_in": 0.152,
-   "rate_out": 0.083,
-   "lift": 1.83,
-   "p": 0.01483,
-   "seeded": false,
-   "survives_correction": false
-  },
-  {
    "product_class": "raw_stock",
-   "mode": "Corrosion on arrival",
-   "field": "packaging_spec",
-   "value": "TB-1",
-   "n_in": 84,
-   "k_in": 11,
-   "rate_in": 0.131,
-   "rate_out": 0.045,
-   "lift": 2.88,
-   "p": 0.01598,
+   "mode": "Wrong part in the right bag",
+   "field": "carrier",
+   "value": "Carrier-A",
+   "n_in": 73,
+   "k_in": 7,
+   "rate_in": 0.096,
+   "rate_out": 0.025,
+   "lift": 3.87,
+   "p": 0.01502,
    "seeded": false,
    "survives_correction": false
   }
  ],
- "scan_cells": 256,
- "bonferroni_p": 0.0001953125,
+ "scan_cells": 247,
+ "bonferroni_p": 0.00020242914979757087,
  "scan_survivors": 1,
  "scan_seeded_ranks": [
   1,
-  32
+  31
  ]
 }

@@ -268,7 +268,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 <section id="voice">
   <p class="eyebrow">05 · What real customers say</p>
   <h2>Two thousand real one- and two-star reviews of industrial products, sorted into an operator's failure taxonomy.</h2>
-  <p class="muted">The taxonomy is 15 failure modes written from shop experience, not from a catalog. Expand a mode to read what the model quoted as its evidence.</p>
+  <p class="muted">The taxonomy started as 15 failure modes written from shop experience. Hand-labeling real reviews showed what a parts-receiving view misses — the part that works but doesn't do the job, the listing that was wrong, the customer who chose wrong — so v2 has 20. Expand a mode to read what the model quoted as its evidence.</p>
   <div class="grid2">
     <div class="panel"><div id="chart-voice"></div></div>
     <div class="panel"><div class="modes-head"><span>Failure mode · share</span><span>tap <b>+</b> to expand</span></div><div class="modes" id="voice-modes"></div></div>
@@ -281,19 +281,19 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <p class="muted">Every classification carries a confidence. Above the threshold it's auto-filed; below, it goes to a person. Move the threshold and you trade coverage for precision. On clean synthetic text the trade is generous; on real reviews it is not — and the model's confidence knows the difference.</p>
   <div class="grid2">
     <div class="panel"><h3>Synthetic ground truth (n = 1,500)</h3><div id="chart-curve"></div><div class="legend"><span style="--c:var(--s1)">Coverage</span><span style="--c:var(--s3)">Precision</span></div>
-      <h3 style="margin-top:16px">Real reviews vs. human labels (n = 150)</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="real-curve"></table></div></div></div>
+      <h3 style="margin-top:16px">Real reviews vs. human labels (100 unseen, v2)</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="real-curve"></table></div></div></div>
     <div class="panel"><h3 id="queue-title">Review queue</h3><div id="queue"></div></div>
   </div>
 </section>
 
 <section id="accuracy">
   <p class="eyebrow">07 · How accurate is it, and where does it fail</p>
-  <h2>Measured three ways — and real language is harder than synthetic.</h2>
-  <p class="muted">Against synthetic ground truth every model looks great. Against 200 records hand-labeled by the author — 150 of them real reviews, each with a confidence tag and a note — the picture is honest: models agree with a careful human where the human is sure, and disagree where the human was unsure too. Model tier matters on real language in a way it does not on clean text. For scale: always guessing the most common label would score <b>34%</b> on those reviews.</p>
+  <h2>Measured against a human, twice — and the taxonomy got better in between.</h2>
+  <p class="muted">Against synthetic ground truth every model looks great. The number that matters is agreement with a careful human on real reviews. The author hand-labeled 200 records under the original taxonomy (72%), found that a third of real complaints had nowhere to go, revised the taxonomy — merged two modes customers can't tell apart, added five the reviews demanded — and then labeled <b>100 fresh reviews no one had seen</b>. That clean test is the headline: <b>78%</b> with the classifier frozen beforehand, <b>85%</b> once the labeling guideline was written down. Always guessing the most common label would score 40%. Model tier matters on real language in a way it does not on clean text: the written rules helped Opus and did nothing for Sonnet.</p>
   <div class="tiles" id="acc-tiles"></div>
-  <div class="panel" style="margin-top:12px"><h3>Agreement with the human labeler, by how sure the human was</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="gold-table"></table></div></div><p class="small muted" style="margin-top:8px">The 50 synthetic records in the gold set also check the generator: the human agreed with the hidden ground truth on <span id="gen-check"></span>.</p></div>
+  <div class="panel" style="margin-top:12px"><h3>The 100 unseen reviews: agreement by how sure the human was</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="gold-table"></table></div></div><p class="small muted" style="margin-top:8px">The 50 synthetic records in the gold set also check the generator: the human agreed with the hidden ground truth on <span id="gen-check"></span>.</p></div>
   <div class="grid2" style="margin-top:12px">
-    <div class="panel"><h3>Where it gets confused</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="confusions"></table></div></div><p class="small muted" style="margin-top:8px">Most confusions are between neighboring modes an experienced person would also debate.</p></div>
+    <div class="panel"><h3>Where it gets confused</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="confusions"></table></div></div><p class="small muted" style="margin-top:8px">On the 100 unseen reviews. What's left are neighbors an experienced person would also debate — a part that broke versus one that fell short of its rating.</p></div>
     <div class="panel"><h3>Where the human and the model disagreed, with the human's note</h3><div id="errors"></div></div>
   </div>
 </section>
@@ -325,7 +325,8 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
     <div class="panel"><h3>Synthetic: credit records</h3><p class="small">1,500 credit memos with product class, packaging spec, carrier, origin DC, date, and credit amount, generated to mimic the record structure a distributor would actually hold. Notes were written by a language model that saw only the failure mode and product class. Two patterns were seeded on purpose so the method could be checked against a known answer. Downtime hours per failure mode are an operator's estimate, not measured.</p></div>
   </div>
   <div class="panel" style="margin-top:12px"><h3>Limitations</h3><ul class="limits small">
-    <li>Synthetic notes were written and classified by models from the same family. A human-labeled gold set is used to check that the accuracy number is not an artifact of that.</li>
+    <li>Synthetic notes were written and classified by models from the same family. The human-labeled sets are the check on that — and they show synthetic accuracy (96–99%) overstates real-review accuracy (78–85%). Treat synthetic numbers as an upper bound.</li>
+<li>The labeling guideline was refined while the clean set was being labeled, so the 85% is mildly tuned to it; the 78% frozen-protocol number is not. One labeler; a second would turn "one person's judgment" into inter-rater agreement.</li>
     <li>Public reviews are consumer-adjacent; the industrial share is real but the mix is not a distributor's mix.</li>
     <li>Downtime estimates drive the impact ranking. The sensitivity toggle exists because that assumption should be visible, not buried.</li>
     <li>No order-level truth exists for the public reviews; accuracy there rests on the gold set alone.</li>
