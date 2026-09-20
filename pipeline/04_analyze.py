@@ -237,6 +237,20 @@ if clean_gold: acc["gold_v2_clean"] = gold_block(clean_gold, cms_v2, "v2clean")
 if clean_gold and Path("data/processed/v2_frozen/classified_reference.jsonl").exists():
     cms_fr = {t: {r["id"]: r for r in load(f"data/processed/v2_frozen/classified_{t}.jsonl") if "error" not in r} for t in ("bulk", "reference", "cheap")}
     acc["gold_v2_clean_frozen"] = gold_block(clean_gold, cms_fr, "v2frozen")
+# second rater on 50 of the clean 100: inter-rater agreement (raw + Cohen's kappa) and model vs rater 2
+r2 = load("data/gold/gold_v2_clean_rater2.jsonl")
+if r2 and clean_gold:
+    a = {r["id"]: r["label"] for r in clean_gold}; b = {r["id"]: r["label"] for r in r2}; ids = [i for i in b if i in a]
+    if ids:
+        po = sum(a[i] == b[i] for i in ids) / len(ids)
+        ca, cb = Counter(a[i] for i in ids), Counter(b[i] for i in ids)
+        pe = sum(ca[k] * cb[k] for k in set(ca) | set(cb)) / len(ids) ** 2
+        kappa = (po - pe) / (1 - pe) if pe < 1 else None
+        acc["inter_rater"] = dict(n=len(ids), agreement=round(po, 3), kappa=round(kappa, 3) if kappa is not None else None,
+            model_vs_rater1=round(sum(a[i] == ref[i]["failure_mode"] for i in ids if i in ref) / max(sum(i in ref for i in ids), 1), 3),
+            model_vs_rater2=round(sum(b[i] == ref[i]["failure_mode"] for i in ids if i in ref) / max(sum(i in ref for i in ids), 1), 3),
+            model_vs_either=round(sum(ref[i]["failure_mode"] in (a[i], b[i]) for i in ids if i in ref) / max(sum(i in ref for i in ids), 1), 3),
+            disagreements=[dict(rater1=NAME.get(a[i]), rater2=NAME.get(b[i]), model=NAME.get(ref[i]["failure_mode"]) if i in ref else None, text=public[i]["text"][:200]) for i in ids if a[i] != b[i]][:8])
 # keep the old keys the site reads, pointing at the best available v2 set
 best = acc.get("gold_v2_clean") or acc.get("gold_v2_relabeled")
 if best:
