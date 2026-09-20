@@ -58,6 +58,18 @@
     el.replaceChildren(s); bindTips(s);
   }
 
+  /* header height drives the anchor offset, so section links land at the heading on every screen */
+  const hdr = document.querySelector("header.top");
+  const setH = () => document.documentElement.style.setProperty("--header-h", (hdr.offsetHeight + 12) + "px");
+  setH(); new ResizeObserver(setH).observe(hdr);
+  /* mark tables that actually overflow, so the "scroll sideways" hint only shows when true */
+  const markScroll = () => document.querySelectorAll(".scrollwrap").forEach(w => {
+    const t = w.querySelector(".tablewrap"); const sc = t.scrollWidth > t.clientWidth + 2;
+    w.classList.toggle("scrollable", sc);
+    if (sc && !t.dataset.bound) { t.dataset.bound = 1; t.addEventListener("scroll", () => w.classList.toggle("at-end", t.scrollLeft + t.clientWidth >= t.scrollWidth - 2), { passive: true }); }
+  });
+  addEventListener("resize", markScroll);
+
   /* ---------- hero ---------- */
   const S = D.summary, CR = D.credits_ranked, ST = D.seeded_test, AC = D.accuracy, EC = D.economics, RQ = D.review_queue, MP = D.modes_public;
   const seedA = ST?.tests?.[0];
@@ -165,4 +177,5 @@
     ].map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${esc(d)}</div></div>`).join("");
     $("#scale").innerHTML = `<thead><tr><th>Credits per month</th><th class="n">Bulk model</th><th class="n">Reference model</th></tr></thead><tbody>` + EC.scale.map(r => `<tr><td>${fmt.n(r.credits_per_month)}</td><td class="n">${fmt.usd(r.bulk_usd)}</td><td class="n">${fmt.usd(r.reference_usd)}</td></tr>`).join("") + "</tbody>";
   }
+  markScroll(); setTimeout(markScroll, 300);
 })();

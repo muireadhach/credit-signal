@@ -1625,7 +1625,7 @@
     "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
    },
    {
-    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake.<br /><br />I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time wh",
+    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
     "human": "Assembly or mechanism failure on first use",
     "model": "Premature failure in service",
     "conf": 0.6,
@@ -1646,7 +1646,7 @@
     "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
    },
    {
-    "text": "Total garbage-very thin. Total garbage.<br /><br />Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if ",
+    "text": "Total garbage-very thin. Total garbage. Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if I could hav",
     "human": "Other / unclear",
     "model": "Material or hardness nonconformance",
     "conf": 0.55,
@@ -1750,7 +1750,7 @@
     "note": "[medium] Toggle is a spring mechanism and it snapped before any load was applied, so DOA rather than premature_failure. Boundary case."
    },
    {
-    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake.<br /><br />I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time wh",
+    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
     "human": "Assembly or mechanism failure on first use",
     "model": "Other / unclear",
     "conf": 0.5,
@@ -1771,7 +1771,7 @@
     "note": "[medium] Nails bend during driving. Customer blames 'flimsy shaft' but offers no material evidence, so coded by symptom rather than material_nonconformance."
    },
    {
-    "text": "Total garbage-very thin. Total garbage.<br /><br />Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if ",
+    "text": "Total garbage-very thin. Total garbage. Very thin. It's as thin as foil and tears easier than a piece of paper. I couldn't even get the paper backing (which was as thick as the tape) to come off. I bought it to secure my dryer hose to the vent and it's so thin I wouldn't trust it even if I could hav",
     "human": "Other / unclear",
     "model": "Material or hardness nonconformance",
     "conf": 0.55,
@@ -1882,7 +1882,7 @@
     "note": "[high] NOT LISTED: design/ergonomics dissatisfaction (stiff hose, tips over, short cord, filter clogs). Nothing is broken or nonconforming, so no defect mode ap"
    },
    {
-    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake.<br /><br />I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time wh",
+    "text": "Mistake To Try To Save Money. I bought this as a replacement for a leaking name brand regulator. I let price dictate this purchase. Big mistake. I use the regulator when filling my tank plus when I hook up at campgrounds. Using this regulator when filling noticeably increased fill time which I didn'",
     "human": "Assembly or mechanism failure on first use",
     "model": "Other / unclear",
     "conf": 0.75,
@@ -1903,7 +1903,7 @@
     "note": "[high] NOT LISTED: listing image error (photo shows full thread, 4in SKU is partial thread). Not wrong_part: he received the titled item, no mispick. Not out_of"
    },
    {
-    "text": "Not true gaffer's tape. Leaves moderate adhesive reside and won't tear cleanly.. This tape isn't true gaffers tape. It's a textured plastic sheet that won't tear cleanly and the adhesive leaves quite a bit of residue.<br /><br />It'll work for what I'm using it for, but if you need quality gaffer's ",
+    "text": "Not true gaffer's tape. Leaves moderate adhesive reside and won't tear cleanly.. This tape isn't true gaffers tape. It's a textured plastic sheet that won't tear cleanly and the adhesive leaves quite a bit of residue. It'll work for what I'm using it for, but if you need quality gaffer's tape that w",
     "human": "Material or hardness nonconformance",
     "model": "Other / unclear",
     "conf": 0.85,

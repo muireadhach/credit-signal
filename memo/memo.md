@@ -12,6 +12,8 @@ Customer credits are a symptom log. Each one carries a coarse reason code and a 
 
 I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 15-item taxonomy written from shop experience, joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in **downtime** rather than what was refunded. Low-confidence results go to a person.
 
+It is deliberately plain: a static demo with no runtime model calls and no framework — the analysis runs once, the page serves the results, and it deploys anywhere static files do. Every design choice in it is one I can explain and defend, which was a constraint I set for myself.
+
 Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 256 failure-mode × metadata cells ranked the primary seeded pattern **#1**, at **3.6× lift** (p < 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Against synthetic ground truth the models score 94–96%. Against 200 records I labeled by hand — 150 of them real reviews — the honest number is **72%** for the reference model (Opus 5), **64%** for the bulk model, and **100% / 97%** on the 92 records where I was sure of my own label; disagreements cluster where I was unsure too. Real language is harder than clean text, and model tier matters on it in a way it does not on synthetic data. Cost: **$5.58 per thousand records** on the model I would actually deploy.
 
 **Recommendation if this were real:** a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, run on the reference-tier model (the extra $3.50 per thousand records buys eight points of accuracy on real language), with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.
@@ -163,9 +165,5 @@ North-star metric for the program: **credit recurrence rate** — the share of c
 - Downtime estimates are mine. The toggle in the demo exists so that assumption is visible, not buried.
 - The taxonomy has 15 modes because that is what I have seen. A real dataset will want a few I have not.
 - The seeded test proves the method finds a known signal; it says nothing about what a real dataset contains.
-
-## 9. Why I built it this way
-
-Static demo, no runtime model calls, no framework: the analysis runs once, the page serves results, and the whole thing deploys anywhere static files do. Every design choice here is one I can explain and defend, which was a constraint I set for myself.
 
 *Demo: [https://credit-signal-self.vercel.app](https://credit-signal-self.vercel.app) · Repository: [github.com/muireadhach/credit-signal](https://github.com/muireadhach/credit-signal)*

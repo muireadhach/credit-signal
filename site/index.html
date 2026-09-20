@@ -40,17 +40,18 @@ header.top .wrap{display:flex;align-items:center;gap:18px;min-height:52px;flex-w
 nav.sections{display:flex;gap:2px 14px;flex-wrap:wrap;font-size:13px;margin-left:auto}
 nav.sections a{color:var(--ink-2);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
 nav.sections a:hover{color:var(--ink);border-color:var(--rule-strong)}
-.disclose{font:500 12px/1.3 var(--mono);color:var(--ink-2);background:var(--panel-2);border:1px solid var(--rule);border-radius:4px;padding:5px 9px;letter-spacing:.01em}
+.disclose{font:500 11.5px/1.2 var(--mono);color:var(--ink-2);background:var(--panel-2);border:1px solid var(--rule);border-radius:4px;padding:5px 8px;letter-spacing:0;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .disclose b{color:var(--critical);font-weight:500}
+.disclose a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor}
 @media (max-width:760px){
-  header.top .wrap{gap:8px 12px}
-  nav.sections{order:3;width:100%;margin-left:0;flex-wrap:nowrap;overflow-x:auto;gap:0 16px;padding-bottom:2px;scrollbar-width:none}
-  nav.sections::-webkit-scrollbar{display:none}
-  nav.sections a{white-space:nowrap}
-  .disclose{margin-left:auto}
+  header.top .wrap{gap:6px 12px;padding-block:8px}
+  nav.sections{order:3;width:100%;margin-left:0;flex-wrap:wrap;gap:2px 14px;font-size:12.5px}
+  nav.sections a{padding:2px 0}
+  .disclose{margin-left:auto;font-size:11px}
 }
+html{scroll-padding-top:var(--header-h,70px)}
 main .wrap{padding-block:34px 60px;display:grid;grid-template-columns:minmax(0,1fr);gap:44px}
-section{scroll-margin-top:70px;min-width:0}
+section{min-width:0}
 .grid2>*,.panel{min-width:0}
 h1{font:600 clamp(30px,5vw,44px)/1.08 var(--display);margin:0 0 12px;text-wrap:balance;letter-spacing:-.005em}
 h2{font:600 26px/1.15 var(--display);margin:0 0 6px;text-wrap:balance}
@@ -98,7 +99,12 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);verti
 th{font:500 12px/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 td.n{font-family:var(--mono);font-size:13px}
-.tablewrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.tablewrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;position:relative}
+.scrollwrap{position:relative}
+.scrollwrap .hint{display:none;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.scrollwrap.scrollable .hint{display:flex;justify-content:flex-end;gap:6px}
+.scrollwrap.scrollable::after{content:"";position:absolute;top:22px;right:0;bottom:0;width:36px;pointer-events:none;background:linear-gradient(to right,transparent,var(--panel));transition:opacity .15s}
+.scrollwrap.scrollable.at-end::after{opacity:0}
 .chip{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.04em;padding:4px 7px;border-radius:3px;border:1px solid var(--rule-strong);color:var(--ink-2);vertical-align:middle}
 .chip.safety{border-color:var(--critical);color:var(--critical)}
 .chip.sig{border-color:var(--good);color:var(--good)}
@@ -113,6 +119,8 @@ details summary::-webkit-details-marker{display:none}
 details summary::after{content:"+";font-family:var(--mono);color:var(--ink-3)}
 details[open] summary::after{content:"–"}
 .modes{display:grid;gap:0}
+.modes-head{display:flex;justify-content:space-between;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding:0 0 8px}
+.modes-head b{font-weight:500;color:var(--ink-3)}
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;counter-reset:s}
 .step{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:14px;position:relative}
 .step h3{font:600 15px/1.3 var(--body);margin:0 0 4px}
@@ -136,7 +144,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <nav class="sections" aria-label="Sections">
     <a href="#drivers">Drivers</a><a href="#pattern">Hidden pattern</a><a href="#voice">Customer voice</a><a href="#review">Coverage</a><a href="#accuracy">Accuracy</a><a href="#cost">Cost</a><a href="#method">Method</a><a href="#data">Data</a>
   </nav>
-  <span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + disclosed synthetic credits.</span>
+  <span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + synthetic credits · <a href="memo">Decision memo</a></span>
 </div></header>
 
 <main><div class="wrap" id="top">
@@ -181,11 +189,11 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <div class="panel" style="margin-top:12px">
     <h3>Nobody told the scan where to look</h3>
     <p class="small muted" style="margin:0 0 10px">Every failure mode × every packaging spec, carrier, and warehouse, within each product class — <span id="scan-cells"></span> cells, ranked by significance. The seeded cell is where it should be.</p>
-    <div class="tablewrap"><table id="scan-table"></table></div>
+    <div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="scan-table"></table></div></div>
   </div>
   <div class="panel" style="margin-top:12px">
     <h3>All three checks, including the ones that didn't clear</h3>
-    <div class="tablewrap"><table id="seed-table"></table></div>
+    <div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="seed-table"></table></div></div>
     <p class="small muted" style="margin-top:8px">Lift = rate inside the suspect group ÷ rate outside it. p is a one-sided two-proportion z-test. Two keyword baselines: <em>naive</em> is what a reason code or a search for "damaged" gives you; <em>tuned</em> is a regex written after you already suspect thread damage — it works, which is the point: keyword search finds what you already know to look for. Reporting the non-significant checks on purpose: the method should say "no" as clearly as it says "yes".</p>
   </div>
 </section>
@@ -196,7 +204,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <p class="muted">The taxonomy is 15 failure modes written from shop experience, not from a catalog. Expand a mode to read what the model quoted as its evidence.</p>
   <div class="grid2">
     <div class="panel"><div id="chart-voice"></div></div>
-    <div class="panel"><div class="modes" id="voice-modes"></div></div>
+    <div class="panel"><div class="modes-head"><span>Failure mode · share</span><span>tap <b>+</b> to expand</span></div><div class="modes" id="voice-modes"></div></div>
   </div>
 </section>
 
@@ -206,7 +214,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <p class="muted">Every classification carries a confidence. Above the threshold it's auto-filed; below, it goes to a person. Move the threshold and you trade coverage for precision. On clean synthetic text the trade is generous; on real reviews it is not — and the model's confidence knows the difference.</p>
   <div class="grid2">
     <div class="panel"><h3>Synthetic ground truth (n = 1,500)</h3><div id="chart-curve"></div><div class="legend"><span style="--c:var(--s1)">Coverage</span><span style="--c:var(--s3)">Precision</span></div>
-      <h3 style="margin-top:16px">Real reviews vs. human labels (n = 150)</h3><div class="tablewrap"><table id="real-curve"></table></div></div>
+      <h3 style="margin-top:16px">Real reviews vs. human labels (n = 150)</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="real-curve"></table></div></div></div>
     <div class="panel"><h3 id="queue-title">Review queue</h3><div id="queue"></div></div>
   </div>
 </section>
@@ -216,9 +224,9 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <h2>Measured three ways — and real language is harder than synthetic.</h2>
   <p class="muted">Against synthetic ground truth every model looks great. Against 200 records hand-labeled by the author — 150 of them real reviews, each with a confidence tag and a note — the picture is honest: models agree with a careful human where the human is sure, and disagree where the human was unsure too. Model tier matters on real language in a way it does not on clean text.</p>
   <div class="tiles" id="acc-tiles"></div>
-  <div class="panel" style="margin-top:12px"><h3>Agreement with the human labeler, by how sure the human was</h3><div class="tablewrap"><table id="gold-table"></table></div><p class="small muted" style="margin-top:8px">The 50 synthetic records in the gold set also check the generator: the human agreed with the hidden ground truth on <span id="gen-check"></span>.</p></div>
+  <div class="panel" style="margin-top:12px"><h3>Agreement with the human labeler, by how sure the human was</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="gold-table"></table></div></div><p class="small muted" style="margin-top:8px">The 50 synthetic records in the gold set also check the generator: the human agreed with the hidden ground truth on <span id="gen-check"></span>.</p></div>
   <div class="grid2" style="margin-top:12px">
-    <div class="panel"><h3>Where it gets confused</h3><div class="tablewrap"><table id="confusions"></table></div><p class="small muted" style="margin-top:8px">Most confusions are between neighboring modes an experienced person would also debate.</p></div>
+    <div class="panel"><h3>Where it gets confused</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="confusions"></table></div></div><p class="small muted" style="margin-top:8px">Most confusions are between neighboring modes an experienced person would also debate.</p></div>
     <div class="panel"><h3>Where the human and the model disagreed, with the human's note</h3><div id="errors"></div></div>
   </div>
 </section>
@@ -227,7 +235,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <p class="eyebrow">06 · What it costs to run</p>
   <h2>Cents per thousand records.</h2>
   <div class="tiles" id="cost-tiles"></div>
-  <div class="panel" style="margin-top:12px"><div class="tablewrap"><table id="scale"></table></div><p class="small muted" style="margin-top:8px">Measured from this project's own API usage, with prompt caching on. A human reviewer reading 200 notes an hour costs more per record than either model by two orders of magnitude — the point is not to replace the reviewer, it's to send them only the records worth reading.</p></div>
+  <div class="panel" style="margin-top:12px"><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="scale"></table></div></div><p class="small muted" style="margin-top:8px">Measured from this project's own API usage, with prompt caching on. A human reviewer reading 200 notes an hour costs more per record than either model by two orders of magnitude — the point is not to replace the reviewer, it's to send them only the records worth reading.</p></div>
 </section>
 
 <section id="method">

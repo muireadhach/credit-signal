@@ -4,7 +4,7 @@ Everything here is plain arithmetic on the classifier output -- no model calls. 
 to site/data/*.json, which the static demo reads. Runs on whatever has been classified so
 far, so it can be re-run as data lands.
 """
-import json, math, statistics as st
+import json, math, re, statistics as st
 from collections import Counter, defaultdict
 from pathlib import Path
 import yaml
@@ -20,7 +20,11 @@ SPEC_CHANGE = "2026-05-01"
 
 def load(p): return [json.loads(l) for l in open(p)] if Path(p).exists() else []
 frame = {r["credit_id"]: r for r in load("data/processed/synthetic_frame.jsonl")}
+import html as _html
+def _clean(t):  # reviews carry raw HTML (<br />, &#34;); strip it for display
+    t = re.sub(r"<br\s*/?>", " ", t or "", flags=re.I); t = re.sub(r"<[^>]+>", " ", t); return re.sub(r"\s+", " ", _html.unescape(t)).strip()
 public = {r["id"]: r for r in load("data/processed/public_sample.jsonl")}
+for r in public.values(): r["text"] = _clean(r["text"])
 bulk = {r["id"]: r for r in load("data/processed/classified_bulk.jsonl") if "error" not in r}
 ref = {r["id"]: r for r in load("data/processed/classified_reference.jsonl") if "error" not in r}
 usage = load("data/processed/usage.jsonl")
@@ -46,7 +50,7 @@ for m in MODES:
     modes_public.append(dict(mode=m, name=NAME[m], category=CAT[m], n=len(cs), share=round(len(cs) / max(len(pub_cls), 1), 4),
         avg_conf=round(st.mean([c["confidence"] for c in cs]), 3) if cs else None,
         shop_n=sum(public[c["id"]]["stratum"] == "shop" for c in cs),
-        examples=[dict(quote=c["evidence"], text=public[c["id"]]["text"][:400], conf=c["confidence"]) for c in ex]))
+        examples=[dict(quote=_clean(c["evidence"]), text=public[c["id"]]["text"][:400], conf=c["confidence"]) for c in ex]))
 dump("modes_public", dict(n=len(pub_cls), n_shop=sum(public[c["id"]]["stratum"] == "shop" for c in pub_cls), modes=modes_public))
 
 # ---------- 2. credits ranked: dollars vs customer impact (synthetic) ----------
