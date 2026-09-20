@@ -74,6 +74,6 @@ class handler(BaseHTTPRequestHandler):
         except anthropic.RateLimitError:
             return self._send(429, {"error": "rate limited upstream — try again in a moment"})
         except Exception as e:
-            return self._send(502, {"error": "classifier unavailable", "detail": type(e).__name__})
+            return self._send(502, {"error": "classifier unavailable", "detail": f"{type(e).__name__}: {str(e)[:160]}"})
     def do_GET(self):
         self._send(200 if not IMPORT_ERROR else 500, {"ok": not IMPORT_ERROR, "model": MODEL, "modes": len(MODE_IDS), "import_error": IMPORT_ERROR, "python": sys.version.split()[0]})
