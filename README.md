@@ -24,7 +24,7 @@ Downtime hours per failure mode (`taxonomy/impact_weights.yaml`) are an operator
 ## How it runs
 
 ```
-pipeline/01_fetch_public.py       stream + keyword-prefilter the public corpus (one-time, ~700 MB)
+pipeline/01_fetch_public.py       stream + keyword-prefilter the public corpus (one-time, ~700 MB; optional — the 2,000-review sample is committed)
 pipeline/01b_sample_public.py     stratified 2,000-review sample
 pipeline/02_generate_synthetic.py --frame   metadata + hidden ground truth + seeded patterns (gate: lift ≥ 3×)
 pipeline/02b_write_notes.py       Claude Opus 5 writes the free-text notes (sees mode + product class only)

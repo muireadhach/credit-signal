@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Credit Signal</title>
 <meta name="description" content="Root-cause analysis of customer credits with an LLM: what drives credits, ranked by customer downtime, with a measured accuracy and cost. Public + disclosed synthetic data.">
+<meta property="og:type" content="website"><meta property="og:title" content="Credit Signal"><meta property="og:description" content="What drives customer credits, ranked by customer downtime — found blind by an LLM, tested against a known answer, with accuracy and cost measured honestly.">
+<meta property="og:url" content="https://credit-signal-self.vercel.app/"><meta property="og:image" content="https://credit-signal-self.vercel.app/og.png"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -165,6 +167,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
   <div class="panel">
     <div class="controls">
       <div class="toggle" role="group" aria-label="Rank by"><button id="rk-credit" aria-pressed="true">By credit $</button><button id="rk-impact" aria-pressed="false">By customer impact</button></div>
+      <div class="toggle" role="group" aria-label="Downtime cost per hour" id="rate-toggle" hidden><button data-rate="250">$250/h</button><button data-rate="500" aria-pressed="true">$500/h</button><button data-rate="1500">$1,500/h</button></div>
       <span class="small muted" id="rk-note"></span>
     </div>
     <div id="chart-drivers"></div>
@@ -224,7 +227,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 <section id="accuracy">
   <p class="eyebrow">05 · How accurate is it, and where does it fail</p>
   <h2>Measured three ways — and real language is harder than synthetic.</h2>
-  <p class="muted">Against synthetic ground truth every model looks great. Against 200 records hand-labeled by the author — 150 of them real reviews, each with a confidence tag and a note — the picture is honest: models agree with a careful human where the human is sure, and disagree where the human was unsure too. Model tier matters on real language in a way it does not on clean text.</p>
+  <p class="muted">Against synthetic ground truth every model looks great. Against 200 records hand-labeled by the author — 150 of them real reviews, each with a confidence tag and a note — the picture is honest: models agree with a careful human where the human is sure, and disagree where the human was unsure too. Model tier matters on real language in a way it does not on clean text. For scale: always guessing the most common label would score <b>34%</b> on those reviews.</p>
   <div class="tiles" id="acc-tiles"></div>
   <div class="panel" style="margin-top:12px"><h3>Agreement with the human labeler, by how sure the human was</h3><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="gold-table"></table></div></div><p class="small muted" style="margin-top:8px">The 50 synthetic records in the gold set also check the generator: the human agreed with the hidden ground truth on <span id="gen-check"></span>.</p></div>
   <div class="grid2" style="margin-top:12px">

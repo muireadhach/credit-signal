@@ -93,8 +93,13 @@
   ].map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${esc(v)}</div><div class="d">${esc(d)}</div></div>`).join("");
 
   /* ---------- drivers ---------- */
+  let rate = 500, rkMode = "credit";
+  const impactAt = (m, r) => m.credit_usd + m.downtime_hours.typical * r;
   function drawDrivers(mode) {
-    if (!CR) return;
+    if (!CR) return; rkMode = mode;
+    CR.modes.forEach(m => { m.impact_usd = { low: m.credit_usd + m.downtime_hours.low * rate, typical: impactAt(m, rate), high: m.credit_usd + m.downtime_hours.high * rate }; });
+    const byI = [...CR.modes].sort((a, b) => b.impact_usd.typical - a.impact_usd.typical); CR.modes.forEach(m => m.rank_by_impact = byI.indexOf(m) + 1);
+    $("#rate-toggle").hidden = mode === "credit";
     const rows = [...CR.modes].filter(m => m.n > 0).sort((a, b) => mode === "credit" ? b.credit_usd - a.credit_usd : b.impact_usd.typical - a.impact_usd.typical).slice(0, 12);
     hbars($("#chart-drivers"), rows.map(m => ({
       label: m.name, suffix: m.safety ? "⚠" : "",
@@ -103,11 +108,12 @@
     })), { max: Math.max(...CR.modes.map(m => mode === "credit" ? m.credit_usd : m.impact_usd.typical)) });
     const moved = CR.modes.filter(m => m.n > 0 && Math.abs(m.rank_by_credit - m.rank_by_impact) >= 3).sort((a, b) => a.rank_by_impact - b.rank_by_impact);
     $("#rk-note").textContent = mode === "credit" ? `${fmt.n(CR.n)} synthetic credits · ${fmt.usd(CR.total_credit_usd)} refunded` :
-      `at $${CR.rate_per_hour}/h downtime · biggest movers: ` + moved.slice(0, 3).map(m => `${m.name} #${m.rank_by_credit}→#${m.rank_by_impact}`).join(", ");
+      `at $${rate.toLocaleString()}/h downtime · biggest movers: ` + moved.slice(0, 3).map(m => `${m.name} #${m.rank_by_credit}→#${m.rank_by_impact}`).join(", ");
     $("#rk-credit").setAttribute("aria-pressed", mode === "credit"); $("#rk-impact").setAttribute("aria-pressed", mode !== "credit");
   }
   drawDrivers("credit");
   $("#rk-credit").onclick = () => drawDrivers("credit"); $("#rk-impact").onclick = () => drawDrivers("impact");
+  $("#rate-toggle").querySelectorAll("button").forEach(b => b.onclick = () => { rate = +b.dataset.rate; $("#rate-toggle").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); drawDrivers(rkMode); });
 
   /* ---------- pattern ---------- */
   if (ST) {

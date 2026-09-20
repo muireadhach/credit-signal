@@ -287,7 +287,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tr>
 </tbody>
 </table>
-<p>Across 1,500 credits: $156k refunded, roughly $3.0M in estimated customer downtime at $500/hour. The ratio is the assumption to test first — but even at $250/hour the order above holds.</p>
+<p>Across 1,500 credits: $156k refunded, roughly $3.0M in estimated customer downtime at $500/hour. The ratio is the assumption to test first. At $250/hour the top three are unchanged and only positions 4 and 5 swap; at $1,500/hour nothing moves; at $0 (refund only) the list reverts to the refund column. The demo has the control, so nobody has to take my word for it.</p>
 <p>Downtime hours per mode are my estimate (<code>impact_weights.yaml</code>), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: wrong part in the bag, bent long stock, material nonconformance.</p>
 <h3>5.2 The pattern keyword search misses</h3>
 <table>
@@ -403,6 +403,11 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>Always guess the most common label ("other / unclear") — the baseline</td>
+<td>150</td>
+<td>34%</td>
+</tr>
 <tr>
 <td>Sonnet 5 vs. synthetic ground truth</td>
 <td>1,500</td>
@@ -537,6 +542,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tr>
 </tbody>
 </table>
+<p>Targets I would put on the table, as assumptions for the pilot to correct rather than promises: thread-damage credits on the affected fastener SKUs down by half within eight weeks of the packaging change; DC-4's aged-consumable rate down to the other DCs' level within one stock-rotation cycle; wrong-part credits down 30% on the top 50 SKUs once scan-verify is live. If a target is missed, the interesting question is why, and the evidence quotes are where to look.</p>
 <p>North-star metric for the program: <strong>credit recurrence rate</strong> — the share of credits this quarter whose cause was already in last quarter's top ten.</p>
 <h2>7. How to run this on real data</h2>
 <ul>

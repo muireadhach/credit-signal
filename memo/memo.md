@@ -63,7 +63,7 @@ A third cut (Carrier-C transit damage) was given only a weak nudge, to see wheth
 | Aged or degraded elastomers & consumables | 126 | $5,138 | #13 | **#7** | $127k |
 | Out of straight, flat, or round | 57 | $9,603 | #9 | #8 | $112k |
 
-Across 1,500 credits: $156k refunded, roughly $3.0M in estimated customer downtime at $500/hour. The ratio is the assumption to test first — but even at $250/hour the order above holds.
+Across 1,500 credits: $156k refunded, roughly $3.0M in estimated customer downtime at $500/hour. The ratio is the assumption to test first. At $250/hour the top three are unchanged and only positions 4 and 5 swap; at $1,500/hour nothing moves; at $0 (refund only) the list reverts to the refund column. The demo has the control, so nobody has to take my word for it.
 
 Downtime hours per mode are my estimate (`impact_weights.yaml`), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: wrong part in the bag, bent long stock, material nonconformance.
 
@@ -106,6 +106,7 @@ Two things to take from that. The model's confidence is honest: where it says 0.
 
 | Check | n | Accuracy |
 |---|---|---|
+| Always guess the most common label ("other / unclear") — the baseline | 150 | 34% |
 | Sonnet 5 vs. synthetic ground truth | 1,500 | 94.3% (macro-F1 0.95) |
 | Opus 5 vs. synthetic ground truth | 550 | 96.4% (macro-F1 0.97) — agrees with Sonnet 96.7% |
 | **Opus 5 vs. my labels, real reviews** | 150 | **72%** |
@@ -145,6 +146,8 @@ Whole project: $20.47, including a $3 run I threw away. The production decision:
 | Thread damage · bulk-bag fasteners · post-May | Packaging engineering | Revert PB-2 for fastener SKUs above a size threshold, or add a divider. Test on the top 20 SKUs by credit count. | Thread-damage credits on those SKUs, next 8 weeks, vs. the 8 before |
 | Aged elastomers · DC-4 | DC operations + inventory | FIFO audit on elastomer bins; date-code check at pick. | Aged-consumable credits from DC-4 vs. other DCs |
 | Wrong part in the right bag | Fulfillment QA | Trace to the bagging line or supplier lot; add a scan-verify at bagging for the top 50 SKUs. | Wrong-part credits per 10k lines shipped |
+
+Targets I would put on the table, as assumptions for the pilot to correct rather than promises: thread-damage credits on the affected fastener SKUs down by half within eight weeks of the packaging change; DC-4's aged-consumable rate down to the other DCs' level within one stock-rotation cycle; wrong-part credits down 30% on the top 50 SKUs once scan-verify is live. If a target is missed, the interesting question is why, and the evidence quotes are where to look.
 
 North-star metric for the program: **credit recurrence rate** — the share of credits this quarter whose cause was already in last quarter's top ten.
 
