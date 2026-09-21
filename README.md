@@ -10,7 +10,7 @@ Root-cause analysis of customer credits and complaints with a language model.
 
 ## Results at a glance
 
-See the live demo: [credit-signal-self.vercel.app](https://credit-signal-self.vercel.app). The decision memo is in [`memo/memo.md`](memo/memo.md).
+See the live demo: [creditsignal.vercel.app](https://creditsignal.vercel.app). The decision memo is in [`memo/memo.md`](memo/memo.md).
 
 ## Data — disclosed everywhere it appears
 
