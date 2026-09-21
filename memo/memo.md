@@ -172,4 +172,4 @@ North-star metric for the program: **credit recurrence rate** — the share of c
 - The taxonomy has 20 modes after one revision. A real credit dataset will want more revisions; the point is that the process for revising it is now written down.
 - The seeded test proves the method finds a known signal; it says nothing about what a real dataset contains.
 
-*Demo: [https://creditsignal.vercel.app](https://creditsignal.vercel.app) · Repository: [github.com/muireadhach/credit-signal](https://github.com/muireadhach/credit-signal)*
+*Demo: [https://creditsignal.muireadhach.com](https://creditsignal.muireadhach.com) · Repository: [github.com/muireadhach/credit-signal](https://github.com/muireadhach/credit-signal)*
