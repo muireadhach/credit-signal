@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Credit Signal</title>
 <link rel="icon" href="brand/favicon-64.png" type="image/png"><link rel="icon" href="brand/logo.svg" type="image/svg+xml">
-<meta name="description" content="Root-cause analysis of customer credits with an LLM: what drives credits, ranked by customer downtime, with a measured accuracy and cost. Public + disclosed synthetic data.">
-<meta property="og:type" content="website"><meta property="og:title" content="Credit Signal"><meta property="og:description" content="What drives customer credits, ranked by customer downtime — found blind by an LLM, tested against a known answer, with accuracy and cost measured honestly.">
+<meta name="description" content="A language model reads the notes behind customer credits, names the failure behind each one, and ranks causes by customer downtime, with accuracy and cost measured. Built on public reviews and disclosed synthetic data.">
+<meta property="og:type" content="website"><meta property="og:title" content="Credit Signal"><meta property="og:description" content="What drives customer credits, ranked by the downtime they cause. An LLM finds the causes without being told where to look, and the method is tested against a known answer.">
 <meta property="og:url" content="https://creditsignal.muireadhach.com/"><meta property="og:image" content="https://creditsignal.muireadhach.com/og.png"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
@@ -303,16 +303,16 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
   <h1>Every credit has a reason. Most of them are written in a sentence nobody has time to read.</h1>
   <div class="whoami">
     <p class="label">Who built this, and why</p>
-    <p class="says"><strong>Muireadhach Currie.</strong> I ran an additive-manufacturing service bureau, production for a 3D-printer manufacturer, and machines in a family machine shop. A damaged shipment was never a forty-dollar refund to me; it was a machine sitting idle. That is why the ranking here is by downtime.</p>
-    <div class="next"><p>This page is the evidence. The memo is the decision.</p><a class="btn" href="memo">Read the decision memo →</a></div>
+    <p class="says"><strong>Muireadhach Currie.</strong> I ran an additive-manufacturing service bureau, production for a 3D-printer manufacturer, and machines in a family machine shop. When a shipment arrived damaged, the refund might be forty dollars. The bigger cost was a machine sitting idle until the replacement came, which is why this page ranks causes by downtime.</p>
+    <div class="next"><p>This page has the evidence, and the memo makes the recommendation.</p><a class="btn" href="memo">Read the decision memo →</a></div>
   </div>
-  <p class="lede">Credit Signal reads the free text behind customer credits and complaints, extracts the failure mode with a language model, joins it to what the system already knows (packaging, carrier, warehouse, date), and ranks causes by what they cost the customer in downtime — not just by the refund.</p>
+  <p class="lede">Credit Signal uses a language model to read the free text on customer credits and complaints and pull out the failure mode. It joins that to what the order system already records (packaging, carrier, warehouse, date) and ranks causes by the downtime they cost the customer, alongside the refund.</p>
   <div class="tiles" id="hero-tiles"><div class="loading">Loading results…</div></div>
 </section>
 
 <section id="drivers">
-  <h2>Ranked by refund, the list looks one way. Ranked by customer downtime, it reorders.</h2>
-  <p class="intro">A $40 credit on a damaged shaft collar is trivial. The four hours a line sat idle waiting for the reship is not. Downtime hours per failure mode are an operator's estimate (see <a href="#data">Data</a>); the toggle shows how much the ranking depends on them.</p>
+  <h2>Rank the causes by customer downtime instead of refund dollars, and the order changes.</h2>
+  <p class="intro">A $40 credit on a damaged shaft collar is trivial next to the four hours a line sat idle waiting for the reship. Downtime hours per failure mode are my estimates from running shops (see <a href="#data">Data</a>); the toggle shows how much the ranking depends on them.</p>
   <div class="controls">
     <div class="toggle" role="group" aria-label="Rank by"><button id="rk-credit" aria-pressed="true">By credit $</button><button id="rk-impact" aria-pressed="false">By customer impact</button></div>
     <div class="toggle" role="group" aria-label="Downtime cost per hour" id="rate-toggle" hidden><button data-rate="250">$250/h</button><button data-rate="500" aria-pressed="true">$500/h</button><button data-rate="1500">$1,500/h</button></div>
@@ -327,8 +327,8 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </section>
 
 <section id="pattern">
-  <h2>A packaging change in May quadrupled thread damage on bulk-bagged fasteners. Searching "damaged" barely moves.</h2>
-  <p class="intro">Two patterns were deliberately seeded into the synthetic credit records so the method could be tested against a known answer. The model that wrote the customer notes never saw packaging, carrier, or warehouse — so if the pipeline finds the pattern, it found it in the language.</p>
+  <h2>A packaging change in May quadrupled thread damage on bulk-bagged fasteners. A search for "damaged" doesn't pick it up.</h2>
+  <p class="intro">I seeded two patterns into the synthetic credit records so the method could be tested against a known answer. The model that wrote the customer notes never saw packaging, carrier, or warehouse, so any pattern the pipeline finds had to come from the wording of the notes.</p>
   <div class="fig even">
     <div>
       <h3>Thread-damage rate in fasteners, by month</h3>
@@ -342,7 +342,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
   </div>
   <div class="block">
     <h3>Nobody told the scan where to look</h3>
-    <p class="small muted">Every failure mode × every packaging spec, carrier, and warehouse, within each product class — <span id="scan-cells"></span> cells, ranked by significance. The seeded cell is where it should be.<span id="scan-survivors"></span></p>
+    <p class="small muted">The scan tests every failure mode against every packaging spec, carrier, and warehouse within each product class: <span id="scan-cells"></span> cells, ranked by significance. The seeded cell comes out on top.<span id="scan-survivors"></span></p>
     <details class="more"><summary><span>Show the top-ranked cells</span></summary>
       <div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="scan-table"></table></div></div>
     </details>
@@ -350,16 +350,16 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
   <div class="block">
     <h3>All three checks, including the ones that didn't clear</h3>
     <div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="seed-table"></table></div></div>
-    <p class="small muted" style="margin-top:10px">Lift = rate inside the suspect group ÷ rate outside it. p is a one-sided two-proportion z-test; a check counts as significant at p &lt; 0.01. Two keyword baselines: <em>naive</em> is what a reason code or a search for "damaged" gives you; <em>tuned</em> is a regex written after you already suspect thread damage — it works, which is the point: keyword search finds what you already know to look for. Reporting the non-significant checks on purpose: the method should say "no" as clearly as it says "yes".</p>
+    <p class="small muted" style="margin-top:10px">Lift is the rate inside the suspect group divided by the rate outside it. p comes from a one-sided two-proportion z-test, and a check counts as significant at p &lt; 0.01. There are two keyword baselines. <em>Naive</em> is what a reason code or a search for "damaged" gives you. <em>Tuned</em> is a regex written after you already suspect thread damage; it works, but only because you already knew what to search for. The non-significant checks are included on purpose, to show the method returning "no" when the signal isn't there.</p>
   </div>
 </section>
 
 <section id="try">
-  <h2>Paste a complaint. Watch it get filed.</h2>
+  <h2>Paste a complaint and see how it gets filed.</h2>
   <p class="intro">This is the same classifier the numbers below were measured on, running live on the model the memo recommends. It returns the failure mode, how sure it is, the words it based that on, and whether it would file the record automatically or send it to a person.</p>
   <div class="trybox">
     <div>
-      <label for="try-text">Customer's note — or pick an example</label>
+      <label for="try-text">Customer's note, or pick an example</label>
       <div class="examples" id="try-examples"></div>
       <textarea id="try-text" rows="5" maxlength="600" placeholder="e.g. Half the 3/8-16 nuts in the bag won't start on a bolt by hand, the first couple threads look mashed flat…"></textarea>
       <div class="controls" style="margin:12px 0 0"><button class="btn" id="try-go">Classify</button><span class="small muted" id="try-status"></span></div>
@@ -369,8 +369,8 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </section>
 
 <section id="plan">
-  <h2>Finding the cause is the easy half.</h2>
-  <p class="intro">The hard half is getting packaging engineering, carrier management, and DC operations to change something because a model read customer notes. That takes an owner, a fix small enough to say yes to, and a metric agreed before anyone starts. From the memo, for three of the causes above:</p>
+  <h2>Finding the cause is easier than getting it fixed.</h2>
+  <p class="intro">A fix means getting packaging engineering, carrier management, or DC operations to change something because a model read customer notes. That takes an owner, a fix small enough to say yes to, and a metric agreed before anyone starts. Here is the plan from the memo for three of the causes above:</p>
   <div class="scrollwrap" style="margin-top:20px"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="plan-table">
     <thead><tr><th>Cause</th><th>Owner</th><th>Fix</th><th>Metric that says it worked</th><th>Target</th></tr></thead>
     <tbody>
@@ -378,23 +378,23 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
       <tr><td data-label="Cause">Aged elastomers · DC-4</td><td data-label="Owner">DC operations + inventory</td><td data-label="Fix">FIFO audit on elastomer bins; date-code check at pick.</td><td data-label="Metric">Aged-consumable credits, DC-4 vs. other DCs</td><td data-label="Target">Parity within one rotation cycle</td></tr>
       <tr><td data-label="Cause">Wrong part in the right bag</td><td data-label="Owner">Fulfillment QA</td><td data-label="Fix">Trace to bagging line or supplier lot; scan-verify at bagging for the top 50 SKUs.</td><td data-label="Metric">Wrong-part credits per 10k lines shipped</td><td data-label="Target">−30% on top 50 SKUs</td></tr>
     </tbody></table></div></div>
-  <p class="small muted" style="margin-top:12px">Targets are assumptions for a pilot to correct, not promises. Program metric: <strong>credit recurrence rate</strong> — the share of this quarter's credits whose cause was already in last quarter's top ten.</p>
+  <p class="small muted" style="margin-top:12px">The targets are assumptions for the pilot to correct. The program metric is <strong>credit recurrence rate</strong>: the share of this quarter's credits whose cause was already in last quarter's top ten.</p>
   <div id="pilot">
     <p class="kicker">Recommendation if this were real</p>
     <h2>The four-week pilot</h2>
     <ol class="weeks">
-      <li><span class="wk">Week <b>1</b></span><h3>Load and run</h3><p>Load six months of credits, redact PII, run.</p></li>
-      <li><span class="wk">Week <b>2</b></span><h3>Set the threshold</h3><p>Two CS reps hand-label 300 records; set the confidence threshold from the curve.</p></li>
-      <li><span class="wk">Week <b>3</b></span><h3>Take it to the owners</h3><p>Take the top three causes, with evidence quotes, to the teams that own them.</p></li>
-      <li><span class="wk">Week <b>4</b></span><h3>Agree the metric</h3><p>Agree the metric and the review cadence.</p></li>
+      <li><span class="wk">Week <b>1</b></span><h3>Load and run</h3><p>Load six months of credits, redact PII, and run the pipeline.</p></li>
+      <li><span class="wk">Week <b>2</b></span><h3>Set the threshold</h3><p>Two CS reps hand-label 300 records, and the confidence threshold is set from the resulting curve.</p></li>
+      <li><span class="wk">Week <b>3</b></span><h3>Take it to the owners</h3><p>Bring the top three causes, with evidence quotes, to the teams that own them.</p></li>
+      <li><span class="wk">Week <b>4</b></span><h3>Agree the metric</h3><p>Settle what counts as success and how often the results get reviewed.</p></li>
     </ol>
-    <div class="foot"><p>The memo covers why rank by downtime, what the gold set changed about the model choice, what it would cost at scale, and the limitations stated plainly.</p><a class="btn" href="memo">Read the decision memo →</a></div>
+    <div class="foot"><p>The memo explains why the ranking uses downtime, how the hand-labeled test changed the model choice, what this would cost at scale, and where the evidence is weak.</p><a class="btn" href="memo">Read the decision memo →</a></div>
   </div>
 </section>
 
 <section id="voice">
   <h2>Two thousand real one- and two-star reviews of industrial products, sorted into an operator's failure taxonomy.</h2>
-  <p class="intro">The taxonomy started as 15 failure modes written from shop experience. Hand-labeling real reviews showed what a parts-receiving view misses — the part that works but doesn't do the job, the listing that was wrong, the customer who chose wrong — so v2 has 20. Expand a mode to read what the model quoted as its evidence.</p>
+  <p class="intro">The taxonomy started as 15 failure modes written from shop experience. Hand-labeling real reviews showed what that parts-receiving view missed: parts that work but don't do the job, listings that were wrong, customers who picked the wrong part. Version 2 has 20 modes. Open any mode to read the text the model quoted as evidence.</p>
   <div class="fig" style="grid-template-columns:minmax(0,1fr)">
     <div id="chart-voice" style="max-width:880px"></div>
     <div style="max-width:760px"><div class="modes-head"><span>Failure mode · share</span><span>tap <b>+</b> to expand</span></div><div class="modes" id="voice-modes"></div></div>
@@ -402,8 +402,8 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </section>
 
 <section id="review">
-  <h2>The model is allowed to say "I'm not sure." That's what makes it deployable.</h2>
-  <p class="intro">Every classification carries a confidence. Above the threshold it's auto-filed; below, it goes to a person. Move the threshold and you trade coverage for precision. On clean synthetic text the trade is generous; on real reviews it is not — and the model's confidence knows the difference.</p>
+  <h2>The model can say "I'm not sure," which is what makes it safe to deploy.</h2>
+  <p class="intro">Every classification comes with a confidence score. Records above the threshold are filed automatically, and the rest go to a person. Raising the threshold buys precision at the cost of coverage. On clean synthetic text you give up very little; on real reviews you give up more, and the confidence scores still track how often the model is right.</p>
   <div class="grid2 block">
     <div><h3>Synthetic ground truth (n = 1,500)</h3><div id="chart-curve"></div>
       <details class="more"><summary><span>Real reviews vs. human labels (100 unseen, v2)</span></summary><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="real-curve"></table></div></div></details></div>
@@ -412,15 +412,15 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </section>
 
 <section id="accuracy">
-  <h2>Measured against a human, twice — and the taxonomy got better in between.</h2>
-  <p class="intro">Against synthetic ground truth every model looks great. The number that matters is agreement with a careful human on real reviews. The author hand-labeled 200 records under the original taxonomy (72%), found that a third of real complaints had nowhere to go, revised the taxonomy — merged two modes customers can't tell apart, added five the reviews demanded — and then labeled <b>100 fresh reviews no one had seen</b>. That clean test is the headline: <b>78%</b> with the classifier frozen beforehand, <b>85%</b> once the labeling guideline was written down. Always guessing the most common label would score 40%. Model tier matters on real language in a way it does not on clean text: the written rules helped Opus and did nothing for Sonnet.</p>
+  <h2>Measured against a human twice, with a taxonomy revision in between.</h2>
+  <p class="intro">Every model scores well against synthetic ground truth. The harder test is whether it agrees with a careful person reading real reviews. I hand-labeled 200 records under the original taxonomy, and the model matched me 72% of the time. A third of the real complaints had no category that fit, so I revised the taxonomy, merging two modes customers can't tell apart and adding five the reviews called for. Then I labeled 100 fresh reviews no one had seen. On that clean test the model agreed with me <b>78%</b> of the time with the classifier frozen beforehand, and <b>85%</b> once the labeling guideline was written down. Always guessing the most common label would score 40%. Model tier matters more on real language than on clean text: the written rules helped Opus and did nothing for Sonnet.</p>
   <div class="tiles" id="acc-tiles"></div>
   <div class="block">
     <h3>Where the human and the model disagreed, with the human's note</h3>
     <div id="errors"></div>
     <details class="more" style="margin-top:8px"><summary><span>More disagreements</span></summary><div id="errors-more"></div></details>
-    <details class="more" style="margin-top:0;border-top:0"><summary><span>The 100 unseen reviews: agreement by how sure the human was</span></summary><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="gold-table"></table></div></div><p class="small muted" style="margin-top:10px">The 50 synthetic records in the gold set also check the generator: the human agreed with the hidden ground truth on <span id="gen-check"></span>.</p></details>
-    <details class="more" style="margin-top:0;border-top:0"><summary><span>Where it gets confused</span></summary><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="confusions"></table></div></div><p class="small muted" style="margin-top:10px">On the 100 unseen reviews. What's left are neighbors an experienced person would also debate — a part that broke versus one that fell short of its rating.</p></details>
+    <details class="more" style="margin-top:0;border-top:0"><summary><span>The 100 unseen reviews: agreement by how sure the human was</span></summary><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="gold-table"></table></div></div><p class="small muted" style="margin-top:10px">The 50 synthetic records in the labeled set also test the generator. My labels matched the hidden ground truth on <span id="gen-check"></span>.</p></details>
+    <details class="more" style="margin-top:0;border-top:0"><summary><span>Where it gets confused</span></summary><div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="confusions"></table></div></div><p class="small muted" style="margin-top:10px">On the 100 unseen reviews, the remaining confusions are between neighboring modes an experienced person would also argue about, such as a part that broke versus one that fell short of its rating.</p></details>
   </div>
 </section>
 
@@ -429,38 +429,38 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
   <div class="tiles" id="cost-tiles"></div>
   <div class="block" style="max-width:760px">
     <div class="scrollwrap"><div class="hint">scroll sideways →</div><div class="tablewrap"><table id="scale"></table></div></div>
-    <p class="small muted" style="margin-top:10px">Measured from this project's own API usage, with prompt caching on. A human reviewer reading 200 notes an hour costs more per record than either model by two orders of magnitude — the point is not to replace the reviewer, it's to send them only the records worth reading.</p>
+    <p class="small muted" style="margin-top:10px">Measured from this project's own API usage, with prompt caching on. A person reading 200 notes an hour costs about a hundred times more per record than either model. The model's job is to hand that person only the records worth reading.</p>
   </div>
 </section>
 
 <section id="method">
-  <h2>Five steps, no magic.</h2>
+  <h2>The pipeline, in five steps</h2>
   <div class="steps">
     <div class="step"><h3><span class="sn">1.</span> Collect the note</h3><div class="io">IN · free text</div><p>The customer's own words from the credit request, email, or review. PII would be redacted here before anything reaches a model.</p></div>
     <div class="step"><h3><span class="sn">2.</span> Extract</h3><div class="io">LLM · structured output</div><p>Failure mode from a 20-item taxonomy, a confidence, a verbatim evidence quote, and where in the chain it likely originated.</p></div>
     <div class="step"><h3><span class="sn">3.</span> Join</h3><div class="io">JOIN · metadata</div><p>Attach what the order system already knows: product class, packaging spec, carrier, origin DC, date, credit amount.</p></div>
-    <div class="step"><h3><span class="sn">4.</span> Rank and test</h3><div class="io">MATH · no model</div><p>Count, dollars, expected downtime. Lift and significance for every metadata cut. Trend by month.</p></div>
+    <div class="step"><h3><span class="sn">4.</span> Rank and test</h3><div class="io">MATH · no model</div><p>Counts, dollars, and expected downtime per mode, plus lift, significance, and a monthly trend for every metadata cut.</p></div>
     <div class="step"><h3><span class="sn">5.</span> Route</h3><div class="io">OUT · people</div><p>Confident results file automatically. Uncertain ones go to a reviewer, whose labels feed the next accuracy check.</p></div>
   </div>
 </section>
 
 <section id="data">
-  <p class="flag"><strong>None of this is McMaster-Carr data.</strong> Two sources, both disclosed everywhere they appear:</p>
+  <p class="flag"><strong>None of this is McMaster-Carr data.</strong> It comes from two sources, both labeled wherever they appear:</p>
   <div class="grid2 block" style="margin-top:28px">
-    <div><h3>Real: public product reviews</h3><p class="small">2,000 one- and two-star reviews from the <em>Industrial &amp; Scientific</em> category of the Amazon Reviews 2023 dataset (UCSD / McAuley Lab), stratified 70/30 toward reviews using shop vocabulary. They supply genuine, messy customer language. They have no credit amounts, carriers, or warehouses, so they appear only in the taxonomy and accuracy sections.</p></div>
-    <div><h3>Synthetic: credit records</h3><p class="small">1,500 credit memos with product class, packaging spec, carrier, origin DC, date, and credit amount, generated to mimic the record structure a distributor would actually hold. Notes were written by a language model that saw only the failure mode and product class. Two patterns were seeded on purpose so the method could be checked against a known answer. Downtime hours per failure mode are an operator's estimate, not measured.</p></div>
+    <div><h3>Real: public product reviews</h3><p class="small">2,000 one- and two-star reviews from the <em>Industrial &amp; Scientific</em> category of the Amazon Reviews 2023 dataset (UCSD / McAuley Lab), stratified 70/30 toward reviews using shop vocabulary. The language is genuine and messy. They have no credit amounts, carriers, or warehouses, so they appear only in the taxonomy and accuracy sections.</p></div>
+    <div><h3>Synthetic: credit records</h3><p class="small">1,500 credit memos with product class, packaging spec, carrier, origin DC, date, and credit amount, generated to match the record structure a distributor would actually hold. A language model wrote the notes and saw only the failure mode and product class. I seeded two patterns on purpose so the method could be checked against a known answer. Downtime hours per failure mode are my estimates, not measurements.</p></div>
   </div>
   <div class="block"><h3>Limitations</h3><ul class="limits small">
-    <li>Synthetic notes were written and classified by models from the same family. The human-labeled sets are the check on that — and they show synthetic accuracy (96–99%) overstates real-review accuracy (78–85%). Treat synthetic numbers as an upper bound.</li>
-    <li>The labeling guideline was refined while the clean set was being labeled, so the 85% is mildly tuned to it; the 78% frozen-protocol number is not. One labeler; a second would turn "one person's judgment" into inter-rater agreement.</li>
-    <li>Public reviews are consumer-adjacent; the industrial share is real but the mix is not a distributor's mix.</li>
-    <li>Downtime estimates drive the impact ranking. The sensitivity toggle exists because that assumption should be visible, not buried.</li>
+    <li>Models from the same family wrote the synthetic notes and classified them. The human-labeled sets check for that, and they show synthetic accuracy (96–99%) overstating real-review accuracy (78–85%). Treat the synthetic numbers as an upper bound.</li>
+    <li>I refined the labeling guideline while labeling the clean set, so the 85% is mildly tuned to it. The 78% from the frozen classifier is not. All the labels are mine; a second labeler would replace one person's judgment with a measured inter-rater agreement.</li>
+    <li>The public reviews lean consumer. The industrial share is real, but the mix is not a distributor's.</li>
+    <li>Downtime estimates drive the impact ranking, which is why the page has a toggle to show how much the ranking depends on them.</li>
     <li>No order-level truth exists for the public reviews; accuracy there rests on the gold set alone.</li>
   </ul></div>
 </section>
 
 </div></main>
-<footer><div class="wrap"><span>Credit Signal — a portfolio project. Built with Python, the Claude API, and plain HTML.</span><span><a href="https://github.com/muireadhach/credit-signal" id="repo-link">Repository</a> · <a href="memo" id="memo-link">Decision memo</a></span></div></footer>
+<footer><div class="wrap"><span>Credit Signal is a portfolio project, built with Python, the Claude API, and plain HTML.</span><span><a href="https://github.com/muireadhach/credit-signal" id="repo-link">Repository</a> · <a href="memo" id="memo-link">Decision memo</a></span></div></footer>
 <div class="tip" id="tip" role="status" aria-live="polite"></div>
 <script defer src="/_vercel/insights/script.js"></script>
 <script src="app.js"></script>

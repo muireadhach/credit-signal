@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Credit Signal — Decision memo</title>
+<title>Credit Signal · Decision memo</title>
 <link rel="icon" href="brand/favicon-64.png" type="image/png"><link rel="icon" href="brand/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
@@ -320,21 +320,22 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
   <p class="disclose"><span class="wrap"><b>Not McMaster-Carr data.</b> Public reviews + synthetic credits · <a href="./">Live demo</a></span></p>
   <div class="wrap bar"><a class="brand" href="./">← Credit Signal</a></div>
 </header>
-<main><div class="memo"><h1 id="credit-signal-decision-memo">Credit Signal — decision memo</h1>
+<main><div class="memo"><h1 id="credit-signal-decision-memo">Credit Signal decision memo</h1>
 <p><strong>Subject:</strong> Finding the root causes behind customer credits with a language model, and what it would take to run it for real<br />
 <strong>Prepared by:</strong> Muireadhach Currie · September 2026<br />
 <strong>Status:</strong> Portfolio prototype on public and disclosed synthetic data. Not McMaster-Carr data.<br />
-<strong>Built:</strong> Deliberately plain — a static demo with no framework, plus one small throttled endpoint behind the Try-it box. The analysis runs once, the page serves the results, and it deploys anywhere static files do. Every design choice is one I can explain and defend; that was a constraint I set for myself.</p>
+<strong>Built:</strong> A static demo with no framework, plus one small throttled endpoint behind the Try-it box. The analysis runs once, the page serves the results, and it deploys anywhere static files do. I kept it this plain on purpose, so that I can explain and defend every design choice.</p>
 <hr />
-<nav class="toc" aria-label="Contents"><p class="toc-h">Contents</p><ul><li><a href="#1-summary">1. Summary</a></li><li><a href="#2-the-problem-from-the-customers-side">2. The problem, from the customer's side</a></li><li><a href="#3-what-was-built">3. What was built</a></li><li><a href="#4-data-and-what-it-can-and-cannot-prove">4. Data, and what it can and cannot prove</a></li><li><a href="#5-findings">5. Findings</a><ul><li><a href="#51-ranking-by-refund-and-ranking-by-customer-impact-disagree">5.1 Ranking by refund and ranking by customer impact disagree</a></li><li><a href="#52-the-pattern-keyword-search-misses">5.2 The pattern keyword search misses</a></li><li><a href="#53-coverage-vs-precision">5.3 Coverage vs. precision</a></li><li><a href="#54-accuracy-three-ways-and-what-hand-labeling-changed">5.4 Accuracy, three ways — and what hand-labeling changed</a></li><li><a href="#55-cost">5.5 Cost</a></li></ul></li><li><a href="#6-what-i-would-do-about-three-of-these-causes">6. What I would do about three of these causes</a></li><li><a href="#7-how-to-run-this-on-real-data">7. How to run this on real data</a></li><li><a href="#8-limitations">8. Limitations</a></li></ul></nav>
+<nav class="toc" aria-label="Contents"><p class="toc-h">Contents</p><ul><li><a href="#1-summary">1. Summary</a></li><li><a href="#2-the-problem-from-the-customers-side">2. The problem, from the customer's side</a></li><li><a href="#3-what-was-built">3. What was built</a></li><li><a href="#4-data-and-what-it-can-and-cannot-prove">4. Data, and what it can and cannot prove</a></li><li><a href="#5-findings">5. Findings</a><ul><li><a href="#51-ranking-by-refund-and-ranking-by-customer-impact-disagree">5.1 Ranking by refund and ranking by customer impact disagree</a></li><li><a href="#52-the-pattern-keyword-search-misses">5.2 The pattern keyword search misses</a></li><li><a href="#53-coverage-vs-precision">5.3 Coverage vs. precision</a></li><li><a href="#54-accuracy-three-ways-and-what-hand-labeling-changed">5.4 Accuracy three ways, and what hand-labeling changed</a></li><li><a href="#55-cost">5.5 Cost</a></li></ul></li><li><a href="#6-what-i-would-do-about-three-of-these-causes">6. What I would do about three of these causes</a></li><li><a href="#7-how-to-run-this-on-real-data">7. How to run this on real data</a></li><li><a href="#8-limitations">8. Limitations</a></li></ul></nav>
 <h2 id="1-summary">1. Summary</h2>
-<p>Customer credits are a symptom log. Each one carries a coarse reason code and a sentence of free text that says what actually happened. At volume, nobody reads the sentence, so the same failure gets credited repeatedly instead of fixed once.</p>
-<p>I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 20-item taxonomy (written from shop experience, then revised once against real reviews), joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in <strong>downtime</strong> rather than what was refunded. Low-confidence results go to a person.</p>
-<p>Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 247 failure-mode × metadata cells ranked the primary seeded pattern <strong>#1</strong>, at <strong>3.6× lift</strong> (p &lt; 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Against synthetic ground truth the models score 96–99%. The number that matters is agreement with a careful human on real reviews. I labeled 200 records under the original taxonomy and got <strong>72%</strong> on the reference model (Opus 5) — and found that a third of real complaints had no home in a taxonomy written from a parts-receiving point of view. I revised it, wrote down the boundary rules, and labeled <strong>100 fresh reviews no one had seen</strong>: <strong>78%</strong> with the classifier frozen before I labeled, <strong>85%</strong> with the written guideline, <strong>97%</strong> on the records I was sure of. Real language is harder than clean text; model tier matters on it (Haiku 67%, Sonnet 76%, Opus 85%); and a written labeling guideline is worth seven points on the model that can follow one. Cost: <strong>$6.23 per thousand records</strong> on the model I would deploy.</p>
-<p><strong>Recommendation if this were real:</strong> a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, run on the reference-tier model (the extra $4 per thousand records buys nine points of accuracy on real language), with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.</p>
+<p>Customer credits are a log of symptoms. Each one carries a coarse reason code and a sentence of free text that says what actually happened. At volume nobody reads the sentence, so the same failure gets credited again and again when it could have been fixed once.</p>
+<p>I built a pipeline that reads the free text with a language model and pulls out a specific failure mode from a 20-item taxonomy, which I wrote from shop experience and revised once against real reviews. It joins that to the metadata an order system already holds and ranks causes by what they cost the customer in downtime rather than by what was refunded. Low-confidence results go to a person.</p>
+<p>To test the method against a known answer, I seeded two patterns into synthetic credit records. The notes were written by a model that never saw the seeded fields. A blind scan of 247 failure-mode × metadata cells ranked the main seeded pattern #1, at 3.6× lift (p &lt; 0.00001), and it was the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all.</p>
+<p>Against synthetic ground truth the models score 96–99%. The harder test is agreement with a careful human on real reviews. I labeled 200 records under the original taxonomy, and the reference model (Opus 5) agreed with me 72% of the time. A third of the real complaints had no home in a taxonomy written from a parts-receiving point of view, so I revised it, wrote down the boundary rules, and labeled 100 fresh reviews no one had seen. On those the model scored <strong>78%</strong> with the classifier frozen before I labeled, <strong>85%</strong> with the written guideline, and 97% on the records I was sure of. Model tier matters more on real language than on clean text (Haiku 67%, Sonnet 76%, Opus 85%), and the written guideline added seven points on the one model that could follow it. Cost is <strong>$6.23 per thousand records</strong> on the model I would deploy.</p>
+<p><strong>Recommendation if this were real:</strong> a four-week pilot on six months of credit history. Two CS reps hand-label records to set the confidence threshold. It runs on the reference-tier model, where the extra $4 per thousand records buys nine points of accuracy on real language. The top three causes go to the teams that own them, with one metric agreed in advance: whether the same cause recurs the following quarter.</p>
 <h2 id="2-the-problem-from-the-customers-side">2. The problem, from the customer's side</h2>
-<p>A $40 credit on a damaged shaft collar is a rounding error on the P&amp;L. The four hours a line sat idle waiting for the reship is not — and it is what the customer remembers. Running a service bureau, I placed those orders and took those deliveries. The credit never captured the cost.</p>
-<p>Reason codes ("damaged", "wrong item") cannot distinguish a packaging spec that chews threads from a carrier lane that dents boxes from a warehouse that ships aged o-rings. The distinction lives in the note. That is the gap this closes.</p>
+<p>A $40 credit on a damaged shaft collar is a rounding error on the P&amp;L. The four hours a line sat idle waiting for the reship is what the customer remembers. When I ran a service bureau, I placed those orders and took those deliveries, and the credit never reflected that cost.</p>
+<p>Reason codes ("damaged", "wrong item") can't tell a packaging spec that chews threads from a carrier lane that dents boxes or a warehouse that ships aged o-rings. Only the note says which it was, and nobody is reading the notes at scale.</p>
 <h2 id="3-what-was-built">3. What was built</h2>
 <table>
 <thead>
@@ -348,7 +349,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 <tr>
 <td>Collect</td>
 <td>The customer's own words from the credit request, email, or review. PII redacted before anything reaches a model.</td>
-<td>—</td>
+<td>No</td>
 </tr>
 <tr>
 <td>Extract</td>
@@ -358,30 +359,30 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 <tr>
 <td>Join</td>
 <td>Product class, packaging spec, carrier, origin DC, date, credit amount from the order system.</td>
-<td>—</td>
+<td>No</td>
 </tr>
 <tr>
 <td>Rank &amp; test</td>
 <td>Count, dollars, expected downtime. Lift and significance for every metadata cut. Trend by month.</td>
-<td>—</td>
+<td>No</td>
 </tr>
 <tr>
 <td>Route</td>
 <td>Confident results file automatically; uncertain ones go to a reviewer whose labels feed the next accuracy check.</td>
-<td>—</td>
+<td>No</td>
 </tr>
 </tbody>
 </table>
-<p>The taxonomy (thread damage, out-of-tolerance, wrong part in the right bag, short count, bent long stock, aged elastomers, corrosion on arrival, …) is mine, from years of receiving parts. It is in <code>taxonomy/failure_modes.yaml</code> with the phrasings customers actually use.</p>
+<p>The taxonomy (thread damage, out-of-tolerance, wrong part in the right bag, short count, bent long stock, aged elastomers, corrosion on arrival, …) is mine, from years of receiving parts. It lives in <code>taxonomy/failure_modes.yaml</code> along with the phrasings customers actually use.</p>
 <h2 id="4-data-and-what-it-can-and-cannot-prove">4. Data, and what it can and cannot prove</h2>
-<p><strong>Real:</strong> 2,000 one- and two-star reviews of industrial products from a public academic dataset (Amazon Reviews 2023, Industrial &amp; Scientific, UCSD). Genuine language; no credit amounts, carriers, or warehouses.</p>
-<p><strong>Synthetic:</strong> 1,500 credit records with product class, packaging spec, carrier, origin DC, date, and credit amount, mimicking the structure a distributor holds. Notes written by a model that saw only the failure mode and product class. Two patterns seeded deliberately:</p>
+<p><strong>Real:</strong> 2,000 one- and two-star reviews of industrial products from a public academic dataset (Amazon Reviews 2023, Industrial &amp; Scientific, UCSD). The language is genuine, but there are no credit amounts, carriers, or warehouses.</p>
+<p><strong>Synthetic:</strong> 1,500 credit records with product class, packaging spec, carrier, origin DC, date, and credit amount, built to match the structure a distributor holds. A model that saw only the failure mode and product class wrote the notes. I seeded two patterns on purpose:</p>
 <ul>
 <li><strong>Seed A.</strong> Fasteners in bulk poly bags (PB-2) after a May spec change: thread damage at ~4× the base rate. Mechanism: large fasteners loose in a bulk bag chew each other's threads in transit.</li>
 <li><strong>Seed B.</strong> Elastomers and consumables from DC-4: aged-stock failures weighted 3× at generation. Mechanism: stock rotation. Aged stock is already the most common failure in that class, so the lift that can actually be measured is only ~1.5×.</li>
 </ul>
-<p>A third cut (Carrier-C transit damage) was given only a weak nudge, to see whether the method would correctly report "not significant."</p>
-<p><strong>What this proves:</strong> the method recovers a known signal from language alone. <strong>What it does not prove:</strong> what any real credit dataset contains. The synthetic layer is labeled as synthetic everywhere it appears.</p>
+<p>I gave a third cut (Carrier-C transit damage) only a weak nudge, to see whether the method would correctly report "not significant."</p>
+<p>This setup proves the method can recover a known signal from language alone. It proves nothing about what a real credit dataset contains. The synthetic layer is labeled as synthetic everywhere it appears.</p>
 <h2 id="5-findings">5. Findings</h2>
 <h3 id="51-ranking-by-refund-and-ranking-by-customer-impact-disagree">5.1 Ranking by refund and ranking by customer impact disagree</h3>
 <table>
@@ -462,8 +463,8 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </tr>
 </tbody>
 </table>
-<p>Across 1,500 credits: $156k refunded, roughly $2.9M in estimated customer downtime at $500/hour. The ratio is the assumption to test first. At $250/hour the top five are unchanged and only positions 6 and 7 swap; at $1,500/hour nothing moves; at $0 (refund only) the list reverts to the refund column. The demo has the control, so nobody has to take my word for it.</p>
-<p>Downtime hours per mode are my estimate (<code>impact_weights.yaml</code>), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: material nonconformance, bent long stock, aged elastomers.</p>
+<p>Across 1,500 credits, $156k was refunded, and estimated customer downtime comes to roughly $2.9M at $500/hour. The hourly rate is the assumption to test first. At $250/hour the top five are unchanged and only positions 6 and 7 swap. At $1,500/hour nothing moves. At $0 (refund only) the list reverts to the refund column. The demo has this control, so you can check it yourself.</p>
+<p>Downtime hours per mode are my estimates (<code>impact_weights.yaml</code>), shown at $500/hour with sensitivity at $250 and $1,500. The exact dollar figure matters less than the change in order. The modes that rise are the ones that stop work for a day: material nonconformance, bent long stock, aged elastomers.</p>
 <h3 id="52-the-pattern-keyword-search-misses">5.2 The pattern keyword search misses</h3>
 <table>
 <thead>
@@ -477,7 +478,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 <tr>
 <td>Seeded (hidden ground truth)</td>
 <td>4.1×</td>
-<td>—</td>
+<td>n/a</td>
 </tr>
 <tr>
 <td>LLM extraction</td>
@@ -496,9 +497,9 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </tr>
 </tbody>
 </table>
-<p>The trend chart in the demo shows the step in May. Two things worth saying plainly. First, generic damage words appear in under 1% of these notes — customers describe symptoms ("wouldn't start the nut"), not categories. Second, a regex written <em>after</em> you know what to look for works fine; that is not a weakness of regex, it is the definition of the problem. The model checks all 20 modes at once with no hypothesis, and the blind scan below is the real test.</p>
-<p>"Damaged" matches dents, corrosion, kinked tube, and thread damage alike; the specific signal is diluted. <strong>The blind scan.</strong> Every failure mode × every packaging spec, carrier, and warehouse, within each product class: 247 cells, ranked by significance, with no one telling the scan where the seeds were. The seeded PB-2 cell ranked #1. After Bonferroni correction (p &lt; 0.0002), it was the <em>only</em> survivor — eight other cells looked interesting at p &lt; 0.01 and would have been chased on a smaller dataset. Stratifying by product class matters: without it, packaging just proxies product (long stock ships in crates; crates "cause" bent tube).</p>
-<p><strong>Seed B</strong> was seeded too weakly to matter (ground truth 1.5×) and the method correctly does not claim it: 1.4×, p = 0.03, rank 31 of 247 — short of the p &lt; 0.01 bar for the seeded checks and far short of the correction. <strong>Carrier-C</strong> was given only a nudge (1.2×) and comes back 1.2×, p = 0.24 — not significant, which is the right answer. A method that only ever says "yes" is not a method.</p>
+<p>The trend chart in the demo shows the step in May. Generic damage words appear in under 1% of these notes, because customers describe symptoms ("wouldn't start the nut") rather than categories. When the word "damaged" does appear, it matches dents, corrosion, kinked tube, and thread damage alike, so the specific signal gets diluted. A regex written <em>after</em> you know what to look for works fine, but you have to know first, and that is the problem this project is about. The model checks all 20 modes at once with no hypothesis. The blind scan is the real test of that.</p>
+<p>The blind scan tested every failure mode against every packaging spec, carrier, and warehouse within each product class: 247 cells, ranked by significance, with nothing telling the scan where the seeds were. The seeded PB-2 cell ranked #1. After Bonferroni correction (p &lt; 0.0002) it was the <em>only</em> survivor. Eight other cells looked interesting at p &lt; 0.01 and would have been chased on a smaller dataset. Stratifying by product class matters, because without it packaging just stands in for product (long stock ships in crates, so crates appear to "cause" bent tube).</p>
+<p>Seed B was seeded too weakly to matter (ground truth 1.5×), and the method correctly does not claim it: 1.4×, p = 0.03, rank 31 of 247. That misses the p &lt; 0.01 bar for the seeded checks and falls far short of the correction. Carrier-C got only a nudge (1.2×) and comes back at 1.2×, p = 0.24. Not significant is the right answer there.</p>
 <h3 id="53-coverage-vs-precision">5.3 Coverage vs. precision</h3>
 <table>
 <thead>
@@ -567,9 +568,10 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </tr>
 </tbody>
 </table>
-<p><em>(100 unseen reviews, taxonomy v2. Under v1 the same threshold of 0.7 auto-filed 39% at 90% — the taxonomy revision, not the model, is what moved this.)</em> Two things to take from that. The model's confidence is honest: where it says 0.8 on a real review, it is right 49 times in 50. And the review queue is real work — at 0.7, three in ten records go to a person. That is the correct design, not a failure of it; the reviewer sees a suggested mode and the evidence quote, so each review takes seconds, and every reviewed label feeds the next accuracy check.</p>
-<h3 id="54-accuracy-three-ways-and-what-hand-labeling-changed">5.4 Accuracy, three ways — and what hand-labeling changed</h3>
-<p><strong>The taxonomy revision.</strong> The first 200 labels put 34% of real reviews in "other / unclear" and my notes said "NOT LISTED" over and over. Customers could not tell "broke on first use" from "failed in week one" (merged into one mode with a timing field), and real complaints included whole categories a parts-receiving taxonomy never sees: the part works but does not do the job, the listing was wrong, the customer chose or misused it, it was not worth the price, it never arrived. Version 2 has 20 modes; on the next 100 reviews only 4 landed in "other." I also wrote the boundary rules down — eight of them, each from a real case — and put them in the classifier's instructions verbatim, so the model and the labeler draw the same lines.</p>
+<p><em>(100 unseen reviews, taxonomy v2. Under v1 the same 0.7 threshold auto-filed 39% at 90% precision. The model was the same both times, so the taxonomy revision is what moved this.)</em></p>
+<p>The model's confidence scores hold up on real reviews: when it says 0.8, it is right 49 times in 50. The review queue is still real work. At 0.7, three in ten records go to a person, and that is intended. The reviewer sees a suggested mode and the evidence quote, so each review takes seconds, and every reviewed label feeds the next accuracy check.</p>
+<h3 id="54-accuracy-three-ways-and-what-hand-labeling-changed">5.4 Accuracy three ways, and what hand-labeling changed</h3>
+<p>My first 200 labels put 34% of real reviews in "other / unclear," and my notes said "NOT LISTED" over and over. Customers could not tell "broke on first use" from "failed in week one," so I merged those into one mode with a timing field. Real complaints also included whole categories a parts-receiving taxonomy never sees: the part works but does not do the job, the listing was wrong, the customer chose or misused it, it was not worth the price, it never arrived. Version 2 has 20 modes, and on the next 100 reviews only 4 landed in "other." I also wrote down eight boundary rules, each from a real case, and put them in the classifier's instructions word for word, so the model and the labeler draw the same lines.</p>
 <table>
 <thead>
 <tr>
@@ -580,7 +582,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </thead>
 <tbody>
 <tr>
-<td>Always guess the most common label — the baseline</td>
+<td>Baseline: always guess the most common label</td>
 <td>100</td>
 <td>40%</td>
 </tr>
@@ -592,7 +594,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 <tr>
 <td>Opus 5 vs. synthetic ground truth</td>
 <td>250</td>
-<td>98.8% — agrees with Sonnet 96.8%</td>
+<td>98.8% (agrees with Sonnet on 96.8%)</td>
 </tr>
 <tr>
 <td>Opus 5 vs. my labels, taxonomy v1, 150 real reviews</td>
@@ -622,7 +624,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 <tr>
 <td>My labels vs. the hidden synthetic ground truth</td>
 <td>50</td>
-<td>49 of 50 — the generator writes what a person reads</td>
+<td>49 of 50 (the generator writes what a person would read)</td>
 </tr>
 </tbody>
 </table>
@@ -661,8 +663,8 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </tr>
 </tbody>
 </table>
-<p><em>(100 unseen reviews, written guideline.)</em> Where a careful human is sure, the reference model agrees; where the human is unsure, so is the model, and what remains is real ambiguity — a part that broke versus one that fell short of its rating; aged rubber versus rubber that never sealed. Top disagreements: functional failure ↔ material nonconformance (2), aged elastomers ↔ performance shortfall (2), performance shortfall ↔ customer selection (2).</p>
-<p>Two lessons that changed decisions. On synthetic text all three models look interchangeable (96–99%); on real language they are not — 67 → 76 → 85. And the written guideline moved Opus from 78% to 85% while leaving Sonnet flat: nuanced rules only pay off on the model that can follow them. The cheap-model question is answered by real data, not clean data. These are neighbors an experienced reviewer would also debate (corrosion on arrival vs. plating failure; wrong part vs. thread mismatch).</p>
+<p><em>(100 unseen reviews, written guideline.)</em> When I was sure, the reference model agreed with me. When I was unsure, so was the model, and what remains is real ambiguity: a part that broke versus one that fell short of its rating, or aged rubber versus rubber that never sealed. The top disagreements were functional failure ↔ material nonconformance (2), aged elastomers ↔ performance shortfall (2), and performance shortfall ↔ customer selection (2). Other pairs an experienced reviewer would also argue over include corrosion on arrival vs. plating failure and wrong part vs. thread mismatch.</p>
+<p>Two results changed my decisions. On synthetic text all three models look interchangeable (96–99%), but on real language they separate: 67%, 76%, 85%. And the written guideline moved Opus from 78% to 85% while leaving Sonnet flat, so detailed rules only pay off on a model that can follow them. Whether a cheaper model is good enough has to be decided on real data.</p>
 <h3 id="55-cost">5.5 Cost</h3>
 <table>
 <thead>
@@ -679,7 +681,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 <td>$112</td>
 </tr>
 <tr>
-<td><strong>Opus 5 — the one I would deploy</strong></td>
+<td><strong>Opus 5 (the one I would deploy)</strong></td>
 <td>$6.23</td>
 <td>$312</td>
 </tr>
@@ -690,9 +692,9 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </tr>
 </tbody>
 </table>
-<p>Whole project: $46.66 across two taxonomy versions, three full classification passes, and a discarded run. The production decision: Opus costs $200 a month more at 50,000 credits and is nine points more accurate on real language. That is not a close call. One lesson worth the price: the cheapest model per token (Haiku 4.5) will not cache a prompt under 4,096 tokens, so it cost <em>more per record</em> than Sonnet with caching. Cheaper per token is not cheaper per record.</p>
+<p>The whole project cost $46.66 across two taxonomy versions, three full classification passes, and a discarded run. For production, Opus costs $200 a month more at 50,000 credits and is nine points more accurate on real language, which makes it an easy choice. One thing I learned along the way: the cheapest model per token (Haiku 4.5) won't cache a prompt under 4,096 tokens, so it cost <em>more per record</em> than Sonnet with caching.</p>
 <h2 id="6-what-i-would-do-about-three-of-these-causes">6. What I would do about three of these causes</h2>
-<p><em>Illustrative, based on the synthetic findings — the shape of the action matters more than the specifics. The DC-4 row acts on a suggestive signal, not a significant one (§5.2); a FIFO audit is cheap enough to be worth it anyway.</em></p>
+<p><em>Illustrative, based on the synthetic findings. The shape of each action matters more than the specifics. The DC-4 row acts on a suggestive signal that did not reach significance (§5.2), but a FIFO audit is cheap enough to be worth doing anyway.</em></p>
 <table>
 <thead>
 <tr>
@@ -723,25 +725,25 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </tr>
 </tbody>
 </table>
-<p>Targets I would put on the table, as assumptions for the pilot to correct rather than promises: thread-damage credits on the affected fastener SKUs down by half within eight weeks of the packaging change; DC-4's aged-consumable rate down to the other DCs' level within one stock-rotation cycle; wrong-part credits down 30% on the top 50 SKUs once scan-verify is live. If a target is missed, the interesting question is why, and the evidence quotes are where to look.</p>
-<p>North-star metric for the program: <strong>credit recurrence rate</strong> — the share of credits this quarter whose cause was already in last quarter's top ten.</p>
+<p>The targets I would propose are assumptions for the pilot to correct: thread-damage credits on the affected fastener SKUs down by half within eight weeks of the packaging change; DC-4's aged-consumable rate down to the other DCs' level within one stock-rotation cycle; wrong-part credits down 30% on the top 50 SKUs once scan-verify is live. If a target is missed, the question is why, and the evidence quotes are where to look.</p>
+<p>The program's main metric would be <strong>credit recurrence rate</strong>: the share of this quarter's credits whose cause was already in last quarter's top ten.</p>
 <h2 id="7-how-to-run-this-on-real-data">7. How to run this on real data</h2>
 <ul>
 <li><strong>Inputs needed:</strong> six months of credits with note text, reason code, product/SKU class, packaging spec, carrier, origin DC, ship and credit dates, credit amount, order value, and a line-down flag if one exists.</li>
-<li><strong>Privacy:</strong> redact names, emails, phone numbers, and account numbers from the note before it reaches a model. Nothing else in the record is sensitive. Run under the API's standard data-retention terms; no training on inputs.</li>
-<li><strong>Pilot (4 weeks):</strong> week 1 — load and run; week 2 — two CS reps hand-label 300 records, set the threshold from the curve; week 3 — take the top three causes with evidence quotes to the owning teams; week 4 — agree the metric and the review cadence.</li>
-<li><strong>What it would cost:</strong> at ~$6.20 per thousand records on the reference model, a year of 50,000 credits a month is about $3,700 in model calls. The reviewer time is the real cost, and the threshold controls it.</li>
-<li><strong>What to expect:</strong> the first run finds things people already suspected and could not prove. That is the useful outcome — proof is what moves packaging engineering.</li>
+<li><strong>Privacy:</strong> redact names, emails, phone numbers, and account numbers from the note before it reaches a model. Nothing else in the record is sensitive. Run under the API's standard data-retention terms, with no training on inputs.</li>
+<li><strong>Pilot (4 weeks):</strong> Week 1, load and run. Week 2, two CS reps hand-label 300 records and the threshold is set from the curve. Week 3, take the top three causes, with evidence quotes, to the teams that own them. Week 4, agree the metric and the review cadence.</li>
+<li><strong>What it would cost:</strong> at about $6.20 per thousand records on the reference model, a year of 50,000 credits a month is about $3,700 in model calls. Reviewer time costs more than that, and the threshold controls it.</li>
+<li><strong>What to expect:</strong> the first run finds things people already suspected and could not prove. That is useful, because proof is what gets packaging engineering to act.</li>
 </ul>
 <h2 id="8-limitations">8. Limitations</h2>
 <ul>
-<li>The synthetic notes and the classifier are both Claude models. The human-labeled sets are the check on that circularity — and they show synthetic accuracy (96–99%) overstates real-review accuracy (78–85%). Treat the synthetic numbers as an upper bound.</li>
-<li>The 85% is mildly tuned to the test: I wrote the boundary rules while labeling the clean set, then put them in the classifier. The 78% frozen-protocol number has no such caveat. The honest range is 78–85.</li>
-<li>One labeler (me). Two CS reps labeling the same 300 records, with disagreements adjudicated, is the right way to do it for real.</li>
-<li>The public reviews skew consumer. The industrial share is real; the mix is not a distributor's.</li>
-<li>Downtime estimates are mine. The toggle in the demo exists so that assumption is visible, not buried.</li>
-<li>The taxonomy has 20 modes after one revision. A real credit dataset will want more revisions; the point is that the process for revising it is now written down.</li>
-<li>The seeded test proves the method finds a known signal; it says nothing about what a real dataset contains.</li>
+<li>Claude models both wrote the synthetic notes and classified them. The human-labeled sets check for that circularity, and they show synthetic accuracy (96–99%) overstating real-review accuracy (78–85%). Treat the synthetic numbers as an upper bound.</li>
+<li>The 85% is mildly tuned to the test: I wrote the boundary rules while labeling the clean set, then put them in the classifier. The 78% from the frozen classifier has no such caveat. The range to quote is 78–85%.</li>
+<li>All the labels are mine. A real run should have two CS reps label the same 300 records and settle their disagreements.</li>
+<li>The public reviews skew consumer. The industrial share is real, but the mix is not a distributor's.</li>
+<li>The downtime estimates are mine. The demo's toggle shows how much the ranking depends on them.</li>
+<li>The taxonomy has 20 modes after one revision. A real credit dataset will need more revisions, and the process for making them is now written down.</li>
+<li>The seeded test shows the method finds a known signal. It says nothing about what a real dataset contains.</li>
 </ul>
 <p><em>Demo: <a href="https://creditsignal.muireadhach.com">https://creditsignal.muireadhach.com</a> · Repository: <a href="https://github.com/muireadhach/credit-signal">github.com/muireadhach/credit-signal</a></em></p></div></main>
 <script defer src="/_vercel/insights/script.js"></script>

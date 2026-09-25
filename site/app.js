@@ -172,7 +172,7 @@
         { label: "Regex tuned to thread damage", segs: [{ v: seedA.keyword_tuned?.lift || 0, cls: "kw", tip: `written after you suspect the answer · ${fmt.pct(seedA.keyword_tuned?.rate_in)} vs ${fmt.pct(seedA.keyword_tuned?.rate_out)}` }] },
         { label: "Ground truth (hidden)", segs: [{ v: seedA.ground_truth_lift || 0, cls: "dim", tip: "the lift that was actually seeded" }] },
       ], { valueFmt: fmt.x, labelW: 190, rowH: 32 });
-      $("#lift-note").textContent = `Thread damage in ${seedA.n_in} bulk-bagged fastener credits after the spec change vs ${seedA.n_out} other fastener credits. A generic search catches dents, corrosion and kinked tube alike and the signal drowns. A regex tuned to thread damage works — if you already know to write it. The model checks all 20 modes at once without a hypothesis.`;
+      $("#lift-note").textContent = `Thread damage in ${seedA.n_in} bulk-bagged fastener credits after the spec change vs ${seedA.n_out} other fastener credits. A generic search also matches dents, corrosion, and kinked tube, which buries the thread-damage signal. A regex tuned to thread damage works, but only if you already know to write it. The model checks all 20 modes at once without starting from a hypothesis.`;
     }
     $("#seed-table").innerHTML = `<thead><tr><th>Check</th><th>Target</th><th class="n">n in / out</th><th class="n">Seeded</th><th class="n">LLM lift</th><th class="n">p</th><th class="n">Naive keyword</th><th>Verdict</th></tr></thead><tbody>` +
       ST.tests.map(t => { const sig = t.llm.p != null && t.llm.p < .01; return `<tr><td>${esc(t.name)}</td><td>${esc(t.target)}</td><td class="n">${t.n_in} / ${t.n_out}</td><td class="n">${fmt.x(t.ground_truth_lift)}</td><td class="n">${fmt.x(t.llm.lift)}</td><td class="n">${fp(t.llm.p)}</td><td class="n">${t.keyword.lift ? fmt.x(t.keyword.lift) : "no signal"}</td><td>${sig ? '<span class="chip sig">SIGNIFICANT</span>' : '<span class="chip ns">NOT SIGNIFICANT</span>'}</td></tr>`; }).join("") + "</tbody>";
@@ -208,9 +208,9 @@
     const G = { bulk: AC.gold_bulk, reference: AC.gold_reference, cheap: AC.gold_cheap };
     const V1 = AC.gold_v1, FR = AC.gold_v2_clean_frozen, CL = AC.gold_v2_clean, RL = AC.gold_v2_relabeled;
     const tiles = [];
-    if (V1?.reference) tiles.push(["v1 taxonomy · 150 real reviews", fmt.pct(V1.reference.public_accuracy), "Opus 5 vs the author's labels · 34% of labels were 'other'"]);
-    if (RL?.reference) tiles.push(["v2 taxonomy · same 150, re-labeled", fmt.pct(RL.reference.public_accuracy), "merged two modes, added five the reviews demanded"]);
-    if (FR?.reference) tiles.push(["v2 · 100 unseen reviews, rules frozen", fmt.pct(FR.reference.public_accuracy), "labeled after the classifier was fixed — the unarguable number"]);
+    if (V1?.reference) tiles.push(["v1 taxonomy · 150 real reviews", fmt.pct(V1.reference.public_accuracy), "Opus 5 vs my labels · 34% of labels were 'other'"]);
+    if (RL?.reference) tiles.push(["v2 taxonomy · same 150, re-labeled", fmt.pct(RL.reference.public_accuracy), "merged two modes, added five the reviews called for"]);
+    if (FR?.reference) tiles.push(["v2 · 100 unseen reviews, rules frozen", fmt.pct(FR.reference.public_accuracy), "labeled after the classifier was locked, so nothing was tuned to them"]);
     if (CL?.reference) tiles.push(["v2 · same 100, written guideline", fmt.pct(CL.reference.public_accuracy), `8 boundary rules from labeling · Sonnet ${fmt.pct(CL.bulk?.public_accuracy)} · Haiku ${fmt.pct(CL.cheap?.public_accuracy)}`]);
     if (AC.reference) tiles.push(["Synthetic ground truth", fmt.pct(AC.reference.accuracy), `Opus 5 · Sonnet ${fmt.pct(AC.bulk?.accuracy)} · agree ${fmt.pct(AC.agreement)}`]);
     $("#acc-tiles").innerHTML = tiles.map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${esc(d)}</div></div>`).join("");
@@ -233,7 +233,7 @@
     $("#cost-tiles").innerHTML = [
       ["Bulk model, per 1,000", EC.bulk_per_1k != null ? "$" + EC.bulk_per_1k.toFixed(2) : "—", `${fmt.n(EC.bulk_calls)} calls measured`],
       ["Reference model, per 1,000", EC.reference_per_1k != null ? "$" + EC.reference_per_1k.toFixed(2) : "—", `${fmt.n(EC.reference_calls)} calls measured`],
-      ["Haiku 4.5, per 1,000", EC.cheap_per_1k != null ? "$" + EC.cheap_per_1k.toFixed(2) : "—", "cheapest per token — but it can't cache this prompt"],
+      ["Haiku 4.5, per 1,000", EC.cheap_per_1k != null ? "$" + EC.cheap_per_1k.toFixed(2) : "—", "cheapest per token, but it can't cache this prompt"],
       ["This whole project", fmt.usd(EC.total_spend_usd), "generation + classification + evaluation"],
     ].map(([k, v, d]) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${esc(d)}</div></div>`).join("");
     $("#scale").innerHTML = `<thead><tr><th>Credits per month</th><th class="n">Bulk model</th><th class="n">Reference model</th></tr></thead><tbody>` + EC.scale.map(r => `<tr><td>${fmt.n(r.credits_per_month)}</td><td class="n">${fmt.usd(r.bulk_usd)}</td><td class="n">${fmt.usd(r.reference_usd)}</td></tr>`).join("") + "</tbody>";
