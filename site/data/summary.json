@@ -5,7 +5,7 @@
  "synthetic_classified": 1500,
  "synthetic_total": 1500,
  "reference_classified": 500,
- "review_threshold": 0.6,
+ "review_threshold": 0.7,
  "models": {
   "bulk": "claude-sonnet-5",
   "reference": "claude-opus-5"

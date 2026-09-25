@@ -1,184 +1,341 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Credit Signal — Decision memo</title>
+<link rel="icon" href="brand/favicon-64.png" type="image/png"><link rel="icon" href="brand/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
 <style>
+/* ---------- tokens ---------- */
 :root{
   color-scheme:light;
-  --bg:#f4f6f3; --panel:#ffffff; --panel-2:#eef1ec; --rule:#d9ded6; --rule-strong:#b9c1b5;
-  --ink:#151815; --ink-2:#555b55; --ink-3:#7c837b;
-  --accent:#1c5cab; --accent-ink:#ffffff;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
-  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --critical:#d03b3b;
-  --seq-2:#9ec5f4; --seq-5:#256abf;
-  --display:"IBM Plex Sans Condensed",system-ui,"Segoe UI",sans-serif; --body:"IBM Plex Sans",system-ui,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --bg:#f6f5f1; --panel:#ffffff; --panel-2:#ecebe5; --rule:#dddbd3; --rule-strong:#a9a69c;
+  --ink:#161614; --ink-2:#4a4944; --ink-3:#6a6862;
+  --accent:#b23e0e; --accent-ink:#ffffff; --band-accent:#f07d45;
+  --s1:#1f5fa8; --s2:#b23e0e; --s3:#0d7064; --s4:#e3a008; --seq-2:#7fa3d3;
+  --good:#1b7a35; --warn:#8a5a00; --critical:#b42318;
+  --sans:"Archivo",system-ui,"Segoe UI",sans-serif; --serif:"Source Serif 4",Georgia,"Times New Roman",serif; --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  color-scheme:dark; --bg:#171817; --panel:#202220; --panel-2:#2a2d2a; --rule:#353935; --rule-strong:#4b514b;
-  --ink:#f1f2ee; --ink-2:#c3c6bf; --ink-3:#8d928b; --accent:#6da7ec; --accent-ink:#0f1a2a;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
-  --seq-2:#1c5cab; --seq-5:#6da7ec; }}
+  color-scheme:dark; --bg:#121211; --panel:#1b1b19; --panel-2:#242421; --rule:#2d2c29; --rule-strong:#56544e;
+  --ink:#edece8; --ink-2:#b8b6ae; --ink-3:#8f8d86; --accent:#f07d45; --accent-ink:#121211; --band-accent:#b23e0e;
+  --s1:#5d9ee6; --s2:#f07d45; --s3:#3db8a4; --s4:#c98a00; --seq-2:#35608f;
+  --good:#52c27a; --warn:#e0ac3a; --critical:#f2705f; }}
 :root[data-theme="dark"]{
-  color-scheme:dark; --bg:#171817; --panel:#202220; --panel-2:#2a2d2a; --rule:#353935; --rule-strong:#4b514b;
-  --ink:#f1f2ee; --ink-2:#c3c6bf; --ink-3:#8d928b; --accent:#6da7ec; --accent-ink:#0f1a2a;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
-  --seq-2:#1c5cab; --seq-5:#6da7ec; }
+  color-scheme:dark; --bg:#121211; --panel:#1b1b19; --panel-2:#242421; --rule:#2d2c29; --rule-strong:#56544e;
+  --ink:#edece8; --ink-2:#b8b6ae; --ink-3:#8f8d86; --accent:#f07d45; --accent-ink:#121211; --band-accent:#b23e0e;
+  --s1:#5d9ee6; --s2:#f07d45; --s3:#3db8a4; --s4:#c98a00; --seq-2:#35608f;
+  --good:#52c27a; --warn:#e0ac3a; --critical:#f2705f; }
+
+/* ---------- base ---------- */
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{margin:0}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}  /* stop iOS Safari inflating text in landscape */
-body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);-webkit-font-smoothing:antialiased}
-a{color:var(--accent)}
-.wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
-header.top .wrap{display:flex;align-items:center;gap:18px;min-height:52px;flex-wrap:wrap;padding-block:6px}
-.brand{font:600 20px/1 var(--display);letter-spacing:.01em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:10px}
-.brand .mark{width:22px;height:22px;display:inline-block}
-nav.sections{display:flex;gap:2px 14px;flex-wrap:wrap;font-size:13px;margin-left:auto}
-nav.sections a{color:var(--ink-2);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:var(--header-h,96px)}  /* stop iOS Safari inflating text in landscape */
+body{--surface:var(--bg);background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);font-variant-numeric:lining-nums;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--rule-strong);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--accent);text-decoration-color:currentColor}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2{font-family:var(--serif);font-weight:600;text-wrap:balance}
+h1{font-size:52px;line-height:1.05;letter-spacing:-.015em;max-width:18em;margin:0 0 20px}
+h2{font-size:32px;line-height:1.15;max-width:26em;margin:0 0 14px}
+h3{font:600 17px/1.35 var(--sans);margin:0 0 8px}
+p{max-width:66ch;margin:0 0 12px}
+.lede{font-size:20px;line-height:1.45;color:var(--ink-2);max-width:40em}
+.intro{color:var(--ink)}
+.muted{color:var(--ink-2)}
+.small{font-size:13.5px;line-height:1.45}
+.num,.mono{font-variant-numeric:tabular-nums lining-nums}
+.loading{color:var(--ink-3);font-size:13.5px;grid-column:1/-1;padding:12px 0}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1120px;margin:0 auto;padding-inline:24px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--rule)}
+.disclose{margin:0;max-width:none;background:var(--panel-2);border-bottom:1px solid var(--rule-strong);font:500 12.5px/1.3 var(--sans);color:var(--ink)}
+.disclose .wrap{display:block;padding-block:7px}
+.disclose b{color:var(--critical);font-weight:600}
+.bar{display:flex;align-items:center;gap:32px;min-height:52px}
+.brand{font:600 19px/1 var(--sans);letter-spacing:-.005em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:9px;white-space:nowrap;flex:none}
+.brand:hover{color:var(--ink)}
+.brand .mark{width:20px;height:20px;display:inline-block}
+nav.sections{display:flex;gap:22px;margin-left:auto;font-size:14px}
+nav.sections a{display:flex;align-items:center;min-height:44px;color:var(--ink-2);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;padding-top:2px}
 nav.sections a:hover{color:var(--ink);border-color:var(--rule-strong)}
 nav.sections a.active{color:var(--ink);border-color:var(--accent)}
-.disclose{font:500 11.5px/1.2 var(--mono);color:var(--ink-2);background:var(--panel-2);border:1px solid var(--rule);border-radius:4px;padding:5px 8px;letter-spacing:0;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
-.disclose b{color:var(--critical);font-weight:500}
-.disclose a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor}
-@media (max-width:760px){
-  header.top .wrap{gap:6px 12px;padding-block:8px}
-  nav.sections{order:3;width:100%;margin-left:0;flex-wrap:wrap;gap:2px 14px;font-size:12.5px}
-  nav.sections a{padding:2px 0}
-  .disclose{margin-left:auto;font-size:11px;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.4}
-}
-html{scroll-padding-top:var(--header-h,70px)}
-main .wrap{padding-block:34px 60px;display:grid;grid-template-columns:minmax(0,1fr);gap:44px}
-section{min-width:0}
-.grid2>*,.panel{min-width:0}
-h1{font:600 clamp(30px,5vw,44px)/1.08 var(--display);margin:0 0 12px;text-wrap:balance;letter-spacing:-.005em}
-h2{font:600 26px/1.15 var(--display);margin:0 0 6px;text-wrap:balance}
-h3{font:600 17px/1.3 var(--body);margin:0 0 6px}
-.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px}
-.lede{font-size:18px;line-height:1.5;max-width:62ch;color:var(--ink-2);margin:0}
-p{max-width:68ch}
-.muted{color:var(--ink-2)}
-.small{font-size:13px}
-.mono{font-family:var(--mono)}
-.num{font-variant-numeric:tabular-nums}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:22px}
-.tile{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;display:grid;gap:4px;align-content:start}
-.tile .k{font:500 12px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
-.tile .v{font:600 34px/1.05 var(--display);font-variant-numeric:tabular-nums;color:var(--ink)}
-.tile .v small{font:500 15px/1 var(--body);color:var(--ink-2);margin-left:4px}
-.tile .d{font-size:13px;color:var(--ink-2)}
-.panel{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:18px 20px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media (max-width:760px){.grid2{grid-template-columns:1fr}}
-.toggle{display:inline-flex;border:1px solid var(--rule-strong);border-radius:5px;overflow:hidden;font-size:13px}
-.toggle button{background:var(--panel);color:var(--ink-2);border:0;padding:6px 12px;cursor:pointer;font:inherit}
-.toggle button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
-.toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0 14px}
-svg.chart{width:100%;height:auto;display:block;font-family:var(--body)}
-svg.chart text{fill:var(--ink-2);font-size:12px}
+main .wrap{padding-block:48px 96px}
+main section{min-width:0}
+main section+section{margin-top:96px;border-top:1px solid var(--ink);padding-top:20px}
+#pattern{--surface:var(--panel-2);background:var(--panel-2);box-shadow:0 0 0 100vmax var(--panel-2);clip-path:inset(0 -100vmax);border-top:0;padding-block:56px 72px}
+.block{margin-top:44px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
+.fig{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:48px;align-items:start;margin-top:28px}
+.fig.even{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+.aside{font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+.aside p{margin:0 0 10px}
+
+/* ---------- components ---------- */
+.kicker{font:600 14px/1.3 var(--sans);color:var(--accent);margin:0 0 14px}
+/* the pilot: the one inverted band on the page, because it is what would actually happen */
+#pilot{background:var(--ink);color:var(--bg);box-shadow:0 0 0 100vmax var(--ink);clip-path:inset(0 -100vmax);padding-block:56px 60px;margin-top:64px}
+#pilot .kicker{color:var(--band-accent)}
+#pilot h2{color:var(--bg);margin-bottom:28px}
+.weeks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 32px}
+.weeks li{border-top:2px solid var(--band-accent);padding-top:14px}
+.weeks .wk{display:block;font:600 13px/1 var(--sans);color:color-mix(in srgb,var(--bg) 70%,var(--ink))}
+.weeks .wk b{display:block;font:600 56px/1 var(--sans);font-variant-numeric:tabular-nums lining-nums;color:var(--band-accent);margin-top:6px}
+.weeks h3{color:var(--bg);font-size:19px;margin:14px 0 6px}
+.weeks p{margin:0;font-size:15px;line-height:1.5;color:color-mix(in srgb,var(--bg) 85%,var(--ink))}
+#pilot .foot{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;margin-top:40px;padding-top:20px;border-top:1px solid color-mix(in srgb,var(--bg) 25%,var(--ink));font-size:15px;color:color-mix(in srgb,var(--bg) 85%,var(--ink))}
+#pilot .foot p{margin:0;max-width:52ch}
+#pilot .btn{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+#pilot .btn:hover{background:color-mix(in srgb,var(--bg) 85%,var(--ink))}
+#pilot .btn:focus-visible{outline-color:var(--band-accent)}
+.whoami{border-block:1px solid var(--rule);padding:14px 0 16px;margin:0 0 24px;max-width:46em}
+.whoami .label{font:600 13px/1.3 var(--sans);color:var(--ink-3);margin:0 0 6px}
+.whoami .says{font:400 18px/1.5 var(--serif);color:var(--ink);margin:0;max-width:none}
+.whoami .says strong{font-weight:600}
+.whoami .next{display:flex;align-items:center;gap:10px 18px;flex-wrap:wrap;margin-top:12px;font-size:15px;color:var(--ink-2)}
+.whoami .next p{margin:0}
+/* ledger: key figures as ruled rows, number left, label + note right */
+.tiles{display:grid;grid-template-columns:fit-content(14rem) minmax(0,1fr);column-gap:28px;max-width:760px;margin-top:32px;border-top:1px solid var(--ink)}
+.tile{grid-column:1/-1;display:grid;grid-template-columns:subgrid;row-gap:3px;padding:14px 0 15px;border-bottom:1px solid var(--rule);align-items:baseline}
+.tile .v{grid-column:1;grid-row:1/3;font:600 40px/1 var(--sans);font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.01em;color:var(--ink);align-self:start}
+.tile.txt .v{font-size:21px;line-height:1.2;letter-spacing:0}
+.tile .k{grid-column:2;grid-row:1;font:600 15px/1.35 var(--sans);color:var(--ink)}
+.tile .d{grid-column:2;grid-row:2;font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:24px 0 8px}
+.toggle{display:inline-flex;border:1px solid var(--ink);border-radius:3px;overflow:hidden}
+.toggle button{min-height:40px;padding:0 14px;background:transparent;color:var(--ink);border:0;font:500 14px/1 var(--sans);cursor:pointer}
+.toggle button+button{border-left:1px solid var(--ink)}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.toggle button:focus-visible{outline-offset:-4px;outline-color:var(--accent)}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;font:600 15px/1 var(--sans);border-radius:3px;background:var(--ink);color:var(--bg);text-decoration:none;border:1px solid var(--ink);cursor:pointer}
+.btn:hover{background:var(--ink-2);border-color:var(--ink-2);color:var(--bg)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.6;cursor:wait}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2);margin:0 0 10px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:7px;vertical-align:-1px;background:var(--c)}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font:13px/1.4 var(--sans);padding:6px 9px;border-radius:2px;max-width:260px;z-index:20;opacity:0;transition:opacity .08s}
+.tip b{font-weight:600}
+/* tables: ink rule under the header and at the close, hairlines between rows */
+table{border-collapse:collapse;width:100%;font:14px/1.45 var(--sans);border-bottom:1px solid var(--ink)}
+th,td{text-align:left;padding:8px 10px;vertical-align:top}
+th{font:600 12.5px/1.3 var(--sans);letter-spacing:.01em;color:var(--ink-2);border-bottom:1px solid var(--ink);vertical-align:bottom}
+td{border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}
+th:first-child,td:first-child{padding-left:0}
+th:last-child,td:last-child{padding-right:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums lining-nums}
+td.n{white-space:nowrap}
+td.cut{font:13px/1.45 var(--mono)}
+tr.hl td{background:color-mix(in srgb,var(--accent) 8%,transparent);font-weight:600}
+.tablewrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;position:relative}
+.scrollwrap{position:relative}
+.scrollwrap .hint{display:none;font:500 12.5px/1 var(--sans);color:var(--ink-3);margin:0 0 6px}
+.scrollwrap.scrollable .hint{display:flex;justify-content:flex-end}
+.scrollwrap.scrollable::after{content:"";position:absolute;top:19px;right:0;bottom:0;width:36px;pointer-events:none;background:linear-gradient(to right,transparent,var(--surface));transition:opacity .15s}
+.scrollwrap.scrollable.at-end::after{opacity:0}
+.chip{display:inline-block;font:600 12.5px/1.3 var(--sans);text-transform:lowercase;color:var(--ink-3);white-space:nowrap}
+.chip::first-letter{text-transform:uppercase}
+.chip.sig{color:var(--good)}
+.chip.ns{color:var(--ink-3)}
+.chip.up{color:var(--accent)}
+.chip.safety{color:var(--critical)}
+/* quotes: customer words in the serif, attribution in the sans */
+.quote{font:16px/1.5 var(--serif);color:var(--ink);padding:12px 0;border-top:1px solid var(--rule)}
+.quote:first-child{border-top:0}
+.quote mark,.result .in mark{background:color-mix(in srgb,var(--s4) 30%,transparent);color:inherit;padding:0 2px}
+.quote .qh{display:block;font:400 13.5px/1.4 var(--sans);color:var(--ink);margin-bottom:4px}
+.quote .who{display:block;font:400 12.5px/1.4 var(--sans);color:var(--ink-3);margin-top:4px}
+.conf{display:inline-block;width:54px;height:6px;background:var(--rule);vertical-align:middle;margin-right:6px;overflow:hidden}
+.conf i{display:block;height:100%;background:var(--s1)}
+details{border-top:1px solid var(--rule)}
+details>summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:center;min-height:44px;padding:6px 0;font:600 15px/1.35 var(--sans)}
+details>summary::-webkit-details-marker{display:none}
+details>summary>:first-child{flex:1}
+details>summary::after{content:"+";font:400 20px/1 var(--sans);color:var(--ink-2);width:14px;text-align:center}
+details[open]>summary::after{content:"−"}
+details>summary:hover{color:var(--accent)}
+details.more{margin-top:20px;border-bottom:1px solid var(--rule)}
+details.more[open]{padding-bottom:16px}
+details.more>summary{font-size:15px}
+.modes{border-bottom:1px solid var(--rule)}
+.modes details>summary{font-weight:400}
+.modes details[open]{padding-bottom:6px}
+.modes-head{display:flex;justify-content:space-between;font:600 12.5px/1.3 var(--sans);color:var(--ink-2);padding:0 0 8px;border-bottom:1px solid var(--ink)}
+.modes-head b{font-weight:600}
+.modes-head+.modes details:first-child{border-top:0}
+/* try it: the one boxed surface on the page, because it is the one you type into */
+.trybox{--surface:var(--panel);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:24px 28px;margin-top:24px}
+.trybox label{font:600 13.5px/1.4 var(--sans);color:var(--ink-2)}
+textarea{width:100%;font:16px/1.5 var(--sans);padding:10px 12px;border:1px solid var(--rule-strong);border-radius:3px;background:var(--bg);color:var(--ink);resize:vertical;margin-top:10px}
+textarea:focus-visible{outline-offset:1px}
+.examples{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.examples button{min-height:40px;padding:0 12px;font:500 14px/1 var(--sans);border:1px solid var(--rule-strong);background:transparent;color:var(--ink);border-radius:3px;cursor:pointer}
+.examples button:hover{border-color:var(--ink)}
+.result{animation:fade .15s ease-out}
+.result .eg{max-width:none;font:600 12.5px/1.3 var(--sans);color:var(--ink-2);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.result .cat{font:500 13.5px/1.3 var(--sans);color:var(--ink-3)}
+.result .mode{font:600 25px/1.2 var(--sans);margin:4px 0 6px}
+.result .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.result .route{display:inline-block;font:600 12.5px/1 var(--sans);padding:6px 8px;border-radius:2px}
+.result .route::first-letter{text-transform:uppercase}
+.result .route.auto{background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--good)}
+.result .route.review{background:color-mix(in srgb,var(--warn) 22%,transparent);color:var(--ink)}
+.result .in{white-space:pre-wrap;font:16px/1.5 var(--serif);color:var(--ink);border-block:1px solid var(--rule);padding:10px 0;margin:12px 0}
+/* plan */
+#plan-table td:first-child{font-weight:600}
+/* method: a sequence under one rule, not five cards */
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px;border-top:1px solid var(--ink);padding-top:16px;margin-top:28px}
+.step h3{font-size:16px;margin-bottom:4px}
+.step .sn{display:block;font:600 32px/1 var(--sans);font-variant-numeric:tabular-nums;color:var(--ink-3);margin-bottom:12px}
+.step .io{font:600 12.5px/1.3 var(--sans);color:var(--ink-3);margin-bottom:8px}
+.step p{font-size:14px;line-height:1.5;color:var(--ink-2);margin:0}
+#data{border-top:0;padding-top:0}
+#errors,#errors-more{max-width:760px}
+.flag{font:400 20px/1.4 var(--serif);border-top:2px solid var(--critical);padding-top:14px;max-width:none;margin:0}
+.flag strong{font-weight:600}
+.limits{padding-left:18px;margin:0}
+.limits li{margin-bottom:8px;max-width:72ch}
+footer{border-top:1px solid var(--ink);padding-block:22px 44px;color:var(--ink-2);font-size:13.5px}
+footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
+
+/* ---------- charts (drawn at container pixel width by app.js) ---------- */
+svg.chart{width:100%;height:auto;display:block;font-family:var(--sans);overflow:visible}
+svg.chart text{fill:var(--ink-2);font-size:12.5px;font-variant-numeric:tabular-nums lining-nums}
 svg.chart .lbl{fill:var(--ink);font-size:13px}
-svg.chart .val{fill:var(--ink);font-size:12px;font-family:var(--mono)}
+svg.chart .val{fill:var(--ink);font-size:12.5px;font-weight:600}
+svg.chart .end{font-weight:600}
 svg.chart .grid{stroke:var(--rule);stroke-width:1}
-svg.chart .axis{stroke:var(--rule-strong);stroke-width:1}
+svg.chart .axis{stroke:var(--ink);stroke-width:1}
 svg.chart .bar{fill:var(--s1)}
 svg.chart .bar.dim{fill:var(--seq-2)}
 svg.chart .bar.kw{fill:var(--ink-3)}
-svg.chart .line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-svg.chart .dot{stroke:var(--panel);stroke-width:2}
-svg.chart .marker{stroke:var(--s2);stroke-dasharray:3 3;stroke-width:1.5}
+svg.chart .line{fill:none;stroke-width:2.25;stroke-linejoin:round;stroke-linecap:round}
+svg.chart .dot{stroke:none}
+svg.chart .marker{stroke:var(--ink-3);stroke-dasharray:3 3;stroke-width:1}
+svg.chart .marker-lbl{fill:var(--ink-2)}
 svg.chart .hit{fill:transparent}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:6px}
-.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
-.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font:12px/1.35 var(--body);padding:6px 9px;border-radius:4px;max-width:260px;z-index:20;opacity:0;transition:opacity .08s}
-.tip b{font-family:var(--mono);font-weight:500}
-table{border-collapse:collapse;width:100%;font-size:14px}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-th{font:500 12px/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
-td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-td.n{font-family:var(--mono);font-size:13px}
-.tablewrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;position:relative}
-.scrollwrap{position:relative}
-.scrollwrap .hint{display:none;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
-.scrollwrap.scrollable .hint{display:flex;justify-content:flex-end;gap:6px}
-.scrollwrap.scrollable::after{content:"";position:absolute;top:22px;right:0;bottom:0;width:36px;pointer-events:none;background:linear-gradient(to right,transparent,var(--panel));transition:opacity .15s}
-.scrollwrap.scrollable.at-end::after{opacity:0}
-.chip{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.04em;padding:4px 7px;border-radius:3px;border:1px solid var(--rule-strong);color:var(--ink-2);vertical-align:middle}
-.chip.safety{border-color:var(--critical);color:var(--critical)}
-.chip.sig{border-color:var(--good);color:var(--good)}
-.chip.ns{border-color:var(--rule-strong);color:var(--ink-3)}
-.chip.up{border-color:var(--s2);color:var(--s2)}
-.quote{border-left:3px solid var(--rule-strong);padding:6px 12px;margin:8px 0;color:var(--ink-2);font-size:14px}
-.quote mark{background:color-mix(in srgb,var(--s4) 30%,transparent);color:inherit;padding:0 2px;border-radius:2px}
-.quote .who{display:block;font:500 11px/1.4 var(--mono);color:var(--ink-3);margin-top:3px;letter-spacing:.03em}
-details{border-top:1px solid var(--rule);padding:8px 0}
-details summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
-details summary::-webkit-details-marker{display:none}
-details summary::after{content:"+";font-family:var(--mono);color:var(--ink-3)}
-details[open] summary::after{content:"–"}
-.modes{display:grid;gap:0}
-.modes-head{display:flex;justify-content:space-between;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding:0 0 8px}
-.modes-head b{font-weight:500;color:var(--ink-3)}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;counter-reset:s}
-.step{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:14px;position:relative}
-.step h3{font:600 15px/1.3 var(--body);margin:0 0 4px}
-.step p{font-size:13px;color:var(--ink-2);margin:0}
-.step .io{font:500 11px/1.3 var(--mono);color:var(--ink-3);letter-spacing:.03em;margin-bottom:8px}
-.callout{border:1px solid var(--rule-strong);border-left:4px solid var(--accent);border-radius:6px;padding:14px 18px;background:var(--panel)}
-.callout p{margin:0}
-.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-textarea{width:100%;font:15px/1.5 var(--body);padding:10px 12px;border:1px solid var(--rule-strong);border-radius:5px;background:var(--panel);color:var(--ink);resize:vertical;margin-top:8px}
-textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.examples{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.examples button{font:13px/1.2 var(--body);padding:6px 10px;border:1px solid var(--rule-strong);background:var(--panel-2);color:var(--ink-2);border-radius:4px;cursor:pointer}
-.examples button:hover{color:var(--ink);border-color:var(--ink-3)}
-.result .mode{font:600 24px/1.15 var(--display);margin:2px 0 4px}
-.result .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0}
-.result .route{font:600 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:4px}
-.result .route.auto{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
-.result .route.review{background:color-mix(in srgb,var(--warn) 25%,transparent);color:var(--ink)}
-.result .in{white-space:pre-wrap;font-size:14px;color:var(--ink-2);border-left:3px solid var(--rule-strong);padding:6px 12px;margin:10px 0}
-.result .in mark{background:color-mix(in srgb,var(--s4) 35%,transparent);color:var(--ink);padding:0 2px;border-radius:2px}
-.btn:disabled{opacity:.6;cursor:wait}
-.btn{display:inline-block;font:600 14px/1 var(--body);padding:10px 16px;border-radius:5px;background:var(--accent);color:var(--accent-ink);text-decoration:none;border:1px solid var(--accent)}
-.btn:hover{filter:brightness(1.08)}
-.btn.ghost{background:transparent;color:var(--accent)}
-.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.limits li{margin-bottom:6px}
-footer{border-top:1px solid var(--rule);padding-block:26px 40px;color:var(--ink-2);font-size:13px}
-footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
-.conf{display:inline-block;width:54px;height:6px;background:var(--panel-2);border-radius:3px;vertical-align:middle;margin-right:6px;overflow:hidden}
-.conf i{display:block;height:100%;background:var(--s1)}
-.hm{display:grid;gap:2px;font-size:10px}
-.loading{color:var(--ink-3);font-family:var(--mono);font-size:13px}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow .24s ease-out}
+@keyframes grow{from{transform:scaleX(0)}}
+@keyframes fade{from{opacity:0}}
 
-.memo{max-width:760px;margin:0 auto;padding:36px 20px 80px}
-.memo h1{font-size:clamp(28px,4.5vw,38px);margin-bottom:18px}
-.memo h2{margin-top:38px;font-size:23px}.memo h3{margin-top:22px}
-.memo p,.memo li{max-width:70ch;font-size:15.5px}
-.memo table{margin:12px 0 18px;display:block;overflow-x:auto;white-space:nowrap}
-.memo td,.memo th{white-space:normal;min-width:90px}
-.memo hr{border:0;border-top:1px solid var(--rule);margin:22px 0}
-.memo blockquote{border-left:3px solid var(--rule-strong);margin:0;padding:4px 14px;color:var(--ink-2)}
+/* ---------- responsive ---------- */
+@media (max-width:1000px){
+  /* the section nav becomes one horizontally scrolling row rather than wrapping (keeps the sticky header short) */
+  nav.sections{flex:1;min-width:0;margin-left:0;gap:18px;overflow-x:auto;scrollbar-width:none;padding-right:24px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent)}
+  nav.sections::-webkit-scrollbar{display:none}
+}
+@media (max-width:900px){
+  .fig,.fig.even{grid-template-columns:minmax(0,1fr);gap:28px}
+  .steps{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .trybox{grid-template-columns:minmax(0,1fr);gap:24px}
+  #try-result{border-top:1px solid var(--rule);padding-top:18px}
+}
+@media (max-width:760px){
+  .wrap{padding-inline:16px}
+  .brand{min-height:40px}
+  .disclose a,footer a{padding-block:13px}  /* inline padding: bigger tap area, same line height */
+  .disclose .wrap{padding-block:6px}
+  .bar{gap:18px;min-height:44px}
+  .brand{font-size:17px;gap:8px}
+  .brand .mark{width:18px;height:18px}
+  nav.sections a{min-height:42px}
+  .grid2{grid-template-columns:minmax(0,1fr);gap:36px}
+  main .wrap{padding-block:32px 64px}
+  main section+section{margin-top:64px}
+  #pattern{padding-block:40px 52px}
+  #pilot{padding-block:40px 44px;margin-top:48px}
+  .weeks{grid-template-columns:minmax(0,1fr);gap:0}
+  .weeks li{display:grid;grid-template-columns:64px minmax(0,1fr);column-gap:14px;border-top-width:1px;padding:16px 0 18px}
+  .weeks .wk{grid-row:span 2}
+  .weeks .wk b{font-size:44px}
+  .weeks h3{margin:0 0 4px}
+  h1{font-size:34px;line-height:1.1}
+  h2{font-size:25px;line-height:1.2}
+  h3{font-size:16px}
+  .lede{font-size:18px}
+  body{line-height:1.55}
+  .trybox{padding:18px 16px}
+  #seed-table td:not(.n),#scan-table td:not(.n),#confusions td:not(.n){min-width:9rem}
+}
+@media (max-width:600px){
+  .tiles{grid-template-columns:fit-content(8.5rem) minmax(0,1fr);column-gap:16px}
+  .tile .v{font-size:32px}
+  .tile.txt .v{font-size:19px;grid-column:1/-1;grid-row:2;margin:2px 0}
+  .tile.txt .k{grid-column:1/-1;grid-row:1}
+  .tile.txt .d{grid-column:1/-1;grid-row:3}
+  table{font-size:13.5px}
+  /* the action plan stacks: each cause becomes a labelled block */
+  #plan-table thead{display:none}
+  #plan-table,#plan-table tbody,#plan-table tr,#plan-table td{display:block}
+  #plan-table tr{padding:12px 0;border-bottom:1px solid var(--rule)}
+  #plan-table tr:last-child{border-bottom:0}
+  #plan-table td{border:0;padding:3px 0;display:grid;grid-template-columns:6.5rem minmax(0,1fr);gap:12px}
+  #plan-table td::before{content:attr(data-label);font:600 12.5px/1.45 var(--sans);color:var(--ink-2);padding-top:1px}
+  #plan-table td:first-child{display:block;font-size:15px;padding-bottom:6px}
+  #plan-table td:first-child::before{content:none}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- memo: the author's prose, so it is set in the serif; tables stay in the sans ---------- */
+.memo{max-width:760px;margin:0 auto;padding:44px 24px 96px;font:18px/1.6 var(--serif)}
+.memo h1{font-size:44px;line-height:1.08;margin:0 0 22px}
+.memo h2{font-size:28px;line-height:1.2;margin:64px 0 14px;padding-top:18px;border-top:1px solid var(--ink)}
+.memo h3{font:600 18px/1.35 var(--sans);margin:36px 0 10px}
+.memo p,.memo li{max-width:68ch}
+.memo p{margin:0 0 16px}
+.memo ul,.memo ol{padding-left:22px;margin:0 0 18px}
+.memo li{margin-bottom:6px}
 .memo strong{font-weight:600}
+.memo a{text-decoration-color:var(--rule-strong)}
+.memo code{font:.85em var(--mono)}
+.memo hr{border:0;border-top:1px solid var(--rule);margin:28px 0}
+.memo blockquote{margin:0 0 16px;padding-left:20px;color:var(--ink-2);font-style:italic}
+/* wide tables scroll inside the column; the edge shadows appear only while there is more to scroll */
+.memo table{font:14px/1.45 var(--sans);font-variant-numeric:tabular-nums lining-nums;margin:18px 0 28px;display:block;overflow-x:auto;white-space:nowrap;border-bottom:0;
+  background:linear-gradient(to right,var(--bg) 30%,transparent) left/40px 100% no-repeat local,linear-gradient(to left,var(--bg) 30%,transparent) right/40px 100% no-repeat local,
+  linear-gradient(to right,color-mix(in srgb,var(--ink) 14%,transparent),transparent) left/12px 100% no-repeat scroll,linear-gradient(to left,color-mix(in srgb,var(--ink) 14%,transparent),transparent) right/12px 100% no-repeat scroll}
+.memo table tbody tr:last-child td{border-bottom:1px solid var(--ink)}
+.memo td,.memo th{white-space:normal;min-width:90px}
+.memo td:first-child,.memo th:first-child{min-width:140px}
+.toc{font:15px/1.4 var(--sans);margin:0}  /* framed by the memo's own <hr> above and the first section rule below */
+.toc .toc-h{font:600 12.5px/1.3 var(--sans);color:var(--ink-2);margin:0 0 8px}
+.toc ul{list-style:none;margin:0;padding:0;columns:2;column-gap:32px}
+.toc li{break-inside:avoid;margin:0 0 6px}
+.toc li ul{columns:1;margin:6px 0 0 16px;font-size:14px}
+.toc a{text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--accent);text-decoration:underline}
+.toc li ul a{color:var(--ink-2)}
+@media (max-width:760px){
+  .memo{padding:28px 16px 64px;font-size:17px}
+  .memo h1{font-size:31px;line-height:1.12}
+  .memo h2{font-size:23px;margin-top:48px}
+  .memo h3{font-size:17px}
+  .toc ul{columns:1}
+  .toc a{display:inline-block;padding:4px 0}
+}
 </style></head><body>
-<header class="top"><div class="wrap"><a class="brand" href="./">← Credit Signal</a><span class="disclose"><b>Not McMaster-Carr data.</b> Public reviews + synthetic credits · <a href="./">Live demo</a></span></div></header>
-<main><div class="memo"><h1>Credit Signal — decision memo</h1>
+<header class="top">
+  <p class="disclose"><span class="wrap"><b>Not McMaster-Carr data.</b> Public reviews + synthetic credits · <a href="./">Live demo</a></span></p>
+  <div class="wrap bar"><a class="brand" href="./">← Credit Signal</a></div>
+</header>
+<main><div class="memo"><h1 id="credit-signal-decision-memo">Credit Signal — decision memo</h1>
 <p><strong>Subject:</strong> Finding the root causes behind customer credits with a language model, and what it would take to run it for real<br />
 <strong>Prepared by:</strong> Muireadhach Currie · September 2026<br />
 <strong>Status:</strong> Portfolio prototype on public and disclosed synthetic data. Not McMaster-Carr data.<br />
-<strong>Built:</strong> Deliberately plain — a static demo with no runtime model calls and no framework. The analysis runs once, the page serves the results, and it deploys anywhere static files do. Every design choice is one I can explain and defend; that was a constraint I set for myself.</p>
+<strong>Built:</strong> Deliberately plain — a static demo with no framework, plus one small throttled endpoint behind the Try-it box. The analysis runs once, the page serves the results, and it deploys anywhere static files do. Every design choice is one I can explain and defend; that was a constraint I set for myself.</p>
 <hr />
-<h2>1. Summary</h2>
+<nav class="toc" aria-label="Contents"><p class="toc-h">Contents</p><ul><li><a href="#1-summary">1. Summary</a></li><li><a href="#2-the-problem-from-the-customers-side">2. The problem, from the customer's side</a></li><li><a href="#3-what-was-built">3. What was built</a></li><li><a href="#4-data-and-what-it-can-and-cannot-prove">4. Data, and what it can and cannot prove</a></li><li><a href="#5-findings">5. Findings</a><ul><li><a href="#51-ranking-by-refund-and-ranking-by-customer-impact-disagree">5.1 Ranking by refund and ranking by customer impact disagree</a></li><li><a href="#52-the-pattern-keyword-search-misses">5.2 The pattern keyword search misses</a></li><li><a href="#53-coverage-vs-precision">5.3 Coverage vs. precision</a></li><li><a href="#54-accuracy-three-ways-and-what-hand-labeling-changed">5.4 Accuracy, three ways — and what hand-labeling changed</a></li><li><a href="#55-cost">5.5 Cost</a></li></ul></li><li><a href="#6-what-i-would-do-about-three-of-these-causes">6. What I would do about three of these causes</a></li><li><a href="#7-how-to-run-this-on-real-data">7. How to run this on real data</a></li><li><a href="#8-limitations">8. Limitations</a></li></ul></nav>
+<h2 id="1-summary">1. Summary</h2>
 <p>Customer credits are a symptom log. Each one carries a coarse reason code and a sentence of free text that says what actually happened. At volume, nobody reads the sentence, so the same failure gets credited repeatedly instead of fixed once.</p>
-<p>I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 15-item taxonomy written from shop experience, joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in <strong>downtime</strong> rather than what was refunded. Low-confidence results go to a person.</p>
-<p>Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 256 failure-mode × metadata cells ranked the primary seeded pattern <strong>#1</strong>, at <strong>3.6× lift</strong> (p &lt; 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Against synthetic ground truth the models score 96–99%. The number that matters is agreement with a careful human on real reviews. I labeled 200 records under the original taxonomy and got <strong>72%</strong> on the reference model (Opus 5) — and found that a third of real complaints had no home in a taxonomy written from a parts-receiving point of view. I revised it, wrote down the boundary rules, and labeled <strong>100 fresh reviews no one had seen</strong>: <strong>78%</strong> with the classifier frozen before I labeled, <strong>85%</strong> with the written guideline, <strong>97%</strong> on the records I was sure of. Real language is harder than clean text; model tier matters on it (Haiku 67%, Sonnet 76%, Opus 85%); and a written labeling guideline is worth seven points on the model that can follow one. Cost: <strong>$6.23 per thousand records</strong> on the model I would deploy.</p>
+<p>I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 20-item taxonomy (written from shop experience, then revised once against real reviews), joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in <strong>downtime</strong> rather than what was refunded. Low-confidence results go to a person.</p>
+<p>Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 247 failure-mode × metadata cells ranked the primary seeded pattern <strong>#1</strong>, at <strong>3.6× lift</strong> (p &lt; 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Against synthetic ground truth the models score 96–99%. The number that matters is agreement with a careful human on real reviews. I labeled 200 records under the original taxonomy and got <strong>72%</strong> on the reference model (Opus 5) — and found that a third of real complaints had no home in a taxonomy written from a parts-receiving point of view. I revised it, wrote down the boundary rules, and labeled <strong>100 fresh reviews no one had seen</strong>: <strong>78%</strong> with the classifier frozen before I labeled, <strong>85%</strong> with the written guideline, <strong>97%</strong> on the records I was sure of. Real language is harder than clean text; model tier matters on it (Haiku 67%, Sonnet 76%, Opus 85%); and a written labeling guideline is worth seven points on the model that can follow one. Cost: <strong>$6.23 per thousand records</strong> on the model I would deploy.</p>
 <p><strong>Recommendation if this were real:</strong> a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, run on the reference-tier model (the extra $4 per thousand records buys nine points of accuracy on real language), with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.</p>
-<h2>2. The problem, from the customer's side</h2>
+<h2 id="2-the-problem-from-the-customers-side">2. The problem, from the customer's side</h2>
 <p>A $40 credit on a damaged shaft collar is a rounding error on the P&amp;L. The four hours a line sat idle waiting for the reship is not — and it is what the customer remembers. Running a service bureau, I placed those orders and took those deliveries. The credit never captured the cost.</p>
 <p>Reason codes ("damaged", "wrong item") cannot distinguish a packaging spec that chews threads from a carrier lane that dents boxes from a warehouse that ships aged o-rings. The distinction lives in the note. That is the gap this closes.</p>
-<h2>3. What was built</h2>
+<h2 id="3-what-was-built">3. What was built</h2>
 <table>
 <thead>
 <tr>
@@ -195,7 +352,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tr>
 <tr>
 <td>Extract</td>
-<td>One of 15 failure modes, a calibrated confidence, a verbatim evidence quote, and where in the chain it likely originated. Structured output, validated on every record.</td>
+<td>One of 20 failure modes, a calibrated confidence, a verbatim evidence quote, and where in the chain it likely originated. Structured output, validated on every record.</td>
 <td>Yes</td>
 </tr>
 <tr>
@@ -216,17 +373,17 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tbody>
 </table>
 <p>The taxonomy (thread damage, out-of-tolerance, wrong part in the right bag, short count, bent long stock, aged elastomers, corrosion on arrival, …) is mine, from years of receiving parts. It is in <code>taxonomy/failure_modes.yaml</code> with the phrasings customers actually use.</p>
-<h2>4. Data, and what it can and cannot prove</h2>
+<h2 id="4-data-and-what-it-can-and-cannot-prove">4. Data, and what it can and cannot prove</h2>
 <p><strong>Real:</strong> 2,000 one- and two-star reviews of industrial products from a public academic dataset (Amazon Reviews 2023, Industrial &amp; Scientific, UCSD). Genuine language; no credit amounts, carriers, or warehouses.</p>
 <p><strong>Synthetic:</strong> 1,500 credit records with product class, packaging spec, carrier, origin DC, date, and credit amount, mimicking the structure a distributor holds. Notes written by a model that saw only the failure mode and product class. Two patterns seeded deliberately:</p>
 <ul>
 <li><strong>Seed A.</strong> Fasteners in bulk poly bags (PB-2) after a May spec change: thread damage at ~4× the base rate. Mechanism: large fasteners loose in a bulk bag chew each other's threads in transit.</li>
-<li><strong>Seed B.</strong> Elastomers and consumables from DC-4: aged-stock failures at ~3×. Mechanism: stock rotation.</li>
+<li><strong>Seed B.</strong> Elastomers and consumables from DC-4: aged-stock failures weighted 3× at generation. Mechanism: stock rotation. Aged stock is already the most common failure in that class, so the lift that can actually be measured is only ~1.5×.</li>
 </ul>
 <p>A third cut (Carrier-C transit damage) was given only a weak nudge, to see whether the method would correctly report "not significant."</p>
 <p><strong>What this proves:</strong> the method recovers a known signal from language alone. <strong>What it does not prove:</strong> what any real credit dataset contains. The synthetic layer is labeled as synthetic everywhere it appears.</p>
-<h2>5. Findings</h2>
-<h3>5.1 Ranking by refund and ranking by customer impact disagree</h3>
+<h2 id="5-findings">5. Findings</h2>
+<h3 id="51-ranking-by-refund-and-ranking-by-customer-impact-disagree">5.1 Ranking by refund and ranking by customer impact disagree</h3>
 <table>
 <thead>
 <tr>
@@ -240,74 +397,74 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </thead>
 <tbody>
 <tr>
-<td>Premature failure in service</td>
-<td>118</td>
-<td>$13,545</td>
-<td>#3</td>
-<td><strong>#1</strong></td>
-<td>$710k</td>
+<td>Functional failure (first use or early in service)</td>
+<td>281</td>
+<td>$30,821</td>
+<td>#1</td>
+<td>#1</td>
+<td>$821k</td>
 </tr>
 <tr>
 <td>Wrong part in the right bag</td>
-<td>171</td>
-<td>$16,015</td>
+<td>170</td>
+<td>$15,850</td>
 <td>#2</td>
 <td>#2</td>
-<td>$484k</td>
+<td>$478k</td>
 </tr>
 <tr>
 <td>Material or hardness nonconformance</td>
-<td>102</td>
-<td>$11,795</td>
+<td>92</td>
+<td>$10,519</td>
 <td>#6</td>
 <td><strong>#3</strong></td>
-<td>$444k</td>
+<td>$411k</td>
 </tr>
 <tr>
 <td>Short count or missing components</td>
 <td>153</td>
 <td>$11,945</td>
-<td>#5</td>
+<td>#4</td>
 <td>#4</td>
 <td>$309k</td>
 </tr>
 <tr>
-<td>Assembly or mechanism failure on first use</td>
-<td>153</td>
-<td>$16,944</td>
-<td><strong>#1</strong></td>
-<td>#5</td>
-<td>$308k</td>
-</tr>
-<tr>
 <td>Bent or crushed long stock</td>
-<td>35</td>
-<td>$9,343</td>
-<td>#10</td>
-<td><strong>#6</strong></td>
-<td>$168k</td>
+<td>36</td>
+<td>$9,686</td>
+<td>#7</td>
+<td><strong>#5</strong></td>
+<td>$181k</td>
 </tr>
 <tr>
 <td>Aged or degraded elastomers &amp; consumables</td>
-<td>126</td>
-<td>$5,138</td>
-<td>#13</td>
-<td><strong>#7</strong></td>
-<td>$127k</td>
+<td>112</td>
+<td>$4,444</td>
+<td>#14</td>
+<td><strong>#6</strong></td>
+<td>$116k</td>
+</tr>
+<tr>
+<td>Out-of-tolerance dimensions</td>
+<td>94</td>
+<td>$12,983</td>
+<td>#3</td>
+<td>#7</td>
+<td>$109k</td>
 </tr>
 <tr>
 <td>Out of straight, flat, or round</td>
-<td>57</td>
-<td>$9,603</td>
+<td>54</td>
+<td>$8,914</td>
 <td>#9</td>
 <td>#8</td>
-<td>$112k</td>
+<td>$105k</td>
 </tr>
 </tbody>
 </table>
-<p>Across 1,500 credits: $156k refunded, roughly $3.0M in estimated customer downtime at $500/hour. The ratio is the assumption to test first. At $250/hour the top three are unchanged and only positions 4 and 5 swap; at $1,500/hour nothing moves; at $0 (refund only) the list reverts to the refund column. The demo has the control, so nobody has to take my word for it.</p>
-<p>Downtime hours per mode are my estimate (<code>impact_weights.yaml</code>), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: wrong part in the bag, bent long stock, material nonconformance.</p>
-<h3>5.2 The pattern keyword search misses</h3>
+<p>Across 1,500 credits: $156k refunded, roughly $2.9M in estimated customer downtime at $500/hour. The ratio is the assumption to test first. At $250/hour the top five are unchanged and only positions 6 and 7 swap; at $1,500/hour nothing moves; at $0 (refund only) the list reverts to the refund column. The demo has the control, so nobody has to take my word for it.</p>
+<p>Downtime hours per mode are my estimate (<code>impact_weights.yaml</code>), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: material nonconformance, bent long stock, aged elastomers.</p>
+<h3 id="52-the-pattern-keyword-search-misses">5.2 The pattern keyword search misses</h3>
 <table>
 <thead>
 <tr>
@@ -339,10 +496,10 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tr>
 </tbody>
 </table>
-<p>The trend chart in the demo shows the step in May. Two things worth saying plainly. First, generic damage words appear in under 1% of these notes — customers describe symptoms ("wouldn't start the nut"), not categories. Second, a regex written <em>after</em> you know what to look for works fine; that is not a weakness of regex, it is the definition of the problem. The model checks all 15 modes at once with no hypothesis, and the blind scan below is the real test.</p>
-<p>"Damaged" matches dents, corrosion, kinked tube, and thread damage alike; the specific signal is diluted. <strong>The blind scan.</strong> Every failure mode × every packaging spec, carrier, and warehouse, within each product class: 256 cells, ranked by significance, with no one telling the scan where the seeds were. The seeded PB-2 cell ranked #1. After Bonferroni correction (p &lt; 0.0002), it was the <em>only</em> survivor — seven other cells looked interesting at p &lt; 0.01 and would have been chased on a smaller dataset. Stratifying by product class matters: without it, packaging just proxies product (long stock ships in crates; crates "cause" bent tube).</p>
-<p><strong>Seed B</strong> was seeded too weakly to matter (ground truth 1.5×) and the method correctly does not claim it: 1.3×, p = 0.07, rank 32 of 256. <strong>Carrier-C</strong> was given only a nudge (1.2×) and comes back 1.2×, p = 0.24 — not significant, which is the right answer. A method that only ever says "yes" is not a method.</p>
-<h3>5.3 Coverage vs. precision</h3>
+<p>The trend chart in the demo shows the step in May. Two things worth saying plainly. First, generic damage words appear in under 1% of these notes — customers describe symptoms ("wouldn't start the nut"), not categories. Second, a regex written <em>after</em> you know what to look for works fine; that is not a weakness of regex, it is the definition of the problem. The model checks all 20 modes at once with no hypothesis, and the blind scan below is the real test.</p>
+<p>"Damaged" matches dents, corrosion, kinked tube, and thread damage alike; the specific signal is diluted. <strong>The blind scan.</strong> Every failure mode × every packaging spec, carrier, and warehouse, within each product class: 247 cells, ranked by significance, with no one telling the scan where the seeds were. The seeded PB-2 cell ranked #1. After Bonferroni correction (p &lt; 0.0002), it was the <em>only</em> survivor — eight other cells looked interesting at p &lt; 0.01 and would have been chased on a smaller dataset. Stratifying by product class matters: without it, packaging just proxies product (long stock ships in crates; crates "cause" bent tube).</p>
+<p><strong>Seed B</strong> was seeded too weakly to matter (ground truth 1.5×) and the method correctly does not claim it: 1.4×, p = 0.03, rank 31 of 247 — short of the p &lt; 0.01 bar for the seeded checks and far short of the correction. <strong>Carrier-C</strong> was given only a nudge (1.2×) and comes back 1.2×, p = 0.24 — not significant, which is the right answer. A method that only ever says "yes" is not a method.</p>
+<h3 id="53-coverage-vs-precision">5.3 Coverage vs. precision</h3>
 <table>
 <thead>
 <tr>
@@ -355,22 +512,22 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 <tr>
 <td>≥ 0.5</td>
 <td>98%</td>
-<td>94.6%</td>
+<td>96.7%</td>
 </tr>
 <tr>
 <td>≥ 0.6</td>
 <td>94%</td>
-<td>96.4%</td>
+<td>97.4%</td>
 </tr>
 <tr>
 <td>≥ 0.7</td>
 <td>91%</td>
-<td>97.5%</td>
+<td>98.0%</td>
 </tr>
 <tr>
 <td>≥ 0.8</td>
-<td>80%</td>
-<td>99.5%</td>
+<td>81%</td>
+<td>99.3%</td>
 </tr>
 <tr>
 <td>≥ 0.9</td>
@@ -384,7 +541,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 <thead>
 <tr>
 <th>Threshold</th>
-<th>Auto-filed</th>
+<th>Auto-filed (Opus 5)</th>
 <th>Precision (Opus 5)</th>
 <th>Precision (Sonnet 5)</th>
 </tr>
@@ -410,8 +567,8 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tr>
 </tbody>
 </table>
-<p><em>(100 unseen reviews, taxonomy v2. Under v1 the same threshold of 0.7 auto-filed 39% at 90% — the taxonomy revision, not the model, is what moved this.)</em> Two things to take from that. The model's confidence is honest: where it says 0.8 on a real review, it is right 49 times in 50. And the review queue is real work — at 0.7, three in ten records go to a person. That is the correct design, not a failure of it; the reviewer sees a suggested mode and the evidence quote, so each review takes seconds, and every reviewed label feeds the next accuracy check. The reviewer sees the model's evidence quote and a suggested mode, which makes a review take seconds rather than a full read.</p>
-<h3>5.4 Accuracy, three ways — and what hand-labeling changed</h3>
+<p><em>(100 unseen reviews, taxonomy v2. Under v1 the same threshold of 0.7 auto-filed 39% at 90% — the taxonomy revision, not the model, is what moved this.)</em> Two things to take from that. The model's confidence is honest: where it says 0.8 on a real review, it is right 49 times in 50. And the review queue is real work — at 0.7, three in ten records go to a person. That is the correct design, not a failure of it; the reviewer sees a suggested mode and the evidence quote, so each review takes seconds, and every reviewed label feeds the next accuracy check.</p>
+<h3 id="54-accuracy-three-ways-and-what-hand-labeling-changed">5.4 Accuracy, three ways — and what hand-labeling changed</h3>
 <p><strong>The taxonomy revision.</strong> The first 200 labels put 34% of real reviews in "other / unclear" and my notes said "NOT LISTED" over and over. Customers could not tell "broke on first use" from "failed in week one" (merged into one mode with a timing field), and real complaints included whole categories a parts-receiving taxonomy never sees: the part works but does not do the job, the listing was wrong, the customer chose or misused it, it was not worth the price, it never arrived. Version 2 has 20 modes; on the next 100 reviews only 4 landed in "other." I also wrote the boundary rules down — eight of them, each from a real case — and put them in the classifier's instructions verbatim, so the model and the labeler draw the same lines.</p>
 <table>
 <thead>
@@ -434,7 +591,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tr>
 <tr>
 <td>Opus 5 vs. synthetic ground truth</td>
-<td>400</td>
+<td>250</td>
 <td>98.8% — agrees with Sonnet 96.8%</td>
 </tr>
 <tr>
@@ -506,7 +663,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </table>
 <p><em>(100 unseen reviews, written guideline.)</em> Where a careful human is sure, the reference model agrees; where the human is unsure, so is the model, and what remains is real ambiguity — a part that broke versus one that fell short of its rating; aged rubber versus rubber that never sealed. Top disagreements: functional failure ↔ material nonconformance (2), aged elastomers ↔ performance shortfall (2), performance shortfall ↔ customer selection (2).</p>
 <p>Two lessons that changed decisions. On synthetic text all three models look interchangeable (96–99%); on real language they are not — 67 → 76 → 85. And the written guideline moved Opus from 78% to 85% while leaving Sonnet flat: nuanced rules only pay off on the model that can follow them. The cheap-model question is answered by real data, not clean data. These are neighbors an experienced reviewer would also debate (corrosion on arrival vs. plating failure; wrong part vs. thread mismatch).</p>
-<h3>5.5 Cost</h3>
+<h3 id="55-cost">5.5 Cost</h3>
 <table>
 <thead>
 <tr>
@@ -534,8 +691,8 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </tbody>
 </table>
 <p>Whole project: $46.66 across two taxonomy versions, three full classification passes, and a discarded run. The production decision: Opus costs $200 a month more at 50,000 credits and is nine points more accurate on real language. That is not a close call. One lesson worth the price: the cheapest model per token (Haiku 4.5) will not cache a prompt under 4,096 tokens, so it cost <em>more per record</em> than Sonnet with caching. Cheaper per token is not cheaper per record.</p>
-<h2>6. What I would do with the top three causes</h2>
-<p><em>Illustrative, based on the synthetic findings — the shape of the action matters more than the specifics.</em></p>
+<h2 id="6-what-i-would-do-about-three-of-these-causes">6. What I would do about three of these causes</h2>
+<p><em>Illustrative, based on the synthetic findings — the shape of the action matters more than the specifics. The DC-4 row acts on a suggestive signal, not a significant one (§5.2); a FIFO audit is cheap enough to be worth it anyway.</em></p>
 <table>
 <thead>
 <tr>
@@ -568,7 +725,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 </table>
 <p>Targets I would put on the table, as assumptions for the pilot to correct rather than promises: thread-damage credits on the affected fastener SKUs down by half within eight weeks of the packaging change; DC-4's aged-consumable rate down to the other DCs' level within one stock-rotation cycle; wrong-part credits down 30% on the top 50 SKUs once scan-verify is live. If a target is missed, the interesting question is why, and the evidence quotes are where to look.</p>
 <p>North-star metric for the program: <strong>credit recurrence rate</strong> — the share of credits this quarter whose cause was already in last quarter's top ten.</p>
-<h2>7. How to run this on real data</h2>
+<h2 id="7-how-to-run-this-on-real-data">7. How to run this on real data</h2>
 <ul>
 <li><strong>Inputs needed:</strong> six months of credits with note text, reason code, product/SKU class, packaging spec, carrier, origin DC, ship and credit dates, credit amount, order value, and a line-down flag if one exists.</li>
 <li><strong>Privacy:</strong> redact names, emails, phone numbers, and account numbers from the note before it reaches a model. Nothing else in the record is sensitive. Run under the API's standard data-retention terms; no training on inputs.</li>
@@ -576,7 +733,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 <li><strong>What it would cost:</strong> at ~$6.20 per thousand records on the reference model, a year of 50,000 credits a month is about $3,700 in model calls. The reviewer time is the real cost, and the threshold controls it.</li>
 <li><strong>What to expect:</strong> the first run finds things people already suspected and could not prove. That is the useful outcome — proof is what moves packaging engineering.</li>
 </ul>
-<h2>8. Limitations</h2>
+<h2 id="8-limitations">8. Limitations</h2>
 <ul>
 <li>The synthetic notes and the classifier are both Claude models. The human-labeled sets are the check on that circularity — and they show synthetic accuracy (96–99%) overstates real-review accuracy (78–85%). Treat the synthetic numbers as an upper bound.</li>
 <li>The 85% is mildly tuned to the test: I wrote the boundary rules while labeling the clean set, then put them in the classifier. The 78% frozen-protocol number has no such caveat. The honest range is 78–85.</li>

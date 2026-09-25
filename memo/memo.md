@@ -3,7 +3,7 @@
 **Subject:** Finding the root causes behind customer credits with a language model, and what it would take to run it for real  
 **Prepared by:** Muireadhach Currie · September 2026  
 **Status:** Portfolio prototype on public and disclosed synthetic data. Not McMaster-Carr data.  
-**Built:** Deliberately plain — a static demo with no runtime model calls and no framework. The analysis runs once, the page serves the results, and it deploys anywhere static files do. Every design choice is one I can explain and defend; that was a constraint I set for myself.
+**Built:** Deliberately plain — a static demo with no framework, plus one small throttled endpoint behind the Try-it box. The analysis runs once, the page serves the results, and it deploys anywhere static files do. Every design choice is one I can explain and defend; that was a constraint I set for myself.
 
 ---
 
@@ -11,9 +11,9 @@
 
 Customer credits are a symptom log. Each one carries a coarse reason code and a sentence of free text that says what actually happened. At volume, nobody reads the sentence, so the same failure gets credited repeatedly instead of fixed once.
 
-I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 15-item taxonomy written from shop experience, joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in **downtime** rather than what was refunded. Low-confidence results go to a person.
+I built a pipeline that reads the free text with a language model, extracts a specific failure mode from a 20-item taxonomy (written from shop experience, then revised once against real reviews), joins it to the metadata an order system already holds, and ranks causes by what they cost the customer in **downtime** rather than what was refunded. Low-confidence results go to a person.
 
-Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 256 failure-mode × metadata cells ranked the primary seeded pattern **#1**, at **3.6× lift** (p < 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Against synthetic ground truth the models score 96–99%. The number that matters is agreement with a careful human on real reviews. I labeled 200 records under the original taxonomy and got **72%** on the reference model (Opus 5) — and found that a third of real complaints had no home in a taxonomy written from a parts-receiving point of view. I revised it, wrote down the boundary rules, and labeled **100 fresh reviews no one had seen**: **78%** with the classifier frozen before I labeled, **85%** with the written guideline, **97%** on the records I was sure of. Real language is harder than clean text; model tier matters on it (Haiku 67%, Sonnet 76%, Opus 85%); and a written labeling guideline is worth seven points on the model that can follow one. Cost: **$6.23 per thousand records** on the model I would deploy.
+Tested against a known answer: two patterns were seeded into synthetic credit records; the notes were written by a model that never saw the seeded fields. A blind scan of 247 failure-mode × metadata cells ranked the primary seeded pattern **#1**, at **3.6× lift** (p < 0.00001) — the only cell to survive correction for multiple comparisons. A generic search for "damaged" finds no signal at all. Against synthetic ground truth the models score 96–99%. The number that matters is agreement with a careful human on real reviews. I labeled 200 records under the original taxonomy and got **72%** on the reference model (Opus 5) — and found that a third of real complaints had no home in a taxonomy written from a parts-receiving point of view. I revised it, wrote down the boundary rules, and labeled **100 fresh reviews no one had seen**: **78%** with the classifier frozen before I labeled, **85%** with the written guideline, **97%** on the records I was sure of. Real language is harder than clean text; model tier matters on it (Haiku 67%, Sonnet 76%, Opus 85%); and a written labeling guideline is worth seven points on the model that can follow one. Cost: **$6.23 per thousand records** on the model I would deploy.
 
 **Recommendation if this were real:** a four-week pilot on six months of credit history, hand-labeled by two CS reps to set the confidence threshold, run on the reference-tier model (the extra $4 per thousand records buys nine points of accuracy on real language), with the top three causes taken to the teams that own them and one metric agreed in advance — recurrence of the same cause the following quarter.
 
@@ -28,7 +28,7 @@ Reason codes ("damaged", "wrong item") cannot distinguish a packaging spec that 
 | Step | What happens | Model? |
 |---|---|---|
 | Collect | The customer's own words from the credit request, email, or review. PII redacted before anything reaches a model. | — |
-| Extract | One of 15 failure modes, a calibrated confidence, a verbatim evidence quote, and where in the chain it likely originated. Structured output, validated on every record. | Yes |
+| Extract | One of 20 failure modes, a calibrated confidence, a verbatim evidence quote, and where in the chain it likely originated. Structured output, validated on every record. | Yes |
 | Join | Product class, packaging spec, carrier, origin DC, date, credit amount from the order system. | — |
 | Rank & test | Count, dollars, expected downtime. Lift and significance for every metadata cut. Trend by month. | — |
 | Route | Confident results file automatically; uncertain ones go to a reviewer whose labels feed the next accuracy check. | — |
@@ -42,7 +42,7 @@ The taxonomy (thread damage, out-of-tolerance, wrong part in the right bag, shor
 **Synthetic:** 1,500 credit records with product class, packaging spec, carrier, origin DC, date, and credit amount, mimicking the structure a distributor holds. Notes written by a model that saw only the failure mode and product class. Two patterns seeded deliberately:
 
 - **Seed A.** Fasteners in bulk poly bags (PB-2) after a May spec change: thread damage at ~4× the base rate. Mechanism: large fasteners loose in a bulk bag chew each other's threads in transit.
-- **Seed B.** Elastomers and consumables from DC-4: aged-stock failures at ~3×. Mechanism: stock rotation.
+- **Seed B.** Elastomers and consumables from DC-4: aged-stock failures weighted 3× at generation. Mechanism: stock rotation. Aged stock is already the most common failure in that class, so the lift that can actually be measured is only ~1.5×.
 
 A third cut (Carrier-C transit damage) was given only a weak nudge, to see whether the method would correctly report "not significant."
 
@@ -54,18 +54,18 @@ A third cut (Carrier-C transit damage) was given only a weak nudge, to see wheth
 
 | Failure mode | Credits | Refunded | Rank by refund | Rank by impact | Est. customer impact |
 |---|---|---|---|---|---|
-| Premature failure in service | 118 | $13,545 | #3 | **#1** | $710k |
-| Wrong part in the right bag | 171 | $16,015 | #2 | #2 | $484k |
-| Material or hardness nonconformance | 102 | $11,795 | #6 | **#3** | $444k |
-| Short count or missing components | 153 | $11,945 | #5 | #4 | $309k |
-| Assembly or mechanism failure on first use | 153 | $16,944 | **#1** | #5 | $308k |
-| Bent or crushed long stock | 35 | $9,343 | #10 | **#6** | $168k |
-| Aged or degraded elastomers & consumables | 126 | $5,138 | #13 | **#7** | $127k |
-| Out of straight, flat, or round | 57 | $9,603 | #9 | #8 | $112k |
+| Functional failure (first use or early in service) | 281 | $30,821 | #1 | #1 | $821k |
+| Wrong part in the right bag | 170 | $15,850 | #2 | #2 | $478k |
+| Material or hardness nonconformance | 92 | $10,519 | #6 | **#3** | $411k |
+| Short count or missing components | 153 | $11,945 | #4 | #4 | $309k |
+| Bent or crushed long stock | 36 | $9,686 | #7 | **#5** | $181k |
+| Aged or degraded elastomers & consumables | 112 | $4,444 | #14 | **#6** | $116k |
+| Out-of-tolerance dimensions | 94 | $12,983 | #3 | #7 | $109k |
+| Out of straight, flat, or round | 54 | $8,914 | #9 | #8 | $105k |
 
-Across 1,500 credits: $156k refunded, roughly $3.0M in estimated customer downtime at $500/hour. The ratio is the assumption to test first. At $250/hour the top three are unchanged and only positions 4 and 5 swap; at $1,500/hour nothing moves; at $0 (refund only) the list reverts to the refund column. The demo has the control, so nobody has to take my word for it.
+Across 1,500 credits: $156k refunded, roughly $2.9M in estimated customer downtime at $500/hour. The ratio is the assumption to test first. At $250/hour the top five are unchanged and only positions 6 and 7 swap; at $1,500/hour nothing moves; at $0 (refund only) the list reverts to the refund column. The demo has the control, so nobody has to take my word for it.
 
-Downtime hours per mode are my estimate (`impact_weights.yaml`), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: wrong part in the bag, bent long stock, material nonconformance.
+Downtime hours per mode are my estimate (`impact_weights.yaml`), shown at $500/hour with sensitivity at $250 and $1,500. The point is not the exact number; it is that the order changes, and the modes that rise are the ones that stop work for a day: material nonconformance, bent long stock, aged elastomers.
 
 ### 5.2 The pattern keyword search misses
 
@@ -76,31 +76,31 @@ Downtime hours per mode are my estimate (`impact_weights.yaml`), shown at $500/h
 | Generic search ("damaged", "broke", "bent", "dent", "defect") | no signal | 0.76 |
 | Regex tuned to thread damage, written after you suspect it | 4.5× | < 0.00001 |
 
-The trend chart in the demo shows the step in May. Two things worth saying plainly. First, generic damage words appear in under 1% of these notes — customers describe symptoms ("wouldn't start the nut"), not categories. Second, a regex written *after* you know what to look for works fine; that is not a weakness of regex, it is the definition of the problem. The model checks all 15 modes at once with no hypothesis, and the blind scan below is the real test.
+The trend chart in the demo shows the step in May. Two things worth saying plainly. First, generic damage words appear in under 1% of these notes — customers describe symptoms ("wouldn't start the nut"), not categories. Second, a regex written *after* you know what to look for works fine; that is not a weakness of regex, it is the definition of the problem. The model checks all 20 modes at once with no hypothesis, and the blind scan below is the real test.
 
-"Damaged" matches dents, corrosion, kinked tube, and thread damage alike; the specific signal is diluted. **The blind scan.** Every failure mode × every packaging spec, carrier, and warehouse, within each product class: 256 cells, ranked by significance, with no one telling the scan where the seeds were. The seeded PB-2 cell ranked #1. After Bonferroni correction (p < 0.0002), it was the *only* survivor — seven other cells looked interesting at p < 0.01 and would have been chased on a smaller dataset. Stratifying by product class matters: without it, packaging just proxies product (long stock ships in crates; crates "cause" bent tube).
+"Damaged" matches dents, corrosion, kinked tube, and thread damage alike; the specific signal is diluted. **The blind scan.** Every failure mode × every packaging spec, carrier, and warehouse, within each product class: 247 cells, ranked by significance, with no one telling the scan where the seeds were. The seeded PB-2 cell ranked #1. After Bonferroni correction (p < 0.0002), it was the *only* survivor — eight other cells looked interesting at p < 0.01 and would have been chased on a smaller dataset. Stratifying by product class matters: without it, packaging just proxies product (long stock ships in crates; crates "cause" bent tube).
 
-**Seed B** was seeded too weakly to matter (ground truth 1.5×) and the method correctly does not claim it: 1.3×, p = 0.07, rank 32 of 256. **Carrier-C** was given only a nudge (1.2×) and comes back 1.2×, p = 0.24 — not significant, which is the right answer. A method that only ever says "yes" is not a method.
+**Seed B** was seeded too weakly to matter (ground truth 1.5×) and the method correctly does not claim it: 1.4×, p = 0.03, rank 31 of 247 — short of the p < 0.01 bar for the seeded checks and far short of the correction. **Carrier-C** was given only a nudge (1.2×) and comes back 1.2×, p = 0.24 — not significant, which is the right answer. A method that only ever says "yes" is not a method.
 
 ### 5.3 Coverage vs. precision
 
 | Confidence threshold | Auto-filed (coverage) | Precision of auto-filed |
 |---|---|---|
-| ≥ 0.5 | 98% | 94.6% |
-| ≥ 0.6 | 94% | 96.4% |
-| ≥ 0.7 | 91% | 97.5% |
-| ≥ 0.8 | 80% | 99.5% |
+| ≥ 0.5 | 98% | 96.7% |
+| ≥ 0.6 | 94% | 97.4% |
+| ≥ 0.7 | 91% | 98.0% |
+| ≥ 0.8 | 81% | 99.3% |
 | ≥ 0.9 | 44% | 100% |
 
 That is the synthetic curve. On real reviews, measured against my labels, the trade is tighter:
 
-| Threshold | Auto-filed | Precision (Opus 5) | Precision (Sonnet 5) |
+| Threshold | Auto-filed (Opus 5) | Precision (Opus 5) | Precision (Sonnet 5) |
 |---|---|---|---|
 | ≥ 0.6 | 86% | 94% | 83% |
 | ≥ 0.7 | 71% | 97% | 88% |
 | ≥ 0.8 | 50% | 98% | 94% |
 
-*(100 unseen reviews, taxonomy v2. Under v1 the same threshold of 0.7 auto-filed 39% at 90% — the taxonomy revision, not the model, is what moved this.)* Two things to take from that. The model's confidence is honest: where it says 0.8 on a real review, it is right 49 times in 50. And the review queue is real work — at 0.7, three in ten records go to a person. That is the correct design, not a failure of it; the reviewer sees a suggested mode and the evidence quote, so each review takes seconds, and every reviewed label feeds the next accuracy check. The reviewer sees the model's evidence quote and a suggested mode, which makes a review take seconds rather than a full read.
+*(100 unseen reviews, taxonomy v2. Under v1 the same threshold of 0.7 auto-filed 39% at 90% — the taxonomy revision, not the model, is what moved this.)* Two things to take from that. The model's confidence is honest: where it says 0.8 on a real review, it is right 49 times in 50. And the review queue is real work — at 0.7, three in ten records go to a person. That is the correct design, not a failure of it; the reviewer sees a suggested mode and the evidence quote, so each review takes seconds, and every reviewed label feeds the next accuracy check.
 
 ### 5.4 Accuracy, three ways — and what hand-labeling changed
 
@@ -110,7 +110,7 @@ That is the synthetic curve. On real reviews, measured against my labels, the tr
 |---|---|---|
 | Always guess the most common label — the baseline | 100 | 40% |
 | Sonnet 5 vs. synthetic ground truth | 1,500 | 96.5% (macro-F1 0.97) |
-| Opus 5 vs. synthetic ground truth | 400 | 98.8% — agrees with Sonnet 96.8% |
+| Opus 5 vs. synthetic ground truth | 250 | 98.8% — agrees with Sonnet 96.8% |
 | Opus 5 vs. my labels, taxonomy v1, 150 real reviews | 150 | 72% |
 | Opus 5 vs. my labels, taxonomy v2, same 150 re-labeled | 150 | 76% |
 | **Opus 5 vs. my labels, 100 unseen reviews, classifier frozen first** | 100 | **78%** |
@@ -140,9 +140,9 @@ Two lessons that changed decisions. On synthetic text all three models look inte
 
 Whole project: $46.66 across two taxonomy versions, three full classification passes, and a discarded run. The production decision: Opus costs $200 a month more at 50,000 credits and is nine points more accurate on real language. That is not a close call. One lesson worth the price: the cheapest model per token (Haiku 4.5) will not cache a prompt under 4,096 tokens, so it cost *more per record* than Sonnet with caching. Cheaper per token is not cheaper per record.
 
-## 6. What I would do with the top three causes
+## 6. What I would do about three of these causes
 
-*Illustrative, based on the synthetic findings — the shape of the action matters more than the specifics.*
+*Illustrative, based on the synthetic findings — the shape of the action matters more than the specifics. The DC-4 row acts on a suggestive signal, not a significant one (§5.2); a FIFO audit is cheap enough to be worth it anyway.*
 
 | Cause | Owner | Fix | Metric that says it worked |
 |---|---|---|---|

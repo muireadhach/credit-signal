@@ -1,8 +1,8 @@
 {
- "threshold": 0.6,
+ "threshold": 0.7,
  "n_total": 3598,
- "n_queue": 362,
- "share": 0.101,
+ "n_queue": 909,
+ "share": 0.253,
  "curve": [
   {
    "threshold": 0.5,

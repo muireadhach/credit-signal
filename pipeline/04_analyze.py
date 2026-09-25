@@ -15,7 +15,7 @@ MODES = [m["id"] for m in TAX["failure_modes"]]
 NAME = {m["id"]: m["name"] for m in TAX["failure_modes"]}
 CAT = {m["id"]: (TAX["categories"].get(m["category"]) if m["category"] else "Unclear") for m in TAX["failure_modes"]}
 OUT = Path("site/data"); OUT.mkdir(parents=True, exist_ok=True)
-REVIEW_THRESHOLD = 0.6
+REVIEW_THRESHOLD = 0.7
 SPEC_CHANGE = "2026-05-01"
 
 def load(p): return [json.loads(l) for l in open(p)] if Path(p).exists() else []
@@ -162,6 +162,7 @@ for t in [0.5, 0.6, 0.7, 0.8, 0.9]:
     auto = [c for c in syn_cls if c["confidence"] >= t]
     acc = sum(norm(c["failure_mode"]) == norm(frame[c["id"]]["true_mode"]) for c in auto) / len(auto) if auto else None
     curve.append(dict(threshold=t, coverage=round(len(auto) / max(len(syn_cls), 1), 3), precision=round(acc, 3) if acc is not None else None))
+def clip(t, n): return t if len(t) <= n else t[:n].rsplit(" ", 1)[0].rstrip(" ,;:.") + "…"
 def txt(c): return (frame[c["id"]]["note"] if c["id"] in frame else public[c["id"]]["text"])[:400]
 dump("review_queue", dict(threshold=REVIEW_THRESHOLD, n_total=len(allc), n_queue=len(queue), share=round(len(queue) / max(len(allc), 1), 3),
     curve=curve, examples=[dict(id=c["id"], source=c["source"], mode=NAME[c["failure_mode"]], conf=c["confidence"],
@@ -211,7 +212,7 @@ def gold_block(gold, cms, tag_prefix):
         r["public_curve"] = [dict(threshold=t, coverage=round(len([i for i in pub_ids if cm[i]["confidence"] >= t]) / max(len(pub_ids), 1), 3), precision=A([i for i in pub_ids if cm[i]["confidence"] >= t])) for t in (0.5, 0.6, 0.7, 0.8, 0.9)]
         r["by_human_confidence"] = {h: dict(n=len(sub), accuracy=A(sub)) for h in ("high", "medium", "low") if (sub := [i for i in ids if hconf.get(i) == h])}
         r["top_disagreements"] = [dict(human=NAME.get(a, a), model=NAME.get(b, b), n=n) for (a, b), n in Counter((g[i], cm[i]["failure_mode"]) for i in pub_ids if g[i] != cm[i]["failure_mode"]).most_common(6)]
-        r["examples"] = [dict(text=public[i]["text"][:300], human=NAME.get(g[i], g[i]), model=NAME.get(cm[i]["failure_mode"]), conf=cm[i]["confidence"], note=gnote[i][:160]) for i in pub_ids if g[i] != cm[i]["failure_mode"]][:6]
+        r["examples"] = [dict(text=clip(public[i]["text"], 300), human=NAME.get(g[i], g[i]), model=NAME.get(cm[i]["failure_mode"]), conf=cm[i]["confidence"], note=clip(gnote[i], 160)) for i in pub_ids if g[i] != cm[i]["failure_mode"]][:6]
         out[tag] = r
     return out
 
