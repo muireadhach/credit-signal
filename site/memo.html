@@ -1,9 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Credit Signal · Decision memo</title>
-<meta name="description" content="$156k in refunds, ~$2.9M in estimated customer downtime: what to fix first, who owns it, and a four-week pilot. Built on public reviews and disclosed synthetic data.">
-<meta property="og:type" content="website"><meta property="og:title" content="Credit Signal: decision memo"><meta property="og:description" content="What to fix first, who owns it, and a four-week pilot to prove it. Ranked by customer downtime, not refund dollars.">
-<meta property="og:url" content="https://creditsignal.muireadhach.com/memo"><meta property="og:image" content="https://creditsignal.muireadhach.com/memo-og-v3.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="brand/favicon-64.png" type="image/png"><link rel="icon" href="brand/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
@@ -67,6 +64,8 @@ nav.sections a.active{color:var(--ink);border-color:var(--accent)}
 main .wrap{padding-block:48px 96px}
 main section{min-width:0}
 main section+section{margin-top:96px;border-top:1px solid var(--ink);padding-top:20px}
+#hero+#try{margin-top:48px;border-top:0;padding-top:0}  /* the demo reads as part of the opening */
+#results .tiles{margin-top:20px}
 #pattern{--surface:var(--panel-2);background:var(--panel-2);box-shadow:0 0 0 100vmax var(--panel-2);clip-path:inset(0 -100vmax);border-top:0;padding-block:56px 72px}
 .block{margin-top:44px}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
@@ -247,6 +246,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
   .grid2{grid-template-columns:minmax(0,1fr);gap:36px}
   main .wrap{padding-block:32px 64px}
   main section+section{margin-top:64px}
+  #hero+#try{margin-top:36px}
   #pattern{padding-block:40px 52px}
   #pilot{padding-block:40px 44px;margin-top:48px}
   .weeks{grid-template-columns:minmax(0,1fr);gap:0}
@@ -325,7 +325,7 @@ svg.chart.grow .bar{transform-box:fill-box;transform-origin:left;animation:grow 
 </header>
 <main><div class="memo"><h1 id="credit-signal-decision-memo">Credit Signal decision memo</h1>
 <p><strong>Subject:</strong> Finding the root causes behind customer credits with a language model, and what it would take to run it for real<br />
-<strong>Prepared by:</strong> Muireadhach Currie · September 2026 · <a href="mailto:m@muireadhach.com">m@muireadhach.com</a> · <a href="https://www.linkedin.com/in/muireadhach/">linkedin.com/in/muireadhach</a><br />
+<strong>Prepared by:</strong> Muireadhach Currie · September 2026<br />
 <strong>Status:</strong> Portfolio prototype on public and disclosed synthetic data. Not McMaster-Carr data.<br />
 <strong>Built:</strong> A static demo with no framework, plus one small throttled endpoint behind the Try-it box. The analysis runs once, the page serves the results, and it deploys anywhere static files do. I kept it this plain on purpose, so that I can explain and defend every design choice.</p>
 <hr />
